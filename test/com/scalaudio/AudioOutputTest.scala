@@ -47,10 +47,10 @@ class AudioOutputTest extends FlatSpec with Matchers with ScalaudioConfig {
     AudioContext.audioOutput.stop
   }
 
-  "Signal chain" should "play noise" in {
-    val chain = SignalChain(List(new NoiseGen))
-    chain.play
-    Thread.sleep(5000)
-    AudioContext.audioOutput.stop
-  }
+//  "Signal chain" should "play noise" in {
+//    val chain = SignalChain(List(new NoiseGen))
+//    chain.play
+//    Thread.sleep(5000)
+//    AudioContext.audioOutput.stop
+//  }
 }
