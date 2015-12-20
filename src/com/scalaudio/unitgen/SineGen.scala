@@ -9,6 +9,8 @@ class SineGen(val initFreq : Double = 440) extends UnitGen with ScalaudioConfig 
   var freq = initFreq
   var phaseOffset = 0 // Should be in radians in case freq changes
 
-  def outputBuffer : Array[Double] =
-    (1 to FramesPerBuffer map (i => Math.sin(i * Math.PI * 2.0 / FramesPerBuffer))).toArray
+  def outputBuffers : List[Array[Double]] =
+    List((1 to FramesPerBuffer map (i =>
+        Math.sin(i * Math.PI * 2.0 / FramesPerBuffer)
+        )).toArray)
 }

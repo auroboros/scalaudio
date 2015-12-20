@@ -1,12 +1,13 @@
-package com.scalaudio.mix
+package com.scalaudio.filter.mix
 
+import com.scalaudio.filter.Filter
 import com.scalaudio.{ScalaudioConfig, AudioContext}
 import com.scalaudio.unitgen.MonoSignalChain
 
 /**
   * Created by johnmcgill on 12/19/15.
   */
-case class Summer(val sigChains : List[MonoSignalChain]) extends ScalaudioConfig {
+case class Summer(val sigChains : List[MonoSignalChain]) extends Filter with ScalaudioConfig {
   import Summer._
 
   def play(numFrames : Int) = {
@@ -20,9 +21,11 @@ case class Summer(val sigChains : List[MonoSignalChain]) extends ScalaudioConfig
   }
 
   def summedOutputBuffer = {
-    val bufferList : List[Array[Double]] = sigChains.map(x => x.outputBuffer(0))
+    val bufferList : List[Array[Double]] = sigChains.map(x => x.outputBuffers(0))
     bufferList.tail.foldLeft(bufferList.head)((r,c) => sumBuffers(r,c))
   }
+
+  override def processBuffers(inBuffers: List[Array[Double]]): List[Array[Double]] = ???
 }
 
 object Summer {

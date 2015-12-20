@@ -34,7 +34,7 @@ class AudioOutputTest extends FlatSpec with Matchers with ScalaudioConfig {
   "Noise Generator" should "create buffer of random noise on every call" in {
 
     val noiseGen = new NoiseGen
-    1 to 1000 foreach {_ => AudioContext.audioOutput.write(noiseGen.outputBuffer)}
+    1 to 1000 foreach {_ => AudioContext.audioOutput.write(noiseGen.outputBuffers(0))}
 
     AudioContext.audioOutput.stop
   }
@@ -42,7 +42,7 @@ class AudioOutputTest extends FlatSpec with Matchers with ScalaudioConfig {
   "Sine Generator" should "create buffer of sine on every call" in {
 
     val noiseGen = new SineGen
-    1 to 1000 foreach {_ => AudioContext.audioOutput.write(noiseGen.outputBuffer)}
+    1 to 1000 foreach {_ => AudioContext.audioOutput.write(noiseGen.outputBuffers(0))}
 
     AudioContext.audioOutput.stop
   }

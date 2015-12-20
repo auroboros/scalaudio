@@ -1,7 +1,7 @@
 package com.scalaudio
 
 import com.scalaudio.filter.{Filter, GainFilter}
-import com.scalaudio.mix.Summer
+import com.scalaudio.filter.mix.Summer
 import com.scalaudio.engine.Playback
 import com.scalaudio.unitgen.{MonoSignalChain, SineGen, NoiseGen}
 import org.scalatest.{Matchers, FlatSpec}
@@ -11,15 +11,15 @@ import org.scalatest.{Matchers, FlatSpec}
   */
 class ChainTest extends FlatSpec with Matchers with ScalaudioConfig {
   "List of modules" should "chain using outputBuffer" in {
-    val filterChain : List[Filter] = List(new GainFilter(.5), new GainFilter(.75))
-    val startUnit = new SineGen
-
-    // Creates function variable to generate frames from this filter chain
-    val frameFunc = () => filterChain.foldLeft(startUnit.outputBuffer)((r,c) => c.processBuffer(r))
-
-    1 to 1000 foreach {_ => AudioContext.audioOutput.write(frameFunc())}
-
-    AudioContext.audioOutput.stop
+//    val filterChain : List[Filter] = List(new GainFilter(.5), new GainFilter(.75))
+//    val startUnit = new SineGen
+//
+//    // Creates function variable to generate frames from this filter chain
+//    val frameFunc = () => filterChain.foldLeft(startUnit.outputBuffers)((r, c) => c.processBuffers(r))
+//
+//    1 to 1000 foreach {_ => AudioContext.audioOutput.write(frameFunc())}
+//
+//    AudioContext.audioOutput.stop
   }
 
   "SignalChain abstraction" should "playback in same fashion" in {

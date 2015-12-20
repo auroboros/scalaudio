@@ -9,11 +9,11 @@ import com.scalaudio.filter.Filter
 case class MonoSignalChain(val startGen : UnitGen, val filterChain : List[Filter]) extends UnitGen {
   val frameFunc = () => {
       if (filterChain.isEmpty) {
-        startGen.outputBuffer
+        startGen.outputBuffers
       } else {
-        filterChain.foldLeft(startGen.outputBuffer)((r, c) => c.processBuffer(r))
+        filterChain.foldLeft(startGen.outputBuffers)((r, c) => c.processBuffers(r))
       }
     }
 
-  def outputBuffer : List[Array[Double]] = List(frameFunc())
+  def outputBuffers : List[Array[Double]] = frameFunc()
 }
