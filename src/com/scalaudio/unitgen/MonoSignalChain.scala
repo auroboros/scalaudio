@@ -15,5 +15,5 @@ case class MonoSignalChain(val startGen : UnitGen, val filterChain : List[Filter
       }
     }
 
-  def outputBuffer : Array[Double] = frameFunc()
+  def outputBuffer : List[Array[Double]] = List(frameFunc())
 }
