@@ -9,6 +9,7 @@ import com.jsyn.devices.javasound.JavaSoundAudioDevice
 trait ScalaudioConfig {
   val FramesPerBuffer = 128
   val SamplesPerFrame = 1
+  val ReportClipping = true
 }
 
 object AudioContext extends ScalaudioConfig {

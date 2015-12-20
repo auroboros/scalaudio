@@ -31,4 +31,24 @@ class ChainTest extends FlatSpec with Matchers with ScalaudioConfig {
 
     AudioContext.audioOutput.stop
   }
+
+  "SignalChain abstraction" should "playback MonosignalChain with nil filter list" in {
+
+    val sigChainList = List(MonoSignalChain(new NoiseGen, Nil))
+    val summer = OutputSummer(sigChainList)
+
+    summer.play(1000)
+
+    AudioContext.audioOutput.stop
+  }
+
+  "SignalChain abstraction" should "report clip for MonoSignalChain that clips" in {
+
+    val sigChainList = List(MonoSignalChain(new SineGen, Nil), MonoSignalChain(new SineGen, Nil))
+    val summer = OutputSummer(sigChainList)
+
+    summer.play(1000)
+
+    AudioContext.audioOutput.stop
+  }
 }
