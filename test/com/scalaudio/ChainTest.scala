@@ -34,7 +34,7 @@ class ChainTest extends FlatSpec with Matchers {
   }
 
   "SignalChain abstraction" should "playback mono SignalChain with nil filter list" in {
-    Config.NChannels = 1
+    Config.NOutChannels = 1
 
     val sigChain = new SignalChain(new NoiseGen, Nil) with Playback
 
@@ -44,7 +44,7 @@ class ChainTest extends FlatSpec with Matchers {
   }
 
   "SignalChain abstraction" should "playback stereo SignalChain only if signal is split" in {
-    Config.NChannels = 2
+    Config.NOutChannels = 2
 
     val sigChain = new SignalChain(new NoiseGen, List(Splitter(2))) with Playback
 

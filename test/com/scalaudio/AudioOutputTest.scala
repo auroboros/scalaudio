@@ -3,12 +3,13 @@ package com.scalaudio
 import com.jsyn.devices.{AudioDeviceOutputStream, AudioDeviceManager}
 import com.jsyn.devices.javasound.JavaSoundAudioDevice
 import com.jsyn.devices.AudioDeviceOutputStream
+import com.scalaudio.engine.Playback
 import com.scalaudio.unitgen.{SineGen, NoiseGen}
 import org.scalatest.{FlatSpec, Matchers}
 
 class AudioOutputTest extends FlatSpec with Matchers {
 
-  "Base of repository" should "execute a get" in {
+  "Audio Output" should "play buffers" in {
     System.out.println("Test mono output.")
     val FRAMES_PER_BUFFER: Int = 128
     val SAMPLES_PER_FRAME: Int = 1
@@ -40,11 +41,12 @@ class AudioOutputTest extends FlatSpec with Matchers {
   }
 
   "Sine Generator" should "create buffer of sine on every call" in {
+    Config.NOutChannels = 1
 
-    val noiseGen = new SineGen(440)
-    1 to 1000 foreach {_ => AudioContext.audioOutput.write(noiseGen.outputBuffers(0))}
+    val sineGen = new SineGen(220) with Playback
+    sineGen.play(1000)
 
-    AudioContext.audioOutput.stop
+    sineGen.stop
   }
 
 //  "Signal chain" should "play noise" in {
