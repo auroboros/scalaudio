@@ -13,10 +13,12 @@ trait Playback {
 
   def play(nFrames : Int) = {
     1 to nFrames foreach { _ =>
+      AudioContext.State.currentFrame += 1
+
       val obs = outputBuffers // Fetch output buffers ONCE (multiple times will retrigger sig chain calcs)
 
-      if (obs.length != Config.Channels)
-        throw new Exception("Playback -- this device outputs incompatible number of channels. This playback system requires " + Config.Channels)
+      if (obs.length != Config.NChannels)
+        throw new Exception("Playback -- this device outputs incompatible number of channels. This playback system requires " + Config.NChannels)
 
       if (Config.ReportClipping && containsClipping(obs))
         println("CLIP!")
@@ -25,7 +27,7 @@ trait Playback {
     }
   }
 
-  def stop = AudioContext.audioOutput.stop
+  def stop = AudioContext.stop
 
   def interleave(buffers : List[Array[Double]]) : Array[Double] = {
     val tBuffers = buffers.transpose

@@ -12,4 +12,11 @@ class TransposeTest extends FlatSpec with Matchers {
     println(newArray(0))
     val x = 1
   }
+
+  "Interleaved buffer" should "deinterleave to separate channel buffers" in {
+    val buffer = Array[Double](.1, .4, .7, .2, .5, .8, .3, .6, .9)
+    val temp: List[Array[Double]] = buffer.grouped(3).toArray.transpose.toList
+    println(temp)
+    val x = 1
+  }
 }

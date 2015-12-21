@@ -1,5 +1,6 @@
 scalaudio
 
 To Do:
-- Combine mixer with filter (both take lists of buffers & return lists of buffers), this way they can all fit into a signal chain (multichannel!) & get playback
-- Need to expand signal chain to reflect this change (should support multichannel)
+- Signal Chain needs to support more varied flows (replaceable frameFunc? Then do constructor args need to be passed in at all?)
+- Sine needs to actually support frequency
+- Audio input UnitGen
