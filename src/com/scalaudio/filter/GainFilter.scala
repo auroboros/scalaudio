@@ -1,7 +1,5 @@
 package com.scalaudio.filter
 
-import com.scalaudio.unitgen.UnitGen
-
 /**
   * Created by johnmcgill on 12/19/15.
   */

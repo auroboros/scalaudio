@@ -1,15 +1,15 @@
 package com.scalaudio
 
 import com.scalaudio.filter.{Filter, GainFilter}
-import com.scalaudio.filter.mix.Summer
+import com.scalaudio.filter.mix.{Splitter, Summer}
 import com.scalaudio.engine.Playback
-import com.scalaudio.unitgen.{MonoSignalChain, SineGen, NoiseGen}
+import com.scalaudio.unitgen.{SignalChain, SineGen, NoiseGen}
 import org.scalatest.{Matchers, FlatSpec}
 
 /**
   * Created by johnmcgill on 12/19/15.
   */
-class ChainTest extends FlatSpec with Matchers with ScalaudioConfig {
+class ChainTest extends FlatSpec with Matchers {
   "List of modules" should "chain using outputBuffer" in {
 //    val filterChain : List[Filter] = List(new GainFilter(.5), new GainFilter(.75))
 //    val startUnit = new SineGen
@@ -25,37 +25,47 @@ class ChainTest extends FlatSpec with Matchers with ScalaudioConfig {
   "SignalChain abstraction" should "playback in same fashion" in {
     val filterChain : List[Filter] = List(new GainFilter(.5), new GainFilter(.75))
 
-    val sigChainList = List(MonoSignalChain(new NoiseGen, filterChain), MonoSignalChain(new SineGen, filterChain))
-    val summer = Summer(sigChainList)
+    val sigChainList = List(SignalChain(new NoiseGen, filterChain), SignalChain(new SineGen, filterChain))
+//    val summer = Summer(sigChainList)
 
-    summer.play(1000)
+//    summer.play(1000)
 
     AudioContext.audioOutput.stop
   }
 
-  "SignalChain abstraction" should "playback MonosignalChain with nil filter list" in {
+  "SignalChain abstraction" should "playback mono SignalChain with nil filter list" in {
+    Config.Channels = 1
 
-    val sigChainList = List(MonoSignalChain(new NoiseGen, Nil))
-    val summer = Summer(sigChainList)
+    val sigChain = new SignalChain(new NoiseGen, Nil) with Playback
 
-    summer.play(1000)
+    sigChain.play(1000)
+
+    AudioContext.audioOutput.stop
+  }
+
+  "SignalChain abstraction" should "playback stereo SignalChain only if signal is split" in {
+    Config.Channels = 2
+
+    val sigChain = new SignalChain(new NoiseGen, List(Splitter(2))) with Playback
+
+    sigChain.play(1000)
 
     AudioContext.audioOutput.stop
   }
 
   "SignalChain abstraction" should "report clip for MonoSignalChain that clips" in {
 
-    val sigChainList = List(MonoSignalChain(new SineGen, Nil), MonoSignalChain(new SineGen, Nil))
-    val summer = Summer(sigChainList)
+    val sigChainList = List(SignalChain(new SineGen, Nil), SignalChain(new SineGen, Nil))
+//    val summer = new Summer(sigChainList) with Playback
 
-    summer.play(1000)
+//    summer.play(1000)
 
     AudioContext.audioOutput.stop
   }
 
   "MonoSignalChain" should "be able to playback if given Playback trait" in {
     val filterChain : List[Filter] = List(new GainFilter(.5), new GainFilter(.75))
-    val sigChainList = new MonoSignalChain(new NoiseGen, filterChain) with Playback
+    val sigChainList = new SignalChain(new NoiseGen, filterChain) with Playback
 
     sigChainList.play(1000)
     sigChainList.stop

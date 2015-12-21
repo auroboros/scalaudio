@@ -6,7 +6,7 @@ import com.jsyn.devices.AudioDeviceOutputStream
 import com.scalaudio.unitgen.{SineGen, NoiseGen}
 import org.scalatest.{FlatSpec, Matchers}
 
-class AudioOutputTest extends FlatSpec with Matchers with ScalaudioConfig {
+class AudioOutputTest extends FlatSpec with Matchers {
 
   "Base of repository" should "execute a get" in {
     System.out.println("Test mono output.")

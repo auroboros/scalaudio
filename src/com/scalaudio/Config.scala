@@ -6,14 +6,16 @@ import com.jsyn.devices.javasound.JavaSoundAudioDevice
 /**
   * Created by johnmcgill on 12/18/15.
   */
-trait ScalaudioConfig {
+object Config {
   val FramesPerBuffer = 128
-  val Channels = 1 // ("Samples per frame")
+  var Channels = 1 // ("Samples per frame")
   val ReportClipping = true
   val SamplingRate = 44100
 }
 
-object AudioContext extends ScalaudioConfig {
+object AudioContext {
+  import Config._
+
   val audioDevice: AudioDeviceManager = new JavaSoundAudioDevice
   val audioOutput: AudioDeviceOutputStream = audioDevice.createOutputStream(audioDevice.getDefaultOutputDeviceID, SamplingRate, Channels)
 

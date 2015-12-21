@@ -1,10 +1,10 @@
 package com.scalaudio.unitgen
 
-import com.scalaudio.ScalaudioConfig
+import com.scalaudio.Config
 
 /**
   * Created by johnmcgill on 12/18/15.
   */
-class NoiseGen extends UnitGen with ScalaudioConfig {
-  def outputBuffers = List(Array.fill[Double](FramesPerBuffer)(Math.random * 2 - 1))
+class NoiseGen extends UnitGen {
+  def outputBuffers = List(Array.fill[Double](Config.FramesPerBuffer)(Math.random * 2 - 1))
 }
