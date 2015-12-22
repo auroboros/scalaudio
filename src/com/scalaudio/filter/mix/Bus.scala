@@ -7,6 +7,6 @@ import com.scalaudio.filter.Filter
   *
   * Created by johnmcgill on 12/20/15.
   */
-class Bus extends Filter {
+case class Bus() extends Filter {
   override def processBuffers(inBuffers: List[Array[Double]]): List[Array[Double]] = inBuffers
 }

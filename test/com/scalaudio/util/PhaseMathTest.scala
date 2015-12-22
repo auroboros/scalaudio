@@ -1,6 +1,6 @@
-package com.scalaudio
+package com.scalaudio.util
 
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
   * Created by johnmcgill on 12/21/15.

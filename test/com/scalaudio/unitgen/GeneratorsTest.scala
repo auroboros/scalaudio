@@ -34,7 +34,7 @@ class GeneratorsTest extends FlatSpec with Matchers {
   "Square Generator" should "create buffer of squarewave on every call" in {
     Config.NOutChannels = 1
 
-    val squareGen = new SquareGen(660) with Playback
+    val squareGen = new SquareGen(300) with Playback
     squareGen.start
     squareGen.play(1000)
     squareGen.stop

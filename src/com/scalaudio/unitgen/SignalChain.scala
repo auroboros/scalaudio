@@ -14,5 +14,5 @@ case class SignalChain(val startGen : UnitGen, val filterChain : List[Filter]) e
       }
     }
 
-  def outputBuffers : List[Array[Double]] = frameFunc()
+  override def computeBuffer : List[Array[Double]] = frameFunc()
 }

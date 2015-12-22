@@ -1,8 +1,9 @@
-package com.scalaudio
+package com.scalaudio.io
 
+import com.scalaudio.AudioContext
 import com.scalaudio.engine.Playback
 import com.scalaudio.unitgen.LineIn
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
   * Created by johnmcgill on 12/20/15.

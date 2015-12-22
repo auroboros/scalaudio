@@ -1,10 +1,10 @@
-package com.scalaudio
+package com.scalaudio.io
 
-import com.jsyn.devices.{AudioDeviceOutputStream, AudioDeviceManager}
+import com.jsyn.devices.{AudioDeviceManager, AudioDeviceOutputStream}
 import com.jsyn.devices.javasound.JavaSoundAudioDevice
-import com.jsyn.devices.AudioDeviceOutputStream
 import com.scalaudio.engine.Playback
-import com.scalaudio.unitgen.{SineGen, NoiseGen}
+import com.scalaudio.unitgen.{NoiseGen, SineGen}
+import com.scalaudio.{AudioContext, Config}
 import org.scalatest.{FlatSpec, Matchers}
 
 class AudioOutputTest extends FlatSpec with Matchers {

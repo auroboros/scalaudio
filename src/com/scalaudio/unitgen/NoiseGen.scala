@@ -5,6 +5,6 @@ import com.scalaudio.Config
 /**
   * Created by johnmcgill on 12/18/15.
   */
-class NoiseGen extends UnitGen {
-  def outputBuffers = List(Array.fill[Double](Config.FramesPerBuffer)(Math.random * 2 - 1))
+case class NoiseGen() extends UnitGen {
+  override def computeBuffer = List(Array.fill[Double](Config.FramesPerBuffer)(Math.random * 2 - 1))
 }
