@@ -25,10 +25,28 @@ class GeneratorsTest extends FlatSpec with Matchers {
   "Sine Generator" should "create buffer of sine on every call" in {
     Config.NOutChannels = 1
 
-    val sineGen = new SineGen(220) with Playback
+    val sineGen = new SineGen(440) with Playback
     sineGen.start
     sineGen.play(1000)
     sineGen.stop
+  }
+
+  "Square Generator" should "create buffer of squarewave on every call" in {
+    Config.NOutChannels = 1
+
+    val squareGen = new SquareGen(660) with Playback
+    squareGen.start
+    squareGen.play(1000)
+    squareGen.stop
+  }
+
+  "Sawtooth Generator" should "create buffer of sawtooth on every call" in {
+    Config.NOutChannels = 1
+
+    val sawtoothGen = new SawtoothGen(880 * 2) with Playback
+    sawtoothGen.start
+    sawtoothGen.play(1000)
+    sawtoothGen.stop
   }
 
   "Signal chain" should "play noise" in {

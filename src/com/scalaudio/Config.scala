@@ -19,15 +19,12 @@ object AudioContext {
 
   private val audioDevice: AudioDeviceManager = new JavaSoundAudioDevice
   // TODO: Make these private & have proxy methods for read/write (interleaving/de-interleaving can be here, actually)
-  var audioOutput: AudioDeviceOutputStream = null
-  var audioInput: AudioDeviceInputStream = null
+  var audioOutput: AudioDeviceOutputStream = audioDevice.createOutputStream(audioDevice.getDefaultOutputDeviceID, SamplingRate, NOutChannels)
+  var audioInput: AudioDeviceInputStream = audioDevice.createInputStream(audioDevice.getDefaultInputDeviceID, SamplingRate, NOutChannels)
 
   start
 
   def start = {
-    // TODO: Moved here & changed above declarations to vars to accomodate testing. Any way to fork JVM for each test instead & remain immutable?
-    audioOutput = audioDevice.createOutputStream(audioDevice.getDefaultOutputDeviceID, SamplingRate, NOutChannels)
-    audioInput = audioDevice.createInputStream(audioDevice.getDefaultInputDeviceID, SamplingRate, NOutChannels)
     audioInput.start
     audioOutput.start
   }
