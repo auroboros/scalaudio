@@ -7,3 +7,6 @@ To Do:
 
 Questions:
 - Is internal caching of buffers really necessary if intention is to use flow of building frameFuncs to feed anonymous UnitGens?
+- Could go fully functional & treat filters as Singleton if no state is involved. Could have UnitGens recurse with state so its not stored internally?
+Only problem is this shifts responsible to user to manage buffer updates (only call outputbuffer once since there will be no record of currentFrame)
+Could prep recursion and pass back that function to be executed? So "state" is more just passing around of closures?
