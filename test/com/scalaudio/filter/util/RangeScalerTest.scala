@@ -1,6 +1,6 @@
 package com.scalaudio.filter.util
 
-import com.scalaudio.implicits.ScalaudioSyntaxHelpers
+import com.scalaudio.syntax.ScalaudioSyntaxHelpers
 import com.scalaudio.unitgen.SineGen
 import org.scalatest.{FlatSpec, Matchers}
 

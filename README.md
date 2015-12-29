@@ -1,6 +1,9 @@
 scalaudio
 
 To Do:
+- Maybe there should be subtype of filter for those that support Signal / ControlRate controls?
+- Need generic format for channel filling etc. in signal / ControlRate controls
+- Should create "1st buffer" notion for supplying warning messages that aren't exceptions so its not repetitive?
 - Signal Chain needs to support more varied flows (replaceable frameFunc? Then do constructor args need to be passed in at all?)
 - Audio input UnitGen needs to be fixed/tested (should be on own thread?)
 - Sawtooth needs to be fixed (octave?)

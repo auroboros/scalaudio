@@ -23,6 +23,11 @@ case class SineGen(val initFreq : Double = 440) extends UnitGen {
     obs
   }
 
+  def computeBufferWithControl(ctrlFreq : Double) : List[Array[Double]] = {
+    setFreq(ctrlFreq) //TODO: This is a pretty bad hack (maybe...), layout of UnitGens that accept ctrl signals should be re-imagined
+    computeBuffer
+  }
+
   def setFreq(newFreq : Double) = {
     freq = newFreq
     period = Config.SamplingRate / freq

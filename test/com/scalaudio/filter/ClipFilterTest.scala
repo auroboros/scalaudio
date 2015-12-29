@@ -2,7 +2,7 @@ package com.scalaudio.filter
 
 import com.scalaudio.engine.Playback
 import com.scalaudio.filter.mix.Splitter
-import com.scalaudio.implicits.ScalaudioSyntaxHelpers
+import com.scalaudio.syntax.ScalaudioSyntaxHelpers
 import com.scalaudio.unitgen.{UnitGen, SineGen}
 import org.scalatest.{FlatSpec, Matchers}
 

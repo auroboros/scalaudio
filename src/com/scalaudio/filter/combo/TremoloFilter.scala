@@ -1,4 +1,6 @@
-package com.scalaudio.filter
+package com.scalaudio.filter.combo
+
+import com.scalaudio.filter.Filter
 
 /**
   * Created by johnmcgill on 12/19/15.

@@ -1,9 +1,13 @@
 package com.scalaudio.filter
 
+import scala.runtime.Tuple2Zipped
+
 /**
   * Created by johnmcgill on 12/19/15.
   */
-class GainFilter(val gain : Double) extends Filter {
-  def processBuffers(inBuffers : List[Array[Double]]) : List[Array[Double]] =
-    inBuffers map (_ map (x => x * gain))
+case class GainFilter(val gain : Double = 1) extends SampleIndependentControllableFilter {
+  override val defaultCtrlParam = gain
+
+  override def processSample(sig : Double, ctrl : Double): Double =
+    sig * ctrl
 }
