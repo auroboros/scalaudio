@@ -5,6 +5,7 @@ import com.scalaudio.Config
 /**
   * Created by johnmcgill on 12/18/15.
   */
+// TODO: There should really be an abstract case class "Oscillator" that is extended by SineGen & others, rather than others hackily extending SineGen
 case class SineGen(val initFreq : Double = 440) extends UnitGen {
   protected var phi : Double = 0 // phase : should be in radians in case freq changes
 
