@@ -13,7 +13,7 @@ case class TimedEvent(val startFrame : Int, val event : CapsuleEvent){
   def endFrame : Int =
     event match {
       case ValueChange(_) => startFrame
-      case vr : ValueRamp => startFrame + vr.duration - 1
+      case vr : ValueRamp => startFrame + vr.duration
     }
 
   def endVal : Double =
@@ -42,5 +42,5 @@ case class ValueRamp(val duration : Int, val startVal : Double, val endVal : Dou
     List.tabulate(duration)(n => (startFrame + n, startVal + (endVal - startVal) * (n / duration)))
 
   override def valueAtRelativeFrame(relativeFrame : Int): Double =
-    startVal + (endVal - startVal) * (relativeFrame / duration)
+    startVal + (endVal - startVal) * (relativeFrame.toDouble / duration)
 }
