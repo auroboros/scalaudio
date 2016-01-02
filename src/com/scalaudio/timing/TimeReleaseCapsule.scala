@@ -8,18 +8,19 @@ import com.scalaudio.AudioContext
   */
 // TODO: Would probably be more efficient to implement as mutable list & chop off outdated pieces rather than using filter
 // (test on 2nd element, discard first if second now applies)
-case class TimeReleaseCapsule[T](val initTimedEvents : List[TimedEvent]) {
-  val sortedChangePoints : List[(Int, T)] = digestTimedEventList(initTimedEvents)
+case class TimeReleaseCapsule(val initTimedEvents : List[TimedEvent]) {
+  val sortedTimedEvents = initTimedEvents.sortBy(_.startFrame)
 
-  def digestTimedEventList(timingEvents : List[TimedEvent]) : List[(Int, T)] = {
-    timingEvents.tail.foldLeft(timingEvents.head.toControlPointList[T])((r,c) => r ++ c.toControlPointList[T]).sortBy(_._1)
+  def controlValue : Double = {
+    val startedEvents = sortedTimedEvents.filter(_.startFrame <= AudioContext.State.currentFrame)
+    val inProgressEvents = startedEvents.filter(_.endFrame > AudioContext.State.currentFrame) // Not greater than or equals, since final frame will be endVal anyway
+
+    if (inProgressEvents.isEmpty) startedEvents.last.endVal
+    else {
+      val te = inProgressEvents.head
+      te.event.valueAtRelativeFrame(AudioContext.State.currentFrame - te.startFrame)
+    }
   }
 
-  def controlValue : T =
-    sortedChangePoints.filter(_._1 <= AudioContext.State.currentFrame).last._2
-
-
-//  def signalValue(frame : Int) : Array[T] = {
-//    Array.fill(Config.FramesPerBuffer)(changePoints.head._2)
-//  }
+  def signalValue(frame : Int) : Array[Double] = ???
 }

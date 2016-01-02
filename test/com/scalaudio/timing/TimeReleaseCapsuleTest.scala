@@ -17,7 +17,7 @@ class TimeReleaseCapsuleTest extends FlatSpec with Matchers with ScalaudioSyntax
 //  }
 
   "Time release capsule" should "work when the prior logic is implemented in the class" in {
-    val capsule : TimeReleaseCapsule[Double] = TimeReleaseCapsule(List(0 -> .0, 30 -> .2, 20 -> .1))
+    val capsule : TimeReleaseCapsule = TimeReleaseCapsule(List(0 -> .0, 30 -> .2, 20 -> .1))
 
     println(capsule)
 
