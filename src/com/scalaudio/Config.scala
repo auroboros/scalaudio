@@ -11,7 +11,7 @@ object Config {
   var NOutChannels = 2 // ("Samples per frame")
   var NInChannels = 1
   val ReportClipping = true
-  val SamplingRate = 44100
+  var SamplingRate = 44100
 
   val AllowMonoSignalReplication = true  // If mono signal is given to input that requires multichannel, it will be copied to fill all channels
   val AllowMultichannelSignalReplication = true // If multichan signal is given to input that requires more, it will be copied to fill all channels (maybe not evenly?)

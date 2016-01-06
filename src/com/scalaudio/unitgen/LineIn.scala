@@ -1,6 +1,5 @@
 package com.scalaudio.unitgen
 
-import com.jsyn.unitgen.LineIn
 import com.scalaudio.engine.Interleaver
 import com.scalaudio.{Config, AudioContext}
 
