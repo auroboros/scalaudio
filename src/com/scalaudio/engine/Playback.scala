@@ -23,17 +23,12 @@ trait Playback {
       if (Config.ReportClipping && containsClipping(obs))
         println("CLIP!")
 
-      AudioContext.audioOutput.write(interleave(obs))
+      AudioContext.audioOutput.write(Interleaver.interleave(obs))
     }
   }
 
   def start = AudioContext.start
   def stop = AudioContext.stop
-
-  def interleave(buffers : List[Array[Double]]) : Array[Double] = {
-    val tBuffers = buffers.transpose
-    tBuffers.tail.foldLeft(tBuffers.head)((r,c) => r ++ c).toArray
-  }
 
   def containsClipping(buffers :  List[Array[Double]]) : Boolean = {
     buffers foreach (b => if (!b.filter(x => Math.abs(x) > 1).isEmpty) return true)
