@@ -5,15 +5,7 @@ import com.scalaudio.Config
 /**
   * Created by johnmcgill on 12/18/15.
   */
-// TODO: There should really be an abstract case class "Oscillator" that is extended by SineGen & others, rather than others hackily extending SineGen
-case class SineGen(val initFreq : Double = 440) extends UnitGen {
-  protected var phi : Double = 0 // phase : should be in radians in case freq changes
-
-  protected var freq : Double = 0
-  protected var w : Double = 0 // Creates 0 to 2pi phaser with length of the period, essentially?
-  protected var phiInc : Double = 0
-  protected var period : Double = 0
-
+case class SineGen(val initFreq : Double = 440) extends UnitOsc with UnitGen {
   setFreq(initFreq)
 
   override def computeBuffer : List[Array[Double]] = {
@@ -27,12 +19,5 @@ case class SineGen(val initFreq : Double = 440) extends UnitGen {
   def computeBufferWithControl(ctrlFreq : Double) : List[Array[Double]] = {
     setFreq(ctrlFreq) //TODO: This is a pretty bad hack (maybe...), layout of UnitGens that accept ctrl signals should be re-imagined
     computeBuffer
-  }
-
-  def setFreq(newFreq : Double) = {
-    freq = newFreq
-    period = Config.SamplingRate / freq
-    w = 2 * Math.PI * freq / Config.SamplingRate
-    phiInc = w * Config.FramesPerBuffer
   }
 }

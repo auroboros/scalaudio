@@ -35,13 +35,13 @@ object AdaptedJavaSoundSampleLoader {
     val format: AudioFormat = audioInputStream.getFormat
     if (format.getEncoding eq AudioFormat.Encoding.PCM_SIGNED) {
       floatData = loadSignedPCM(audioInputStream)
+    } else {
+      throw new UnsupportedAudioFileException("Only signed PCM is supported.")
     }
 
     DoubleSample(Interleaver.deinterleave(floatData.map(_.toDouble), format.getChannels), format.getFrameRate)
   }
 
-  @throws(classOf[IOException])
-  @throws(classOf[UnsupportedAudioFileException])
   private def loadSignedPCM(audioInputStream: AudioInputStream): Array[Float] = {
     var totalSamplesRead: Int = 0
     val format: AudioFormat = audioInputStream.getFormat

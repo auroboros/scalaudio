@@ -1,4 +1,4 @@
-package com.scalaudio.scrap
+package com.scalaudio.math
 
 import org.scalatest.{FlatSpec, Matchers}
 

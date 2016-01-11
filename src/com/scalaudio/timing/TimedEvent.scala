@@ -44,3 +44,6 @@ case class ValueRamp(val duration : Int, val startVal : Double, val endVal : Dou
   override def valueAtRelativeFrame(relativeFrame : Int): Double =
     startVal + (endVal - startVal) * (relativeFrame.toDouble / duration)
 }
+
+case class ExpSweepingRamp()
+case class LogSweepingRamp()
