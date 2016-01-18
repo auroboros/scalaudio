@@ -12,6 +12,7 @@ object Config {
   var NInChannels = 1
   val ReportClipping = true
   var SamplingRate = 44100
+  var FFTBufferSize = 32
 
   val AllowMonoSignalReplication = true  // If mono signal is given to input that requires multichannel, it will be copied to fill all channels
   val AllowMultichannelSignalReplication = true // If multichan signal is given to input that requires more, it will be copied to fill all channels (maybe not evenly?)

@@ -4,7 +4,6 @@ import java.io.{InputStream, File, IOException}
 import java.net.URL
 import javax.sound.sampled.{AudioInputStream, AudioFormat, UnsupportedAudioFileException, AudioSystem}
 
-import com.jsyn.data.FloatSample
 import com.jsyn.util.SampleLoader
 import com.scalaudio.engine.Interleaver
 
@@ -27,7 +26,6 @@ object AdaptedJavaSoundSampleLoader {
 
   private def loadDoubleSample(audioInputStream: AudioInputStream): DoubleSample = {
     var floatData: Array[Float] = null
-    var sample: FloatSample = null
     var bytesPerFrame: Int = audioInputStream.getFormat.getFrameSize
     if (bytesPerFrame == AudioSystem.NOT_SPECIFIED) {
       bytesPerFrame = 1

@@ -28,4 +28,13 @@ class TimeReleaseCapsuleTest extends FlatSpec with Matchers with ScalaudioSyntax
 
     1 to 30 foreach {x => AudioContext.State.currentFrame = x; println(s"Frame: $x ${capsule.controlValue}")}
   }
+
+  "Composite time release capsule" should "correctly execute ADSR curve" in {
+    val capsule : TimeReleaseCapsule = TimeReleaseCapsule(List[TimedEvent](0 -> .0, TimedEvent(10, ValueRamp(10, 0, 1))) ++
+      TimedCompositeEvent(25, ADSRCurve(7, .9, 4, .45, 9, 6)))
+
+    println(capsule)
+
+    1 to 60 foreach {x => AudioContext.State.currentFrame = x; println(s"Frame: $x ${capsule.controlValue}")}
+  }
 }
