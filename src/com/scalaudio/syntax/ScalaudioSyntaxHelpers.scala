@@ -1,9 +1,8 @@
 package com.scalaudio.syntax
 
-import com.scalaudio.timing.{TimedCompositeEvent, ValueChange, TimedEvent}
-import com.sun.javafx.css.converters.DurationConverter
+import com.scalaudio.timing.{TimedCompositeEvent, TimedEvent, ValueChange}
 
-import scala.concurrent.duration.{Duration, DurationConversions, FiniteDuration}
+import scala.concurrent.duration.FiniteDuration
 
 /**
   * This is a bag-of-junk file to magically make all syntax work. Maybe there is a better pattern to split this up by function?

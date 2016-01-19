@@ -3,11 +3,12 @@ package com.scalaudio.io
 import com.jsyn.devices.{AudioDeviceManager, AudioDeviceOutputStream}
 import com.jsyn.devices.javasound.JavaSoundAudioDevice
 import com.scalaudio.engine.Playback
+import com.scalaudio.syntax.ScalaudioSyntaxHelpers
 import com.scalaudio.unitgen.{NoiseGen, SineGen}
 import com.scalaudio.{AudioContext, Config}
 import org.scalatest.{FlatSpec, Matchers}
 
-class AudioOutputTest extends FlatSpec with Matchers {
+class AudioOutputTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers {
 
   "Audio Output" should "play buffers" in {
     System.out.println("Test mono output.")
@@ -44,7 +45,7 @@ class AudioOutputTest extends FlatSpec with Matchers {
     Config.NOutChannels = 1
 
     val sineGen = new SineGen(220) with Playback
-    sineGen.play(1000)
+    sineGen.play(1000 buffers)
 
     sineGen.stop
   }

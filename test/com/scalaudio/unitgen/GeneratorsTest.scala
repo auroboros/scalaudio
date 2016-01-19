@@ -6,11 +6,12 @@ package com.scalaudio.unitgen
 
 
 import com.scalaudio.filter.mix.Splitter
+import com.scalaudio.syntax.ScalaudioSyntaxHelpers
 import com.scalaudio.{Config, AudioContext}
 import com.scalaudio.engine.Playback
 import org.scalatest.{FlatSpec, Matchers}
 
-class GeneratorsTest extends FlatSpec with Matchers {
+class GeneratorsTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers {
 
   "Noise Generator" should "create buffer of random noise on every call" in {
 
@@ -18,7 +19,7 @@ class GeneratorsTest extends FlatSpec with Matchers {
 
     val noiseGen = new NoiseGen with Playback
     noiseGen.start
-    noiseGen.play(1000)
+    noiseGen.play(1000 buffers)
     noiseGen.stop
   }
 
@@ -27,7 +28,7 @@ class GeneratorsTest extends FlatSpec with Matchers {
 
     val sineGen = new SineGen(440) with Playback
     sineGen.start
-    sineGen.play(1000)
+    sineGen.play(1000 buffers)
     sineGen.stop
   }
 
@@ -36,7 +37,7 @@ class GeneratorsTest extends FlatSpec with Matchers {
 
     val squareGen = new SquareGen(300) with Playback
     squareGen.start
-    squareGen.play(1000)
+    squareGen.play(1000 buffers)
     squareGen.stop
   }
 
@@ -45,7 +46,7 @@ class GeneratorsTest extends FlatSpec with Matchers {
 
     val sawtoothGen = new SawtoothGen(880 * 2) with Playback
     sawtoothGen.start
-    sawtoothGen.play(1000)
+    sawtoothGen.play(1000 buffers)
     sawtoothGen.stop
   }
 
@@ -54,7 +55,7 @@ class GeneratorsTest extends FlatSpec with Matchers {
 
     val chain = new SignalChain(new NoiseGen, List(Splitter(2))) with Playback
     chain.start
-    chain.play(1000)
+    chain.play(1000 buffers)
     chain.stop
   }
 }

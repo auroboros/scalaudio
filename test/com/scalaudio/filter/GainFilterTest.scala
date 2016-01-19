@@ -21,7 +21,7 @@ class GainFilterTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers 
     val testFrameFunc: () => List[Array[Double]] = () => gainFilter.processBuffersWithSignal(sineGen.outputBuffers, slowSineGen.outputBuffers)
 
     val playableUnitGen = new UnitGen with Playback {def computeBuffer = testFrameFunc()}
-    playableUnitGen.play(10000)
+    playableUnitGen.play(10000 buffers)
   }
 
   "Gain filter" should "create tremolo when multiplying sine by scaled slow sine" in {
@@ -34,6 +34,6 @@ class GainFilterTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers 
     val testFrameFunc: () => List[Array[Double]] = () => gainFilter.processBuffersWithSignal(sineGen.outputBuffers, slowSineGen.outputBuffers feed rangeScaler.processBuffers)
 
     val playableUnitGen = new UnitGen with Playback {def computeBuffer = testFrameFunc()}
-    playableUnitGen.play(10000)
+    playableUnitGen.play(10000 buffers)
   }
 }

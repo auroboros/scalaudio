@@ -24,7 +24,7 @@ object DurationConverter {
 case class AudioDurationRichInt(val n : Int) {
   import DurationConverter._
 
-  def samples(length : Int) = AudioDuration(samplesToFiniteDuration(length))
+  def samples = AudioDuration(samplesToFiniteDuration(n))
 
-  def buffers(length : Int) = AudioDuration(buffersToFiniteDuration(length))
+  def buffers = AudioDuration(buffersToFiniteDuration(n))
 }
