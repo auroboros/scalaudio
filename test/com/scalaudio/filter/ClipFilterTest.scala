@@ -6,6 +6,7 @@ import com.scalaudio.syntax.ScalaudioSyntaxHelpers
 import com.scalaudio.unitgen.{UnitGen, SineGen}
 import org.scalatest.{FlatSpec, Matchers}
 
+import language.postfixOps
 /**
   * Created by johnmcgill on 12/26/15.
   */
@@ -25,6 +26,6 @@ class ClipFilterTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers 
     val testFrameFunc: () => List[Array[Double]] = () => sineGen.outputBuffers feed clipper.processBuffers feed splitter.processBuffers
 
     val playableUnitGen = new UnitGen with Playback {def computeBuffer = testFrameFunc()}
-    playableUnitGen.play(1000)
+    playableUnitGen.play(1000.buffers)
   }
 }
