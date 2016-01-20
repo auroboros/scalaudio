@@ -17,14 +17,16 @@ trait ScalaudioSyntaxHelpers {
 
   // "Durations" syntax
   // If "AudioDuration" class is created ("5 samples") this could be part of type, but still would fail auto-imports
-  implicit def finiteDuration2AudioDuration(duration : FiniteDuration) : AudioDuration = AudioDuration(duration)
+  import DurationConverter._
+
+  implicit def finiteDuration2AudioDuration(duration : FiniteDuration) : AudioDuration = finiteDuration2AudioDuration(duration)
 
   implicit def int2AudioDurationRichInt(n : Int) = AudioDurationRichInt(n)
 
   // "Timing Events" syntax
   implicit def tuple2ValueChange(eventTuple : (Int, Double)) : TimedEvent =
-    TimedEvent(eventTuple._1, ValueChange(eventTuple._2))
+    TimedEvent(eventTuple._1 buffers, ValueChange(eventTuple._2))
 
   implicit def timedCompositeEvent2TimedEventList(tce : TimedCompositeEvent) : List[TimedEvent] =
-    tce.compositeEvent.toTimedEventList(tce.startFrame)
+    tce.compositeEvent.toTimedEventList(tce.startTime)
 }

@@ -1,15 +1,16 @@
 scalaudio
 
+RATE ISSUES...
+Maybe use some blocking queue to limit the number of buffers that can be produced ahead of time when real-time mode is enabled?
+Except then need to be able to poll how many buffers are waiting to be written basically
+
 To Do:
+- Refactor timing events (Ramp, ADSR curve, TimedEvent itself) to use AudioDurations
 - Maybe there should be subtype of filter for those that support Signal / ControlRate controls?
 - Need generic format for channel filling etc. in signal / ControlRate controls
 - Should create "1st buffer" notion for supplying warning messages that aren't exceptions so its not repetitive?
-- Signal Chain needs to support more varied flows (replaceable frameFunc? Then do constructor args need to be passed in at all?)
 - Audio input UnitGen needs to be fixed/tested (should be on own thread?)
 - Sawtooth needs to be fixed (octave?)
-
-Big To Do:
-- Convert durations in DSL from frames to milliseconds at least
 
 Questions:
 - Is internal caching of buffers really necessary if intention is to use flow of building frameFuncs to feed anonymous UnitGens?
