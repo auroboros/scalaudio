@@ -1,23 +1,24 @@
 package com.scalaudio.unitgen
 
 import com.scalaudio.Config
+import com.scalaudio.syntax.{Pitch, PitchRichDouble}
 
 /**
   * Created by johnmcgill on 12/18/15.
   */
-case class SineGen(val initFreq : Double = 440) extends UnitOsc with UnitGen {
+case class SineGen(val initFreq : Pitch = PitchRichDouble(440).Hz) extends UnitOsc {
   setFreq(initFreq)
 
-  override def computeBuffer : List[Array[Double]] = {
-    val obs = List((1 to Config.FramesPerBuffer map (i =>
-      Math.sin(w * i + phi) // Need to remove parens around (i + phi) & calculate phi properly based on phase in radians
-      )).toArray)
+  override def computeBuffer = {
+    0 to (Config.FramesPerBuffer - 1) foreach (i =>
+      internalBuffers(0)(i) = Math.sin(w * i + phi) // Need to remove parens around (i + phi) & calculate phi properly based on phase in radians
+    )
     phi += phiInc
-    obs
   }
 
-  def computeBufferWithControl(ctrlFreq : Double) : List[Array[Double]] = {
+  def computeBufferWithControl(ctrlFreq : Pitch) : List[Array[Double]] = {
     setFreq(ctrlFreq) //TODO: This is a pretty bad hack (maybe...), layout of UnitGens that accept ctrl signals should be re-imagined
     computeBuffer
+    internalBuffers
   }
 }

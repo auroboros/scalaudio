@@ -13,7 +13,7 @@ class FFTMathTest extends FlatSpec with Matchers {
     val ffter = new FastFourierTransformer(DftNormalization.STANDARD)
     val sg = SineGen()
 
-    val complexOut = ffter.transform(sg.computeBuffer(0), TransformType.FORWARD)
+    val complexOut = ffter.transform(sg.outputBuffers(0), TransformType.FORWARD)
     println(complexOut)
   }
 

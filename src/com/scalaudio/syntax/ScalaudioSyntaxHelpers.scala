@@ -16,12 +16,13 @@ trait ScalaudioSyntaxHelpers {
   implicit def bufferList2ChannelSetManipulator(bufferList: List[Array[Double]]) = new ChannelSetManipulator(bufferList)
 
   // "Durations" syntax
-  // If "AudioDuration" class is created ("5 samples") this could be part of type, but still would fail auto-imports
-  import DurationConverter._
-
   implicit def finiteDuration2AudioDuration(duration : FiniteDuration) : AudioDuration = finiteDuration2AudioDuration(duration)
 
   implicit def int2AudioDurationRichInt(n : Int) = AudioDurationRichInt(n)
+
+  // "Pitch" syntax
+  implicit def int2PitchRichInt(i : Int) = PitchRichInt(i)
+  implicit def double2PitchRichDouble(d : Double) = PitchRichDouble(d)
 
   // "Timing Events" syntax
   implicit def tuple2ValueChange(eventTuple : (Int, Double)) : TimedEvent =

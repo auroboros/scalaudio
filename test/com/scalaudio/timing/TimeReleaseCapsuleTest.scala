@@ -17,7 +17,7 @@ class TimeReleaseCapsuleTest extends FlatSpec with Matchers with ScalaudioSyntax
 
     println(capsule)
 
-    1 to 100 foreach {x => AudioContext.State.currentFrame = x; println(capsule.controlValue)}
+    1 to 100 foreach {x => AudioContext.State.currentBuffer = x; println(capsule.controlValue)}
   }
 
   "Value ramp" should "return right values" in {
@@ -30,7 +30,7 @@ class TimeReleaseCapsuleTest extends FlatSpec with Matchers with ScalaudioSyntax
 
     println(capsule)
 
-    1 to 30 foreach {x => AudioContext.State.currentFrame = x; println(s"Frame: $x ${capsule.controlValue}")}
+    1 to 30 foreach {x => AudioContext.State.currentBuffer = x; println(s"Frame: $x ${capsule.controlValue}")}
   }
 
   "Composite time release capsule" should "correctly execute ADSR curve" in {
@@ -39,7 +39,7 @@ class TimeReleaseCapsuleTest extends FlatSpec with Matchers with ScalaudioSyntax
 
     println(capsule)
 
-    1 to 60 foreach {x => AudioContext.State.currentFrame = x; println(s"Frame: $x ${capsule.controlValue}")}
+    1 to 60 foreach {x => AudioContext.State.currentBuffer = x; println(s"Frame: $x ${capsule.controlValue}")}
   }
 
   "Sine" should "be played through ADSR" in {

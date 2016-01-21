@@ -13,7 +13,7 @@ import org.scalatest.{FlatSpec, Matchers}
 class ChannelSetManipulatorTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers {
 
   "BufferFeeder rich type" should "kick in & feed dat buffer" in {
-    val sineGen : SineGen = SineGen(550)
+    val sineGen : SineGen = SineGen(550 Hz)
     val panner : StereoPanner = StereoPanner()
 
 //    bufferList2BufferFeeder(sineGen.outputBuffers) feed (panner.processBuffers(_))
@@ -37,9 +37,9 @@ class ChannelSetManipulatorTest extends FlatSpec with Matchers with ScalaudioSyn
     Config.NOutChannels = 1
 
     val sg1 : SineGen = SineGen()
-    val sg2 : SineGen = SineGen(873)
-    val sg3 : SineGen = SineGen(521)
-    val sg4 : SineGen = SineGen(921)
+    val sg2 : SineGen = SineGen(873 Hz)
+    val sg3 : SineGen = SineGen(521 Hz)
+    val sg4 : SineGen = SineGen(921 Hz)
     val gain : GainFilter = GainFilter(.1)
 
     val playableUnitGen = new UnitGen with Playback {
@@ -53,11 +53,11 @@ class ChannelSetManipulatorTest extends FlatSpec with Matchers with ScalaudioSyn
 
     val sg1 : SineGen = SineGen()
     val pan1 : StereoPanner = StereoPanner(.2)
-    val sg2 : SineGen = SineGen(873)
+    val sg2 : SineGen = SineGen(873 Hz)
     val pan2 : StereoPanner = StereoPanner(.7)
-    val sg3 : SineGen = SineGen(521)
+    val sg3 : SineGen = SineGen(521 Hz)
     val pan3 : StereoPanner = StereoPanner(0)
-    val sg4 : SineGen = SineGen(921)
+    val sg4 : SineGen = SineGen(921 Hz)
     val pan4 : StereoPanner = StereoPanner(1)
     val gain : GainFilter = GainFilter(.1)
 

@@ -44,7 +44,7 @@ class AudioOutputTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers
   "Sine Generator" should "create buffer of sine on every call" in {
     Config.NOutChannels = 1
 
-    val sineGen = new SineGen(220) with Playback
+    val sineGen = new SineGen(220 Hz) with Playback
     sineGen.play(1000 buffers)
 
     sineGen.stop

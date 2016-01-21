@@ -41,8 +41,8 @@ object AudioContext {
   }
 
   object State {
-    var currentFrame = 0
+    var currentBuffer = 0
   }
 
-  def advanceFrame = State.currentFrame += 1
+  def advanceFrame = State.currentBuffer += 1
 }

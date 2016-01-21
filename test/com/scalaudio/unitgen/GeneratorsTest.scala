@@ -26,7 +26,7 @@ class GeneratorsTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers 
   "Sine Generator" should "create buffer of sine on every call" in {
     Config.NOutChannels = 1
 
-    val sineGen = new SineGen(440) with Playback
+    val sineGen = new SineGen(440 Hz) with Playback
     sineGen.start
     sineGen.play(1000 buffers)
     sineGen.stop
@@ -35,7 +35,7 @@ class GeneratorsTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers 
   "Square Generator" should "create buffer of squarewave on every call" in {
     Config.NOutChannels = 1
 
-    val squareGen = new SquareGen(300) with Playback
+    val squareGen = new SquareGen(300 Hz) with Playback
     squareGen.start
     squareGen.play(1000 buffers)
     squareGen.stop
@@ -44,7 +44,7 @@ class GeneratorsTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers 
   "Sawtooth Generator" should "create buffer of sawtooth on every call" in {
     Config.NOutChannels = 1
 
-    val sawtoothGen = new SawtoothGen(880 * 2) with Playback
+    val sawtoothGen = new SawtoothGen(880 * 2 Hz) with Playback
     sawtoothGen.start
     sawtoothGen.play(1000 buffers)
     sawtoothGen.stop

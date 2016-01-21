@@ -22,9 +22,10 @@ case class Sampler(filenames : List[String]) extends UnitGen {
   //public void read(float[] data) { read(0, data, 0, data.length / getChannelsPerFrame()); }
   // OR... can actualy use JSyn's API
 
-  override def computeBuffer : List[Array[Double]] = {
+  override def computeBuffer = {
     val ds : DoubleSample = soundSamples.head._2
-    (0 to ds.audioBuffers.size - 1).toList.map { (channel: Int) =>
+    // TODO: Refactor for efficiency now that there is no return
+    internalBuffers = (0 to ds.audioBuffers.size - 1).toList.map { (channel: Int) =>
       (0 to Config.FramesPerBuffer - 1).toArray map {frame =>
         val sample : Double = ds.audioBuffers(channel)(currentIndex)
         currentIndex = (currentIndex + 1) % ds.length

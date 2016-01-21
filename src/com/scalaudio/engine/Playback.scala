@@ -13,7 +13,6 @@ trait Playback {
   def outputBuffers : List[Array[Double]]
 
   def play(duration : AudioDuration) = {
-    println(duration.toBuffers)
     1 to duration.toBuffers.toInt foreach { _ =>
       AudioContext.advanceFrame
 

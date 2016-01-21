@@ -21,7 +21,7 @@ case class AudioDuration(val nSamples : Long) extends Ordered[AudioDuration] {
 
   def -(other : AudioDuration) : AudioDuration = AudioDuration(nSamples - other.nSamples)
 
-  override def compare(that: AudioDuration): Int = Math.signum(nSamples - that.nSamples).toInt
+  override def compare(that: AudioDuration) : Int = Math.signum(nSamples - that.nSamples).toInt
 }
 
 object DurationConverter {

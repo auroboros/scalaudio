@@ -14,5 +14,6 @@ case class SignalChain(val startGen : UnitGen, val filterChain : List[Filter]) e
       }
     }
 
-  override def computeBuffer : List[Array[Double]] = frameFunc()
+  // TODO: Maybe gens that use frameFuncs should have a mapping from that to internal, tested for efficiency?
+  override def computeBuffer = (internalBuffers = frameFunc())
 }

@@ -15,7 +15,7 @@ case class TimeReleaseCapsule(val initTimedEvents : List[TimedEvent]) extends Sc
   def validateTimedEventList = ??? //TODO: Should check for overlap (start and end can be shared if they contain same val?), needs a 0 (or 1?) element, etc.
 
   def controlValue : Double = {
-    val currentFrame = AudioContext.State.currentFrame buffers
+    val currentFrame = AudioContext.State.currentBuffer buffers
     val startedEvents = sortedTimedEvents.filter(_.startTime <= currentFrame)
     val inProgressEvents = startedEvents.filter(_.endTime > currentFrame) // Not greater than or equals, since final frame will be endVal anyway
 

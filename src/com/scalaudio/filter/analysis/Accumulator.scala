@@ -10,10 +10,10 @@ import com.scalaudio.filter.SampleIndependentControllableFilter
   */
 class Accumulator(val windowSize : Int = 1000) extends SampleIndependentControllableFilter {
   var hits : List[Int] = Nil
-  override def defaultCtrlParam: Double = windowSize // In samples
+  override def defaultCtrlParam: Double = windowSize // TODO: In samples - change to AudioDuration
 
   override def processSample(sig: Double, ctrlWindowSize: Double): Double = {
-    val currentFrame = AudioContext.State.currentFrame
+    val currentFrame = AudioContext.State.currentBuffer
     hits.dropWhile(_ < currentFrame - ctrlWindowSize)
     if (sig == 1) hits ++ List(currentFrame)
     hits.size

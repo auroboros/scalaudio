@@ -9,11 +9,12 @@ import com.scalaudio.engine.BufferComputer
 trait UnitGen extends BufferComputer {
   def outputBuffers : List[Array[Double]] = {
     if (lastComputedFrame != currentFrame) {
-      internalBuffers = computeBuffer
+      computeBuffer
       lastComputedFrame = currentFrame
     }
     internalBuffers
   }
 
-  def computeBuffer : List[Array[Double]]
+  // Updates internal buffer
+  def computeBuffer : Unit
 }
