@@ -21,7 +21,7 @@ trait Playback {
       if (obs.length != Config.NOutChannels)
         throw new Exception("Playback -- this device outputs incompatible number of channels. This playback system requires " + Config.NOutChannels)
 
-      if (Config.ReportClipping && containsClipping(obs))
+      if (Config.DebugEnabled && Config.ReportClipping && containsClipping(obs))
         println("CLIP!")
 
       AudioContext.audioOutput.write(Interleaver.interleave(obs))

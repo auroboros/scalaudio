@@ -22,7 +22,7 @@ class TimeReleaseCapsuleTest extends FlatSpec with Matchers with ScalaudioSyntax
 
   "Value ramp" should "return right values" in {
     val ramp = ValueRamp(10 buffers, 0, 1)
-    0 to 10 foreach {x => println(ramp.valueAtRelativeFrame(x)) } // Is this off by one since technically the ramp spans 11 frames?
+    0 to 10 foreach {x => println(ramp.valueAtRelativeTime(x buffers)) } // Is this off by one since technically the ramp spans 11 frames?
   }
 
   "Time release capsule" should "properly execute a value ramp" in {

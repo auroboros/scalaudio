@@ -13,7 +13,7 @@ case class TimedEvent(val startTime: AudioDuration, val event: CapsuleEvent) {
 
 // SINGLE EVENTS
 abstract class CapsuleEvent() { // "Gesture" a better name maybe?
-  def valueAtRelativeFrame(relativeFrame : Int) : Double
+  def valueAtRelativeTime(audioDuration: AudioDuration) : Double
 
   def duration : AudioDuration
 
@@ -24,13 +24,13 @@ case class ValueChange(val value : Double) extends CapsuleEvent {
   override val endVal = value
   override val duration : AudioDuration = AudioDuration(0)
 
-  override def valueAtRelativeFrame(relativeFrame : Int): Double = value
+  override def valueAtRelativeTime(relativeDuration : AudioDuration): Double = value
 }
 
 //TODO : Base this & ADSR on AudioDurations
 case class ValueRamp(override val duration : AudioDuration, val startVal : Double, override val endVal : Double) extends CapsuleEvent {
-  override def valueAtRelativeFrame(relativeFrame : Int): Double =
-    startVal + (endVal - startVal) * (relativeFrame.toDouble / duration.toBuffers)
+  override def valueAtRelativeTime(relativeDuration: AudioDuration): Double =
+    startVal + (endVal - startVal) * (relativeDuration.toSamples.toDouble / duration.toSamples)
 }
 
 case class ExpSweepingRamp()

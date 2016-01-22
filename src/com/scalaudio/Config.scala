@@ -10,10 +10,14 @@ object Config {
   val FramesPerBuffer = 32
   var NOutChannels = 2 // ("Samples per frame")
   var NInChannels = 1
-  val ReportClipping = true
   var SamplingRate = 44100
   var FFTBufferSize = 32
 
+  // Debug options
+  val DebugEnabled = false
+  val ReportClipping = true
+
+  // TODO: Are these still applicable? Maybe for "mix" / feed syntax...?
   val AllowMonoSignalReplication = true  // If mono signal is given to input that requires multichannel, it will be copied to fill all channels
   val AllowMultichannelSignalReplication = true // If multichan signal is given to input that requires more, it will be copied to fill all channels (maybe not evenly?)
   val RequireEvenMultichannelReplication = false // Will fail if required chan num is not multiple of input channels
@@ -31,6 +35,7 @@ object AudioContext {
   start
 
   def start = {
+    // TODO : Should check if input & output are connected & only start if they are (overwrite var from LineIn & Playback)
     audioInput.start
     audioOutput.start
   }

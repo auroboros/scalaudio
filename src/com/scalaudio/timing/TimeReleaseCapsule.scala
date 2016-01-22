@@ -1,6 +1,6 @@
 package com.scalaudio.timing
 
-import com.scalaudio.AudioContext
+import com.scalaudio.{Config, AudioContext}
 import com.scalaudio.syntax.ScalaudioSyntaxHelpers
 
 /**
@@ -22,9 +22,20 @@ case class TimeReleaseCapsule(val initTimedEvents : List[TimedEvent]) extends Sc
     if (inProgressEvents.isEmpty) startedEvents.last.endVal
     else {
       val te = inProgressEvents.head
-      te.event.valueAtRelativeFrame((currentFrame - te.startTime).toBuffers.toInt)
+      te.event.valueAtRelativeTime(currentFrame - te.startTime)
     }
   }
 
-  def signalValue(frame : Int) : Array[Double] = ???
+  def signalValue : Array[Double] =
+    (0 to (Config.FramesPerBuffer - 1) map {(s : Int) =>
+      val currentTime = (AudioContext.State.currentBuffer buffers) + (s samples)
+      val startedEvents = sortedTimedEvents.filter(_.startTime <= currentTime)
+      val inProgressEvents = startedEvents.filter(_.endTime > currentTime) // Not greater than or equals, since final frame will be endVal anyway
+
+      if (inProgressEvents.isEmpty) startedEvents.last.endVal
+      else {
+        val te = inProgressEvents.head
+        te.event.valueAtRelativeTime(currentTime - te.startTime)
+      }
+    }).toArray
 }
