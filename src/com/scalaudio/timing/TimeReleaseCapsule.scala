@@ -1,5 +1,6 @@
 package com.scalaudio.timing
 
+import com.scalaudio.unitgen.UnitGen
 import com.scalaudio.{Config, AudioContext}
 import com.scalaudio.syntax.ScalaudioSyntaxHelpers
 
@@ -9,12 +10,13 @@ import com.scalaudio.syntax.ScalaudioSyntaxHelpers
   */
 // TODO: Would probably be more efficient to implement as mutable list & chop off outdated pieces rather than using filter
 // (test on 2nd element, discard first if second now applies)
-case class TimeReleaseCapsule(val initTimedEvents : List[TimedEvent]) extends ScalaudioSyntaxHelpers {
+case class TimeReleaseCapsule(val initTimedEvents : List[TimedEvent]) extends UnitGen with ScalaudioSyntaxHelpers {
   val sortedTimedEvents = initTimedEvents.sortBy(_.startTime)
+  internalBuffers = List(Array.fill(Config.FramesPerBuffer)(0))
 
   def validateTimedEventList = ??? //TODO: Should check for overlap (start and end can be shared if they contain same val?), needs a 0 (or 1?) element, etc.
 
-  def controlValue : Double = {
+  def outputControlValue : Double = {
     val currentFrame = AudioContext.State.currentBuffer buffers
     val startedEvents = sortedTimedEvents.filter(_.startTime <= currentFrame)
     val inProgressEvents = startedEvents.filter(_.endTime > currentFrame) // Not greater than or equals, since final frame will be endVal anyway
@@ -26,16 +28,17 @@ case class TimeReleaseCapsule(val initTimedEvents : List[TimedEvent]) extends Sc
     }
   }
 
-  def signalValue : Array[Double] =
-    (0 to (Config.FramesPerBuffer - 1) map {(s : Int) =>
+  // Updates internal buffer
+  override def computeBuffer: Unit =
+    0 to (Config.FramesPerBuffer - 1) foreach { (s: Int) =>
       val currentTime = (AudioContext.State.currentBuffer buffers) + (s samples)
       val startedEvents = sortedTimedEvents.filter(_.startTime <= currentTime)
       val inProgressEvents = startedEvents.filter(_.endTime > currentTime) // Not greater than or equals, since final frame will be endVal anyway
 
-      if (inProgressEvents.isEmpty) startedEvents.last.endVal
+      internalBuffers(0)(s) = (if (inProgressEvents.isEmpty) startedEvents.last.endVal
       else {
         val te = inProgressEvents.head
         te.event.valueAtRelativeTime(currentTime - te.startTime)
-      }
-    }).toArray
+      })
+    }
 }

@@ -17,7 +17,7 @@ class TimeReleaseCapsuleTest extends FlatSpec with Matchers with ScalaudioSyntax
 
     println(capsule)
 
-    1 to 100 foreach {x => AudioContext.State.currentBuffer = x; println(capsule.controlValue)}
+    1 to 100 foreach {x => AudioContext.State.currentBuffer = x; println(capsule.outputControlValue)}
   }
 
   "Value ramp" should "return right values" in {
@@ -30,7 +30,7 @@ class TimeReleaseCapsuleTest extends FlatSpec with Matchers with ScalaudioSyntax
 
     println(capsule)
 
-    1 to 30 foreach {x => AudioContext.State.currentBuffer = x; println(s"Frame: $x ${capsule.controlValue}")}
+    1 to 30 foreach {x => AudioContext.State.currentBuffer = x; println(s"Frame: $x ${capsule.outputControlValue}")}
   }
 
   "Composite time release capsule" should "correctly execute ADSR curve" in {
@@ -39,7 +39,7 @@ class TimeReleaseCapsuleTest extends FlatSpec with Matchers with ScalaudioSyntax
 
     println(capsule)
 
-    1 to 60 foreach {x => AudioContext.State.currentBuffer = x; println(s"Frame: $x ${capsule.controlValue}")}
+    1 to 60 foreach {x => AudioContext.State.currentBuffer = x; println(s"Frame: $x ${capsule.outputControlValue}")}
   }
 
   "Sine" should "be played through ADSR" in {
@@ -50,7 +50,7 @@ class TimeReleaseCapsuleTest extends FlatSpec with Matchers with ScalaudioSyntax
     val sineGen = SineGen()
     val splitter = Splitter(2)
     val gainController = GainFilter()
-    val frameFunc = {() => gainController.processBuffersWithControl(sineGen.outputBuffers, capsule.controlValue) feed splitter.processBuffers}
+    val frameFunc = {() => gainController.processBuffersWithControl(sineGen.outputBuffers, capsule.outputControlValue) feed splitter.processBuffers}
     val sigChain =  new FuncGen(frameFunc) with Playback
 
     sigChain.play(10000 buffers)
