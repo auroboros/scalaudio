@@ -1,7 +1,7 @@
 package com.scalaudio.timing
 
 import com.scalaudio.AudioContext
-import com.scalaudio.engine.Playback
+import com.scalaudio.engine.{MasterClockEngine, Playback}
 import com.scalaudio.filter.GainFilter
 import com.scalaudio.filter.mix.Splitter
 import com.scalaudio.syntax.ScalaudioSyntaxHelpers
@@ -51,7 +51,7 @@ class TimeReleaseCapsuleTest extends FlatSpec with Matchers with ScalaudioSyntax
     val splitter = Splitter(2)
     val gainController = GainFilter()
     val frameFunc = {() => gainController.processBuffersWithControl(sineGen.outputBuffers, capsule.outputControlValue) feed splitter.processBuffers}
-    val sigChain =  new FuncGen(frameFunc) with Playback
+    val sigChain =  new FuncGen(frameFunc) with MasterClockEngine
 
     sigChain.play(10000 buffers)
   }

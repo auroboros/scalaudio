@@ -2,7 +2,7 @@ package com.scalaudio.io
 
 import com.jsyn.devices.{AudioDeviceManager, AudioDeviceOutputStream}
 import com.jsyn.devices.javasound.JavaSoundAudioDevice
-import com.scalaudio.engine.Playback
+import com.scalaudio.engine.{MasterClockEngine, Playback}
 import com.scalaudio.syntax.ScalaudioSyntaxHelpers
 import com.scalaudio.unitgen.{NoiseGen, SineGen}
 import com.scalaudio.{AudioContext, Config}
@@ -44,7 +44,7 @@ class AudioOutputTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers
   "Sine Generator" should "create buffer of sine on every call" in {
     Config.NOutChannels = 1
 
-    val sineGen = new SineGen(220 Hz) with Playback
+    val sineGen = new SineGen(220 Hz) with MasterClockEngine
     sineGen.play(1000 buffers)
 
     sineGen.stop

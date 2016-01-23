@@ -1,5 +1,7 @@
 package com.scalaudio.syntax
 
+import com.scalaudio.Config
+import com.scalaudio.engine.Playback
 import com.scalaudio.timing.{TimedCompositeEvent, TimedEvent, ValueChange}
 
 import scala.concurrent.duration.FiniteDuration
@@ -30,4 +32,7 @@ trait ScalaudioSyntaxHelpers {
 
   implicit def timedCompositeEvent2TimedEventList(tce : TimedCompositeEvent) : List[TimedEvent] =
     tce.compositeEvent.toTimedEventList(tce.startTime)
+
+  // Default engine config
+  implicit val defaultOutputEngines = Config.DefaultOutputEngines
 }

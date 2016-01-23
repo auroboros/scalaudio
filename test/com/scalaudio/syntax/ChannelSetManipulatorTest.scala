@@ -1,7 +1,7 @@
 package com.scalaudio.syntax
 
 import com.scalaudio.Config
-import com.scalaudio.engine.Playback
+import com.scalaudio.engine.{MasterClockEngine, Playback}
 import com.scalaudio.filter.GainFilter
 import com.scalaudio.filter.mix.StereoPanner
 import com.scalaudio.unitgen.{NoiseGen, SineGen, UnitGen}
@@ -29,7 +29,7 @@ class ChannelSetManipulatorTest extends FlatSpec with Matchers with ScalaudioSyn
       noiseGen.outputBuffers feed panner.processBuffers
     }
 
-    val playableUnitGen = new UnitGen with Playback {def computeBuffer = testFrameFunc()}
+    val playableUnitGen = new UnitGen with MasterClockEngine {def computeBuffer = testFrameFunc()}
     playableUnitGen.play(1000 buffers)
   }
 
@@ -42,7 +42,7 @@ class ChannelSetManipulatorTest extends FlatSpec with Matchers with ScalaudioSyn
     val sg4 : SineGen = SineGen(921 Hz)
     val gain : GainFilter = GainFilter(.1)
 
-    val playableUnitGen = new UnitGen with Playback {
+    val playableUnitGen = new UnitGen with MasterClockEngine {
       def computeBuffer = sg1.outputBuffers mix sg2.outputBuffers mix sg3.outputBuffers mix sg4.outputBuffers feed gain.processBuffers
     }
     playableUnitGen.play(1000 buffers)
@@ -61,7 +61,7 @@ class ChannelSetManipulatorTest extends FlatSpec with Matchers with ScalaudioSyn
     val pan4 : StereoPanner = StereoPanner(1)
     val gain : GainFilter = GainFilter(.1)
 
-    val playableUnitGen = new UnitGen with Playback {
+    val playableUnitGen = new UnitGen with MasterClockEngine {
       def computeBuffer = (sg1.outputBuffers feed pan1.processBuffers) mix
         (sg2.outputBuffers feed pan2.processBuffers) mix
         (sg3.outputBuffers feed pan3.processBuffers) mix

@@ -5,7 +5,7 @@ import java.io.File
 import com.jsyn.data.FloatSample
 import com.jsyn.util.SampleLoader._
 import com.scalaudio.Config
-import com.scalaudio.engine.Playback
+import com.scalaudio.engine.{MasterClockEngine, Playback}
 import com.scalaudio.jsyn.util.{AdaptedJavaSoundSampleLoader, DoubleSample}
 import com.scalaudio.syntax.ScalaudioSyntaxHelpers
 import org.scalatest.{FlatSpec, Matchers}
@@ -30,7 +30,7 @@ class SamplerTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers {
     Config.NOutChannels = 2
 
     val wavFilename = "/Users/johnmcgill/nocode/samples/Media-Convert_test5_PCM_Stereo_VBR_8SS_44100Hz.wav"
-    val sampler = new Sampler(List(wavFilename)) with Playback
+    val sampler = new Sampler(List(wavFilename)) with MasterClockEngine
 
 //    1 to 100 foreach (_ => println(sampler.outputBuffers))
     sampler.play(3000 buffers)

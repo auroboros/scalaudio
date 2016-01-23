@@ -2,11 +2,16 @@ package com.scalaudio
 
 import com.jsyn.devices.{AudioDeviceInputStream, AudioDeviceManager, AudioDeviceOutputStream}
 import com.jsyn.devices.javasound.JavaSoundAudioDevice
+import com.scalaudio.engine.Playback
 
 /**
   * Created by johnmcgill on 12/18/15.
   */
 object Config {
+  val DefaultOutputEngines = List(Playback())
+
+  val AutoStartStop = true
+
   val FramesPerBuffer = 32
   var NOutChannels = 2 // ("Samples per frame")
   var NInChannels = 1

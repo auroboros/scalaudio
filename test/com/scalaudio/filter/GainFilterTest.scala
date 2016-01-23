@@ -1,7 +1,7 @@
 package com.scalaudio.filter
 
 import com.scalaudio.Config
-import com.scalaudio.engine.Playback
+import com.scalaudio.engine.{MasterClockEngine, Playback}
 import com.scalaudio.filter.mix.Splitter
 import com.scalaudio.filter.util.RangeScaler
 import com.scalaudio.syntax.ScalaudioSyntaxHelpers
@@ -20,7 +20,7 @@ class GainFilterTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers 
     val gainFilter : GainFilter = GainFilter()
     val testFrameFunc: () => List[Array[Double]] = () => gainFilter.processBuffersWithSignal(sineGen.outputBuffers, slowSineGen.outputBuffers)
 
-    val playableUnitGen = new UnitGen with Playback {def computeBuffer = testFrameFunc()}
+    val playableUnitGen = new UnitGen with MasterClockEngine {def computeBuffer = testFrameFunc()}
     playableUnitGen.play(10000 buffers)
   }
 
@@ -33,7 +33,7 @@ class GainFilterTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers 
     val rangeScaler : RangeScaler = RangeScaler(0,1)
     val testFrameFunc: () => List[Array[Double]] = () => gainFilter.processBuffersWithSignal(sineGen.outputBuffers, slowSineGen.outputBuffers feed rangeScaler.processBuffers)
 
-    val playableUnitGen = new UnitGen with Playback {def computeBuffer = testFrameFunc()}
+    val playableUnitGen = new UnitGen with MasterClockEngine {def computeBuffer = testFrameFunc()}
     playableUnitGen.play(10000 buffers)
   }
 }

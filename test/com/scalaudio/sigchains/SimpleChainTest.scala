@@ -1,6 +1,6 @@
 package com.scalaudio.sigchains
 
-import com.scalaudio.engine.Playback
+import com.scalaudio.engine.{MasterClockEngine, Playback}
 import com.scalaudio.filter.mix.{StereoPanner, Splitter}
 import com.scalaudio.filter.{Filter, GainFilter}
 import com.scalaudio.syntax.ScalaudioSyntaxHelpers
@@ -16,7 +16,7 @@ class SimpleChainTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers
   "SignalChain abstraction" should "playback mono SignalChain with nil filter list" in {
     Config.NOutChannels = 1
 
-    val sigChain = new SignalChain(new NoiseGen, Nil) with Playback
+    val sigChain = new SignalChain(new NoiseGen, Nil) with MasterClockEngine
 
     sigChain.play(1000 buffers)
 
@@ -26,7 +26,7 @@ class SimpleChainTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers
   "SignalChain abstraction" should "playback stereo SignalChain only if signal is split" in {
     Config.NOutChannels = 2
 
-    val sigChain = new SignalChain(new NoiseGen, List(Splitter(2))) with Playback
+    val sigChain = new SignalChain(new NoiseGen, List(Splitter(2))) with MasterClockEngine
 
     sigChain.play(1000 buffers)
 
@@ -45,7 +45,7 @@ class SimpleChainTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers
 
   "MonoSignalChain" should "be able to playback if given Playback trait" in {
     val filterChain : List[Filter] = List(new GainFilter(.5), new GainFilter(.75))
-    val sigChainList = new SignalChain(new NoiseGen, filterChain) with Playback
+    val sigChainList = new SignalChain(new NoiseGen, filterChain) with MasterClockEngine
 
     sigChainList.play(1000 buffers)
     sigChainList.stop
@@ -53,7 +53,7 @@ class SimpleChainTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers
 
   "Panner" should "pan some noise" in {
     val filterChain : List[Filter] = List(new StereoPanner(.5))
-    val sigChainList = new SignalChain(new NoiseGen, filterChain) with Playback
+    val sigChainList = new SignalChain(new NoiseGen, filterChain) with MasterClockEngine
 
     sigChainList.play(1000 buffers)
     sigChainList.stop
