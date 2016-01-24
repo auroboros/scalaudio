@@ -2,10 +2,10 @@ package com.scalaudio.io
 
 import com.jsyn.devices.{AudioDeviceManager, AudioDeviceOutputStream}
 import com.jsyn.devices.javasound.JavaSoundAudioDevice
-import com.scalaudio.engine.{MasterClockEngine, Playback}
+import com.scalaudio.engine.{AudioTimepiece, Playback}
 import com.scalaudio.syntax.ScalaudioSyntaxHelpers
 import com.scalaudio.unitgen.{NoiseGen, SineGen}
-import com.scalaudio.{AudioContext, Config}
+import com.scalaudio.{ScalaudioConfig, AudioContext}
 import org.scalatest.{FlatSpec, Matchers}
 
 class AudioOutputTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers {
@@ -34,17 +34,18 @@ class AudioOutputTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers
   }
 
   "Noise Generator" should "create buffer of random noise on every call" in {
+    implicit val audioContext = AudioContext(ScalaudioConfig())
 
     val noiseGen = new NoiseGen
-    1 to 1000 foreach {_ => AudioContext.audioOutput.write(noiseGen.outputBuffers(0))}
+    1 to 1000 foreach {_ => audioContext.audioOutput.write(noiseGen.outputBuffers.head) }
 
-    AudioContext.audioOutput.stop
+    audioContext.audioOutput.stop
   }
 
   "Sine Generator" should "create buffer of sine on every call" in {
-    Config.NOutChannels = 1
+    implicit val audioContext = AudioContext(ScalaudioConfig(NOutChannels = 1))
 
-    val sineGen = new SineGen(220 Hz) with MasterClockEngine
+    val sineGen = new SineGen(220 Hz) with AudioTimepiece
     sineGen.play(1000 buffers)
 
     sineGen.stop

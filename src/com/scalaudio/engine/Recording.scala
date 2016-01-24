@@ -3,16 +3,16 @@ package com.scalaudio.engine
 import java.io.File
 
 import com.jsyn.util.WaveFileWriter
-import com.scalaudio.{AudioContext, Config}
+import com.scalaudio.AudioContext
 
 /**
   * Created by johnmcgill on 1/6/16.
   */
-case class Recording(filename : String) extends OutputEngine {
+case class Recording(filename : String)(implicit audioContext: AudioContext) extends OutputEngine {
   val waveFile: File = new File(filename + ".wav")
   val writer = new WaveFileWriter(waveFile)
-  writer.setFrameRate(Config.SamplingRate)
-  writer.setSamplesPerFrame(Config.NOutChannels)
+  writer.setFrameRate(audioContext.config.SamplingRate)
+  writer.setSamplesPerFrame(audioContext.config.NOutChannels)
   writer.setBitsPerSample(16)
 
   def handleBuffer(buffers : List[Array[Double]]) = record(buffers)
@@ -22,8 +22,8 @@ case class Recording(filename : String) extends OutputEngine {
 //    val recorder = new WaveRecorder(synth, waveFile)
     System.out.println("Writing to WAV file " + waveFile.getAbsolutePath)
 
-    if (buffers.length != Config.NOutChannels)
-      throw new Exception("Playback -- this device outputs incompatible number of channels. This recording system requires " + Config.NOutChannels)
+    if (buffers.length != audioContext.config.NOutChannels)
+      throw new Exception("Playback -- this device outputs incompatible number of channels. This recording system requires " + audioContext.config.NOutChannels)
 
     writer.write(Interleaver.interleave(buffers))
   }

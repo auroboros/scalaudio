@@ -1,5 +1,6 @@
 package com.scalaudio.filter
 
+import com.scalaudio.AudioContext
 import com.scalaudio.engine.BufferComputer
 
 /**

@@ -1,15 +1,15 @@
 package com.scalaudio.unitgen
 
+import com.scalaudio.AudioContext
 import com.scalaudio.engine.Interleaver
-import com.scalaudio.{Config, AudioContext}
 
 /**
   * Created by johnmcgill on 12/20/15.
   */
-class LineIn extends UnitGen {
+class LineIn(implicit audioContext: AudioContext) extends UnitGen {
   override def computeBuffer = {
-    var buffer : Array[Double] = Array[Double](Config.FramesPerBuffer * Config.NInChannels)
-    AudioContext.audioInput.read(buffer)
-    internalBuffers = if (Config.NInChannels > 1) Interleaver.deinterleave(buffer, Config.NInChannels) else List(buffer)
+    var buffer : Array[Double] = Array[Double](audioContext.config.FramesPerBuffer * audioContext.config.NInChannels)
+    audioContext.audioInput.read(buffer)
+    internalBuffers = if (audioContext.config.NInChannels > 1) Interleaver.deinterleave(buffer, audioContext.config.NInChannels) else List(buffer)
   }
 }

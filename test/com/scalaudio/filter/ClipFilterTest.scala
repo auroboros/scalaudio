@@ -1,6 +1,7 @@
 package com.scalaudio.filter
 
-import com.scalaudio.engine.{MasterClockEngine, Playback}
+import com.scalaudio.{ScalaudioConfig, AudioContext}
+import com.scalaudio.engine.{AudioTimepiece, Playback}
 import com.scalaudio.filter.mix.Splitter
 import com.scalaudio.syntax.ScalaudioSyntaxHelpers
 import com.scalaudio.unitgen.{FuncGen, SineGen, UnitGen}
@@ -10,6 +11,8 @@ import org.scalatest.{FlatSpec, Matchers}
   * Created by johnmcgill on 12/26/15.
   */
 class ClipFilterTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers {
+  implicit val audioContext = AudioContext(ScalaudioConfig())
+
   "Clip filter" should "clip values to given min & max" in {
     val sineGen : SineGen = new SineGen()
     val clipper : ClipFilter = ClipFilter(-.2, .2)
@@ -24,7 +27,7 @@ class ClipFilterTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers 
     val splitter : Splitter = Splitter(2)
     val testFrameFunc: () => List[Array[Double]] = () => sineGen.outputBuffers feed clipper.processBuffers feed splitter.processBuffers
 
-    val playableUnitGen = new FuncGen(testFrameFunc) with MasterClockEngine
+    val playableUnitGen = new FuncGen(testFrameFunc) with AudioTimepiece
     playableUnitGen.play(1000 buffers)
   }
 }

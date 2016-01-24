@@ -1,8 +1,6 @@
 package com.scalaudio.filter.mix
 
 import com.scalaudio.filter.Filter
-import com.scalaudio.{Config, AudioContext}
-import com.scalaudio.unitgen.SignalChain
 
 /**
   * Created by johnmcgill on 12/19/15.

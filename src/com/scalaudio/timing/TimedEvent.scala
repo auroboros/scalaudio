@@ -1,5 +1,6 @@
 package com.scalaudio.timing
 
+import com.scalaudio.AudioContext
 import com.scalaudio.syntax.AudioDuration
 
 /**
@@ -20,7 +21,7 @@ abstract class CapsuleEvent() { // "Gesture" a better name maybe?
   def endVal : Double
 }
 
-case class ValueChange(val value : Double) extends CapsuleEvent {
+case class ValueChange(val value : Double)(implicit audioContext: AudioContext) extends CapsuleEvent {
   override val endVal = value
   override val duration : AudioDuration = AudioDuration(0)
 

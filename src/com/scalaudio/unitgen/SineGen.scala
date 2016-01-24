@@ -1,16 +1,16 @@
 package com.scalaudio.unitgen
 
-import com.scalaudio.Config
+import com.scalaudio.AudioContext
 import com.scalaudio.syntax.{Pitch, PitchRichDouble}
 
 /**
   * Created by johnmcgill on 12/18/15.
   */
-case class SineGen(val initFreq : Pitch = PitchRichDouble(440).Hz) extends UnitOsc {
+case class SineGen(val initFreq : Pitch = PitchRichDouble(440).Hz)(implicit audioContext: AudioContext) extends UnitOsc {
   setFreq(initFreq)
 
   override def computeBuffer = {
-    0 to (Config.FramesPerBuffer - 1) foreach (i =>
+    0 to (audioContext.config.FramesPerBuffer - 1) foreach (i =>
       internalBuffers(0)(i) = Math.sin(w * i + phi) // Need to remove parens around (i + phi) & calculate phi properly based on phase in radians
     )
     phi += phiInc

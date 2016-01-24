@@ -9,5 +9,5 @@ trait BufferComputer {
   var internalBuffers : List[Array[Double]] = Nil
   var lastComputedFrame = -1
 
-  def currentFrame = AudioContext.State.currentBuffer
+  def currentFrame(implicit audioContext: AudioContext) = audioContext.State.currentBuffer
 }

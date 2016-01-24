@@ -1,7 +1,7 @@
 package com.scalaudio.syntax
 
-import com.scalaudio.Config
-import com.scalaudio.engine.Playback
+import com.scalaudio.AudioContext
+import com.scalaudio.engine.{Playback, OutputEngine}
 import com.scalaudio.timing.{TimedCompositeEvent, TimedEvent, ValueChange}
 
 import scala.concurrent.duration.FiniteDuration
@@ -20,19 +20,19 @@ trait ScalaudioSyntaxHelpers {
   // "Durations" syntax
   implicit def finiteDuration2AudioDuration(duration : FiniteDuration) : AudioDuration = finiteDuration2AudioDuration(duration)
 
-  implicit def int2AudioDurationRichInt(n : Int) = AudioDurationRichInt(n)
+  implicit def int2AudioDurationRichInt(n : Int)(implicit audioContext: AudioContext) = AudioDurationRichInt(n)
 
   // "Pitch" syntax
   implicit def int2PitchRichInt(i : Int) = PitchRichInt(i)
   implicit def double2PitchRichDouble(d : Double) = PitchRichDouble(d)
 
   // "Timing Events" syntax
-  implicit def tuple2ValueChange(eventTuple : (Int, Double)) : TimedEvent =
+  implicit def tuple2ValueChange(eventTuple : (Int, Double))(implicit audioContext: AudioContext) : TimedEvent =
     TimedEvent(eventTuple._1 buffers, ValueChange(eventTuple._2))
 
   implicit def timedCompositeEvent2TimedEventList(tce : TimedCompositeEvent) : List[TimedEvent] =
     tce.compositeEvent.toTimedEventList(tce.startTime)
 
-  // Default engine config
-  implicit val defaultOutputEngines = Config.DefaultOutputEngines
+  // Default output engines
+  implicit def defaultOutputEngines(implicit audioContext: AudioContext) : List[OutputEngine] = List(Playback())
 }

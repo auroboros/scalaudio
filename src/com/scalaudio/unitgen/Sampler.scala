@@ -2,15 +2,13 @@ package com.scalaudio.unitgen
 
 import java.io.File
 
-import com.jsyn.data.FloatSample
-import com.jsyn.util.SampleLoader
-import com.scalaudio.Config
+import com.scalaudio.AudioContext
 import com.scalaudio.jsyn.util.{DoubleSample, AdaptedJavaSoundSampleLoader}
 
 /**
   * Created by johnmcgill on 1/5/16.
   */
-case class Sampler(filenames : List[String]) extends UnitGen {
+case class Sampler(filenames : List[String])(implicit audioContext: AudioContext) extends UnitGen {
   // Using collection breakout is supposed to prevent double-traversal
   val soundSamples : Map[String, DoubleSample] = filenames.map(s => (s -> AdaptedJavaSoundSampleLoader.loadDoubleSample(new File(s))))(collection.breakOut): Map[String, DoubleSample]
   var currentIndex = 0
@@ -26,7 +24,7 @@ case class Sampler(filenames : List[String]) extends UnitGen {
     val ds : DoubleSample = soundSamples.head._2
     // TODO: Refactor for efficiency now that there is no return
     internalBuffers = (0 to ds.audioBuffers.size - 1).toList.map { (channel: Int) =>
-      (0 to Config.FramesPerBuffer - 1).toArray map {frame =>
+      (0 to audioContext.config.FramesPerBuffer - 1).toArray map {frame =>
         val sample : Double = ds.audioBuffers(channel)(currentIndex)
         currentIndex = (currentIndex + 1) % ds.length
         sample
