@@ -20,7 +20,7 @@ case class Sampler(filenames : List[String])(implicit audioContext: AudioContext
   //public void read(float[] data) { read(0, data, 0, data.length / getChannelsPerFrame()); }
   // OR... can actualy use JSyn's API
 
-  override def computeBuffer = {
+  override def computeBuffer(params : Option[UnitGenParams] = None) = {
     val ds : DoubleSample = soundSamples.head._2
     // TODO: Refactor for efficiency now that there is no return
     internalBuffers = (0 to ds.audioBuffers.size - 1).toList.map { (channel: Int) =>

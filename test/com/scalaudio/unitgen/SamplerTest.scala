@@ -5,7 +5,7 @@ import java.io.File
 import com.jsyn.data.FloatSample
 import com.jsyn.util.SampleLoader._
 import com.scalaudio.{ScalaudioConfig, AudioContext}
-import com.scalaudio.engine.AudioTimepiece
+import com.scalaudio.engine.{Playback, AudioTimepiece}
 import com.scalaudio.jsyn.util.{AdaptedJavaSoundSampleLoader, DoubleSample}
 import com.scalaudio.syntax.ScalaudioSyntaxHelpers
 import org.scalatest.{FlatSpec, Matchers}
@@ -14,6 +14,7 @@ import org.scalatest.{FlatSpec, Matchers}
   * Created by johnmcgill on 1/6/16.
   */
 class SamplerTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers {
+
   "Sampler" should "come on come on get happy" in {
     implicit val audioContext : AudioContext = AudioContext()
 

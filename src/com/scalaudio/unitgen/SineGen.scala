@@ -9,7 +9,7 @@ import com.scalaudio.syntax.{Pitch, PitchRichDouble}
 case class SineGen(val initFreq : Pitch = PitchRichDouble(440).Hz)(implicit audioContext: AudioContext) extends UnitOsc {
   setFreq(initFreq)
 
-  override def computeBuffer = {
+  override def computeBuffer(params : Option[UnitGenParams] = None) = {
     0 to (audioContext.config.FramesPerBuffer - 1) foreach (i =>
       internalBuffers(0)(i) = Math.sin(w * i + phi) // Need to remove parens around (i + phi) & calculate phi properly based on phase in radians
     )
@@ -18,7 +18,7 @@ case class SineGen(val initFreq : Pitch = PitchRichDouble(440).Hz)(implicit audi
 
   def computeBufferWithControl(ctrlFreq : Pitch) : List[Array[Double]] = {
     setFreq(ctrlFreq) //TODO: This is a pretty bad hack (maybe...), layout of UnitGens that accept ctrl signals should be re-imagined
-    computeBuffer
+    computeBuffer()
     internalBuffers
   }
 }

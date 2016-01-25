@@ -9,7 +9,7 @@ import com.scalaudio.syntax.{PitchRichInt, Pitch}
 class SawtoothGen(val initFreq : Pitch = PitchRichInt(440).Hz)(implicit audioContext: AudioContext) extends UnitOsc {
   setFreq(initFreq)
 
-  override def computeBuffer = {
+  override def computeBuffer(params : Option[UnitGenParams] = None) = {
     0 to (audioContext.config.FramesPerBuffer - 1) foreach (i =>
       internalBuffers(0)(i) = (((w * i + phi) % period) / period) * 2 - 1
     )

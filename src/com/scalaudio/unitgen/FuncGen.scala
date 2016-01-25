@@ -6,5 +6,5 @@ package com.scalaudio.unitgen
   * Created by johnmcgill on 1/18/16.
   */
 case class FuncGen(val bufferFunc : () => List[Array[Double]]) extends UnitGen {
-  override def computeBuffer = (internalBuffers = bufferFunc())
+  override def computeBuffer(params : Option[UnitGenParams] = None) = (internalBuffers = bufferFunc())
 }

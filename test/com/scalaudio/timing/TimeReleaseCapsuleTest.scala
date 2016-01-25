@@ -60,7 +60,7 @@ class TimeReleaseCapsuleTest extends FlatSpec with Matchers with ScalaudioSyntax
     val sineGen = SineGen()
     val splitter = Splitter(2)
     val gainController = GainFilter()
-    val frameFunc = {() => gainController.processBuffersWithControl(sineGen.outputBuffers, capsule.outputControlValue) feed splitter.processBuffers}
+    val frameFunc = {() => gainController.processBuffersWithControl(sineGen.outputBuffers(), capsule.outputControlValue) feed splitter.processBuffers}
     val sigChain =  new FuncGen(frameFunc) with AudioTimepiece
 
     sigChain.play(10000 buffers)

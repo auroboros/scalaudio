@@ -4,7 +4,7 @@ import com.scalaudio.{ScalaudioConfig, AudioContext}
 import com.scalaudio.engine.AudioTimepiece
 import com.scalaudio.filter.GainFilter
 import com.scalaudio.filter.mix.StereoPanner
-import com.scalaudio.unitgen.{NoiseGen, SineGen, UnitGen}
+import com.scalaudio.unitgen._
 import org.scalatest.{FlatSpec, Matchers}
 
 /**
@@ -19,7 +19,7 @@ class ChannelSetManipulatorTest extends FlatSpec with Matchers with ScalaudioSyn
     val panner : StereoPanner = StereoPanner()
 
 //    bufferList2BufferFeeder(sineGen.outputBuffers) feed (panner.processBuffers(_))
-    val outBuffers : List[Array[Double]] = sineGen.outputBuffers feed panner.processBuffers
+    val outBuffers : List[Array[Double]] = sineGen.outputBuffers() feed panner.processBuffers
   }
 
   "Anon unit gen" should "be able to playback" in {
@@ -30,10 +30,10 @@ class ChannelSetManipulatorTest extends FlatSpec with Matchers with ScalaudioSyn
 
     //    bufferList2BufferFeeder(sineGen.outputBuffers) feed (panner.processBuffers(_))
     val testFrameFunc : () => List[Array[Double]] = () => {
-      noiseGen.outputBuffers feed panner.processBuffers
+      noiseGen.outputBuffers() feed panner.processBuffers
     }
 
-    val playableUnitGen = new UnitGen with AudioTimepiece {def computeBuffer = testFrameFunc()}
+    val playableUnitGen = new FuncGen(testFrameFunc) with AudioTimepiece
     playableUnitGen.play(1000 buffers)
   }
 
@@ -46,9 +46,8 @@ class ChannelSetManipulatorTest extends FlatSpec with Matchers with ScalaudioSyn
     val sg4 : SineGen = SineGen(921 Hz)
     val gain : GainFilter = GainFilter(.1)
 
-    val playableUnitGen = new UnitGen with AudioTimepiece {
-      def computeBuffer = sg1.outputBuffers mix sg2.outputBuffers mix sg3.outputBuffers mix sg4.outputBuffers feed gain.processBuffers
-    }
+    val playableUnitGen = new FuncGen({() => sg1.outputBuffers() mix sg2.outputBuffers() mix sg3.outputBuffers() mix sg4.outputBuffers() feed gain.processBuffers}) with AudioTimepiece
+
     playableUnitGen.play(1000 buffers)
   }
 
@@ -66,10 +65,10 @@ class ChannelSetManipulatorTest extends FlatSpec with Matchers with ScalaudioSyn
     val gain : GainFilter = GainFilter(.1)
 
     val playableUnitGen = new UnitGen with AudioTimepiece {
-      def computeBuffer = (sg1.outputBuffers feed pan1.processBuffers) mix
-        (sg2.outputBuffers feed pan2.processBuffers) mix
-        (sg3.outputBuffers feed pan3.processBuffers) mix
-        (sg4.outputBuffers feed pan4.processBuffers) feed gain.processBuffers
+      def computeBuffer(params : Option[UnitGenParams] = None) = (sg1.outputBuffers() feed pan1.processBuffers) mix
+        (sg2.outputBuffers() feed pan2.processBuffers) mix
+        (sg3.outputBuffers() feed pan3.processBuffers) mix
+        (sg4.outputBuffers() feed pan4.processBuffers) feed gain.processBuffers
     }
     playableUnitGen.play(1000 buffers)
   }

@@ -37,7 +37,7 @@ class AudioOutputTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers
     implicit val audioContext = AudioContext(ScalaudioConfig())
 
     val noiseGen = new NoiseGen
-    1 to 1000 foreach {_ => audioContext.audioOutput.write(noiseGen.outputBuffers.head) }
+    1 to 1000 foreach {_ => audioContext.audioOutput.write(noiseGen.outputBuffers().head) }
 
     audioContext.audioOutput.stop
   }

@@ -9,7 +9,7 @@ import com.scalaudio.syntax.{Pitch, PitchRichInt}
 class SquareGen(val initFreq : Pitch = PitchRichInt(440).Hz)(implicit audioContext: AudioContext) extends UnitOsc {
   setFreq(initFreq)
 
-  override def computeBuffer = {
+  override def computeBuffer(params : Option[UnitGenParams] = None) = {
     0 to (audioContext.config.FramesPerBuffer - 1) foreach (i =>
       internalBuffers(0)(i) = Math.sin(w * i + phi).signum.toDouble
     )

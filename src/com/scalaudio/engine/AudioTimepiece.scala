@@ -2,12 +2,13 @@ package com.scalaudio.engine
 
 import com.scalaudio.AudioContext
 import com.scalaudio.syntax.AudioDuration
+import com.scalaudio.unitgen.UnitGenParams
 
 /**
   * Created by johnmcgill on 1/22/16.
   */
 trait AudioTimepiece {
-  def outputBuffers(implicit audioContext: AudioContext) : List[Array[Double]]
+  def outputBuffers(params : Option[UnitGenParams] = None)(implicit audioContext: AudioContext) : List[Array[Double]]
 
   def play(duration : AudioDuration)(implicit audioContext: AudioContext, outputEngines : List[OutputEngine]) = {
     if (audioContext.config.AutoStartStop) start
@@ -15,10 +16,10 @@ trait AudioTimepiece {
     1 to duration.toBuffers.toInt foreach {_ =>
       audioContext.advanceFrame
 
-      if (audioContext.config.DebugEnabled && audioContext.config.ReportClipping && containsClipping(outputBuffers))
+      if (audioContext.config.DebugEnabled && audioContext.config.ReportClipping && containsClipping(outputBuffers()))
         println("CLIP!")
 
-      outputEngines foreach (_.handleBuffer(outputBuffers))
+      outputEngines foreach (_.handleBuffer(outputBuffers()))
     }
 
     if (audioContext.config.AutoStartStop) stop
