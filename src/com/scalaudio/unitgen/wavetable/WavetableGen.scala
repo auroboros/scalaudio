@@ -25,7 +25,7 @@ case class WavetableGen(val initMode : WavetableMode, val playbackRate : Double 
       case Sample(swt, fs) => swt
     }
 
-  var position = 0
+  var position : Double = 0
   internalBuffers = List.fill(wavetable.size)(Array.fill(audioContext.config.FramesPerBuffer)(0))
 
   // Updates internal buffer
@@ -34,11 +34,17 @@ case class WavetableGen(val initMode : WavetableMode, val playbackRate : Double 
       case wo : WavetableOscillator =>
       case Sample(swt, fs) => {
         0 to (wavetable.size - 1) foreach {c =>
-          0 to (audioContext.config.FramesPerBuffer - 1) foreach {s => internalBuffers(c)(s) = wavetable(c)(position + s)}
+          0 to (audioContext.config.FramesPerBuffer - 1) foreach {s => internalBuffers(c)(s) = interpolatedSample(c,(position + s * playbackRate) % wavetable(0).size)}
         }
-        position = (position + audioContext.config.FramesPerBuffer) % (audioContext.config.FramesPerBuffer - 1)
+        position = (position + audioContext.config.FramesPerBuffer) % wavetable(0).size
       }
     }
+
+  def interpolatedSample(channel : Int, position : Double) : Double = {
+    val (ind1 : Int, ind2 : Int) = (position.floor.toInt, position.ceil.toInt % wavetable(0).size)
+    val interpAmount : Double = position % 1
+    wavetable(channel)(ind1) + (wavetable(channel)(ind2) - wavetable(channel)(ind1)) * interpAmount
+  }
 
   def fileSample2Sample(filesample : FileSample) : Sample = {
     val doubleSample = AdaptedJavaSoundSampleLoader.loadDoubleSample(new File(filesample.filename))
