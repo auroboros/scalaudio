@@ -1,8 +1,8 @@
 package com.scalaudio.timing
 
 import com.scalaudio.AudioContext
-import com.scalaudio.syntax.ScalaudioSyntaxHelpers
-import com.scalaudio.unitgen.{UnitGenParams, UnitGen}
+import com.scalaudio.syntax.{UnitParams, ScalaudioSyntaxHelpers}
+import com.scalaudio.unitgen.UnitGen
 
 /**
   * Created by johnmcgill on 12/28/15.
@@ -29,7 +29,7 @@ case class TimeReleaseCapsule(val initTimedEvents : List[TimedEvent])(implicit a
   }
 
   // Updates internal buffer
-  override def computeBuffer(params : Option[UnitGenParams] = None): Unit =
+  override def computeBuffer(params : Option[UnitParams] = None): Unit =
     0 to (audioContext.config.FramesPerBuffer - 1) foreach { (s: Int) =>
       val currentTime = (audioContext.State.currentBuffer buffers) + (s samples)
       val startedEvents = sortedTimedEvents.filter(_.startTime <= currentTime)

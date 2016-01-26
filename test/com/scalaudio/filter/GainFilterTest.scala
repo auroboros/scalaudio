@@ -4,7 +4,7 @@ import com.scalaudio.{ScalaudioConfig, AudioContext}
 import com.scalaudio.engine.{AudioTimepiece, Playback}
 import com.scalaudio.filter.mix.Splitter
 import com.scalaudio.filter.util.RangeScaler
-import com.scalaudio.syntax.ScalaudioSyntaxHelpers
+import com.scalaudio.syntax.{UnitParams, ScalaudioSyntaxHelpers}
 import com.scalaudio.unitgen._
 import org.scalatest.{FlatSpec, Matchers}
 
@@ -20,7 +20,7 @@ class GainFilterTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers 
     val gainFilter : GainFilter = GainFilter()
     val testFrameFunc: () => List[Array[Double]] = () => gainFilter.processBuffersWithSignal(sineGen.outputBuffers(), slowSineGen.outputBuffers())
 
-    val playableUnitGen = new UnitGen with AudioTimepiece {def computeBuffer(params : Option[UnitGenParams] = None) = testFrameFunc()}
+    val playableUnitGen = new UnitGen with AudioTimepiece {def computeBuffer(params : Option[UnitParams] = None) = testFrameFunc()}
     playableUnitGen.play(10000 buffers)
   }
 

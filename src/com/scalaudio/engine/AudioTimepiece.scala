@@ -1,14 +1,13 @@
 package com.scalaudio.engine
 
 import com.scalaudio.AudioContext
-import com.scalaudio.syntax.AudioDuration
-import com.scalaudio.unitgen.UnitGenParams
+import com.scalaudio.syntax.{UnitParams, AudioDuration}
 
 /**
   * Created by johnmcgill on 1/22/16.
   */
 trait AudioTimepiece {
-  def outputBuffers(params : Option[UnitGenParams] = None)(implicit audioContext: AudioContext) : List[Array[Double]]
+  def outputBuffers(params : Option[UnitParams] = None)(implicit audioContext: AudioContext) : List[Array[Double]]
 
   def play(duration : AudioDuration)(implicit audioContext: AudioContext, outputEngines : List[OutputEngine]) = {
     if (audioContext.config.AutoStartStop) start

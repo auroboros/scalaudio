@@ -1,24 +1,38 @@
 package com.scalaudio.unitgen
 
 import com.scalaudio.AudioContext
-import com.scalaudio.syntax.{Pitch, PitchRichDouble}
+import com.scalaudio.syntax.{UnitParams, Pitch, PitchRichDouble}
 
 /**
   * Created by johnmcgill on 12/18/15.
   */
-case class SineGen(val initFreq : Pitch = PitchRichDouble(440).Hz)(implicit audioContext: AudioContext) extends UnitOsc {
-  setFreq(initFreq)
+case class SineGenCtrlParams(val freq : Option[Pitch] = None, val phase : Option[Double] = None) extends UnitParams
 
-  override def computeBuffer(params : Option[UnitGenParams] = None) = {
+case class SineGen(val initFreq : Pitch = PitchRichDouble(440).Hz, val initPhase : Double = 0)(implicit audioContext: AudioContext) extends UnitOsc {
+  setFreq(initFreq)
+  phi = initPhase // TODO: scale this based on phaser ratio?
+
+  override def computeBuffer(paramsOption : Option[UnitParams] = None) = {
+    paramsOption match {
+      case Some(p) => p match {
+        case SineGenCtrlParams(freqOption,phaseOption) => {
+          freqOption match {
+            case Some(f) => setFreq(f)
+            case None =>
+          }
+          phaseOption match {
+            case Some(p) => phi = p
+            case None =>
+          }
+        }
+        case x => throw new Exception("Unhandled params " + x + "in SineGen")
+      }
+      case None =>
+    }
+
     0 to (audioContext.config.FramesPerBuffer - 1) foreach (i =>
-      internalBuffers(0)(i) = Math.sin(w * i + phi) // Need to remove parens around (i + phi) & calculate phi properly based on phase in radians
+      internalBuffers(0)(i) = Math.sin(w * i + phi)
     )
     phi += phiInc
-  }
-
-  def computeBufferWithControl(ctrlFreq : Pitch) : List[Array[Double]] = {
-    setFreq(ctrlFreq) //TODO: This is a pretty bad hack (maybe...), layout of UnitGens that accept ctrl signals should be re-imagined
-    computeBuffer()
-    internalBuffers
   }
 }
