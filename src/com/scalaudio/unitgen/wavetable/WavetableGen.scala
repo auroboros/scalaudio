@@ -19,13 +19,13 @@ case class WavetableGen(val initMode : WavetableMode, val playbackRate : Double 
   // Determines resolution, essentially (lower = more interpolation, higher = bigger buffer)
   val periodLength : AudioDuration = 10 seconds
 
-  val sample : Sample = (initMode match {
+  val sample : Sample = initMode match {
     case fs : FileSample => fileSample2Sample(fs)
     case s : Sample => s
     case _ : Sine => Sample(generateSingleSinePeriod(periodLength), periodLength.toSamples)
     case _ : Square => Sample(generateSingleSquarePeriod(periodLength), periodLength.toSamples)
     case _ : Sawtooth => Sample(generateSingleSawtoothPeriod(periodLength), periodLength.toSamples)
-  })
+  }
 
   val incrementRate = playbackRate * (sample.samplingFreq / audioContext.config.SamplingRate)
 
@@ -38,14 +38,14 @@ case class WavetableGen(val initMode : WavetableMode, val playbackRate : Double 
 
   // Updates internal buffer
   override def computeBuffer(params : Option[UnitParams] = None) : Unit = {
-    0 until sample.wavetable.size foreach {c =>
-      0 until audioContext.config.FramesPerBuffer foreach {s => internalBuffers(c)(s) = interpolatedSample(c,(position + s * incrementRate) % sample.wavetable(0).size)}
+    sample.wavetable.indices foreach {c =>
+      0 until audioContext.config.FramesPerBuffer foreach {s => internalBuffers(c)(s) = interpolatedSample(c,(position + s * incrementRate) % sample.wavetable.head.length)}
     }
-    position = (position + audioContext.config.FramesPerBuffer * incrementRate) % sample.wavetable(0).size
+    position = (position + audioContext.config.FramesPerBuffer * incrementRate) % sample.wavetable.head.length
   }
 
   def interpolatedSample(channel : Int, position : Double) : Double = {
-    val (ind1 : Int, ind2 : Int) = (position.floor.toInt, position.ceil.toInt % sample.wavetable(0).size)
+    val (ind1 : Int, ind2 : Int) = (position.floor.toInt, position.ceil.toInt % sample.wavetable.head.length)
     val interpAmount : Double = position % 1
     linearInterpolate(sample.wavetable(channel)(ind1), sample.wavetable(channel)(ind2), interpAmount)
   }

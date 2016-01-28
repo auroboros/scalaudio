@@ -31,13 +31,13 @@ case class AudioContext(val config : ScalaudioConfig = ScalaudioConfig()) {
 
   def start = {
     // TODO : Should check if input & output are connected & only start if they are (overwrite var from LineIn & Playback)
-    audioInput.start
-    audioOutput.start
+    audioInput.start()
+    audioOutput.start()
   }
 
   def stop = {
-    audioInput.stop
-    audioOutput.stop
+    audioInput.stop()
+    audioOutput.stop()
   }
 
   object State {

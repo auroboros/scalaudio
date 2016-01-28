@@ -28,9 +28,9 @@ object FFTMath {
     buffer zip window map {case (bs : Double, ws : Double) => bs * ws}
 
   def pad(buffer : Array[Double])(implicit audioContext: AudioContext) : Array[Double] =
-    if (buffer.size == audioContext.config.FFTBufferSize) buffer
-    else if (buffer.size < audioContext.config.FFTBufferSize){
-      buffer ++ Array.fill(audioContext.config.FFTBufferSize - buffer.size)(0.0)
+    if (buffer.length == audioContext.config.FFTBufferSize) buffer
+    else if (buffer.length < audioContext.config.FFTBufferSize){
+      buffer ++ Array.fill(audioContext.config.FFTBufferSize - buffer.length)(0.0)
     } else {
       throw new Exception("Input buffer cannot be larger than FFT buffer size")
     }

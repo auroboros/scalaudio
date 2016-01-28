@@ -11,7 +11,7 @@ import com.scalaudio.syntax.UnitParams
   */
 case class Sampler(filenames : List[String])(implicit audioContext: AudioContext) extends UnitGen {
   // Using collection breakout is supposed to prevent double-traversal
-  val soundSamples : Map[String, DoubleSample] = filenames.map(s => (s -> AdaptedJavaSoundSampleLoader.loadDoubleSample(new File(s))))(collection.breakOut): Map[String, DoubleSample]
+  val soundSamples : Map[String, DoubleSample] = filenames.map(s => s -> AdaptedJavaSoundSampleLoader.loadDoubleSample(new File(s)))(collection.breakOut): Map[String, DoubleSample]
   var currentIndex = 0
 
   // TODO: Hm... how to read & how to read if its a diff sample rate (interpolation)
@@ -24,7 +24,7 @@ case class Sampler(filenames : List[String])(implicit audioContext: AudioContext
   override def computeBuffer(params : Option[UnitParams] = None) = {
     val ds : DoubleSample = soundSamples.head._2
     // TODO: Refactor for efficiency now that there is no return
-    internalBuffers = (0 until ds.audioBuffers.size).toList.map { (channel: Int) =>
+    internalBuffers = ds.audioBuffers.indices.toList.map { (channel: Int) =>
       (0 until audioContext.config.FramesPerBuffer).toArray map {frame =>
         val sample : Double = ds.audioBuffers(channel)(currentIndex)
         currentIndex = (currentIndex + 1) % ds.length

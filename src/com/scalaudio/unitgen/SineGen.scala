@@ -14,24 +14,23 @@ case class SineGen(val initFreq : Pitch = PitchRichDouble(440).Hz, val initPhase
 
   override def computeBuffer(paramsOption : Option[UnitParams] = None) = {
     paramsOption match {
-      case Some(p) => p match {
-        case SineGenCtrlParams(freqOption,phaseOption) => {
+      case Some(params) => params match {
+        case SineGenCtrlParams(freqOption,phaseOption) =>
           freqOption match {
             case Some(f) => setFreq(f)
             case None =>
           }
           phaseOption match {
-            case Some(p) => phi = p
+            case Some(phase) => phi = phase
             case None =>
           }
-        }
         case x => throw new Exception("Unhandled params " + x + "in SineGen")
       }
       case None =>
     }
 
     0 until audioContext.config.FramesPerBuffer foreach (i =>
-      internalBuffers(0)(i) = Math.sin(w * i + phi)
+      internalBuffers.head(i) = Math.sin(w * i + phi)
     )
     phi += phiInc
   }

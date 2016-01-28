@@ -23,14 +23,14 @@ class AudioOutputTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers
 
 //    buffer.zipWithIndex map ((x : Double,i : Int) => (Math.sin(i * Math.PI * 2.0) / FRAMES_PER_BUFFER))
 
-    audioOutput.start
+    audioOutput.start()
 
     1 to 1000 foreach {_ => audioOutput.write(sinBuffer)} // Use buffer.map(x => Math.random * 2 - 1) here to get actual noise
     1 to 1000 foreach {_ => audioOutput.write(noiseBuffer)}
     1 to 1000 foreach {_ => audioOutput.write(sinBuffer.zip(noiseBuffer).map{case (s,n) => s + n})}
     // (otherwise there is some periodicity resulting from buffer size)
 
-    audioOutput.stop
+    audioOutput.stop()
   }
 
   "Noise Generator" should "create buffer of random noise on every call" in {
@@ -39,7 +39,7 @@ class AudioOutputTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers
     val noiseGen = new NoiseGen
     1 to 1000 foreach {_ => audioContext.audioOutput.write(noiseGen.outputBuffers().head) }
 
-    audioContext.audioOutput.stop
+    audioContext.audioOutput.stop()
   }
 
   "Sine Generator" should "create buffer of sine on every call" in {

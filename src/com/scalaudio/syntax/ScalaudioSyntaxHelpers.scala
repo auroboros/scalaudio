@@ -15,16 +15,16 @@ import scala.concurrent.duration.FiniteDuration
   */
 trait ScalaudioSyntaxHelpers {
   // "Signal Flow" syntax
-  implicit def bufferList2ChannelSetManipulator(bufferList: List[Array[Double]]) = new ChannelSetManipulator(bufferList)
+  implicit def bufferList2ChannelSetManipulator(bufferList: List[Array[Double]]) : ChannelSetManipulator = new ChannelSetManipulator(bufferList)
 
   // "Durations" syntax
   implicit def finiteDuration2AudioDuration(duration : FiniteDuration)(implicit audioContext: AudioContext) : AudioDuration = AudioDuration(DurationConverter.finiteDuration2Samples(duration))
 
-  implicit def int2AudioDurationRichInt(n : Int)(implicit audioContext: AudioContext) = AudioDurationRichInt(n)
+  implicit def int2AudioDurationRichInt(n : Int)(implicit audioContext: AudioContext) : AudioDurationRichInt = AudioDurationRichInt(n)
 
   // "Pitch" syntax
-  implicit def int2PitchRichInt(i : Int) = PitchRichInt(i)
-  implicit def double2PitchRichDouble(d : Double) = PitchRichDouble(d)
+  implicit def int2PitchRichInt(i : Int) : PitchRichInt = PitchRichInt(i)
+  implicit def double2PitchRichDouble(d : Double) : PitchRichDouble = PitchRichDouble(d)
 
   // "Timing Events" syntax
   implicit def tuple2ValueChange(eventTuple : (Int, Double))(implicit audioContext: AudioContext) : TimedEvent =

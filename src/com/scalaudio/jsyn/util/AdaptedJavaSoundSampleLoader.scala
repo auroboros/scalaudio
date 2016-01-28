@@ -51,9 +51,9 @@ object AdaptedJavaSoundSampleLoader {
     val audioBytes: Array[Byte] = new Array[Byte](numBytes)
     var numBytesRead: Int = 0
     var numFramesRead: Int = 0
-    while ((({
+    while ({
       numBytesRead = audioInputStream.read(audioBytes); numBytesRead
-    })) != -1) {
+    } != -1) {
       val bytesRemainder: Int = numBytesRead % bytesPerFrame
       if (bytesRemainder != 0) {
         throw new IOException("Read partial block of sample data!")
@@ -88,6 +88,6 @@ object AdaptedJavaSoundSampleLoader {
       numFramesRead = numBytesRead / bytesPerFrame
       totalSamplesRead += numFramesRead * format.getChannels
     }
-    return data
+    data
   }
 }

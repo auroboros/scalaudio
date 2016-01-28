@@ -8,5 +8,5 @@ import com.scalaudio.syntax.UnitParams
   * Created by johnmcgill on 1/18/16.
   */
 case class FuncGen(val bufferFunc : () => List[Array[Double]]) extends UnitGen {
-  override def computeBuffer(params : Option[UnitParams] = None) = (internalBuffers = bufferFunc())
+  override def computeBuffer(params : Option[UnitParams] = None) = internalBuffers = bufferFunc()
 }

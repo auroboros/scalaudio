@@ -11,6 +11,6 @@ case class StereoPanner(val initPan : Double = .5) extends Filter {
 
   override def processBuffers(inBuffers: List[Array[Double]]): List[Array[Double]] = {
     if (inBuffers.size != 1) throw new Exception("Stereo Panner accepts 1 channel, not " + inBuffers.size)
-    List(inBuffers(0) map (_ * Math.sqrt(1-pan)), inBuffers(0) map (_ * Math.sqrt(pan)))
+    List(inBuffers.head map (_ * Math.sqrt(1-pan)), inBuffers.head map (_ * Math.sqrt(pan)))
   }
 }

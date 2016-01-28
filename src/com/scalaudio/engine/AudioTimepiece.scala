@@ -30,7 +30,7 @@ trait AudioTimepiece {
   def stop(implicit audioContext: AudioContext) = audioContext.stop
 
   def containsClipping(buffers :  List[Array[Double]]) : Boolean = {
-    buffers foreach (b => if (!b.filter(x => Math.abs(x) > 1).isEmpty) return true)
+    buffers foreach (b => if (b.exists(x => Math.abs(x) > 1)) return true)
     false
   }
 }

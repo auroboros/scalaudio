@@ -11,6 +11,6 @@ case class NoiseGen()(implicit audioContext: AudioContext) extends UnitGen {
 
   override def computeBuffer(params : Option[UnitParams] = None) =
     0 until audioContext.config.FramesPerBuffer foreach (i =>
-      internalBuffers(0)(i) = Math.random * 2 - 1
+      internalBuffers.head(i) = Math.random * 2 - 1
     )
 }

@@ -11,7 +11,7 @@ class SquareGen(val initFreq : Pitch = PitchRichInt(440).Hz)(implicit audioConte
 
   override def computeBuffer(params : Option[UnitParams] = None) = {
     0 until audioContext.config.FramesPerBuffer foreach (i =>
-      internalBuffers(0)(i) = Math.sin(w * i + phi).signum.toDouble
+      internalBuffers.head(i) = Math.sin(w * i + phi).signum.toDouble
     )
     phi += phiInc
   }

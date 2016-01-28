@@ -35,10 +35,9 @@ case class TimeReleaseCapsule(val initTimedEvents : List[TimedEvent])(implicit a
       val startedEvents = sortedTimedEvents.filter(_.startTime <= currentTime)
       val inProgressEvents = startedEvents.filter(_.endTime > currentTime) // Not greater than or equals, since final frame will be endVal anyway
 
-      internalBuffers(0)(s) = (if (inProgressEvents.isEmpty) startedEvents.last.endVal
-      else {
-        val te = inProgressEvents.head
-        te.event.valueAtRelativeTime(currentTime - te.startTime)
-      })
+      internalBuffers.head(s) = if (inProgressEvents.isEmpty) startedEvents.last.endVal else {
+          val te = inProgressEvents.head
+          te.event.valueAtRelativeTime(currentTime - te.startTime)
+        }
     }
 }

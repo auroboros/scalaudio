@@ -23,7 +23,7 @@ class SamplerTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers {
 
     val dsOption : Option[DoubleSample] = sampler.soundSamples.get(wavFilename)
     dsOption match {
-      case Some(ds) => println(ds.audioBuffers(0).size * audioContext.config.SamplingRate / ds.frameRate)
+      case Some(ds) => println(ds.audioBuffers.head.length * audioContext.config.SamplingRate / ds.frameRate)
       case None => throw new Exception("No sample...")
     }
   }

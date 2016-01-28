@@ -26,7 +26,7 @@ trait SampleIndependentControllableFilter extends ControllableFilter {
 
   final override def processBuffersWithSignal(inBuffers : List[Array[Double]], controlSigBuffers : List[Array[Double]]) : List[Array[Double]] =
     if (controlSigBuffers.size == 1) {
-      inBuffers map (b => (b, controlSigBuffers(0)).zipped map processSample)
+      inBuffers map (b => (b, controlSigBuffers.head).zipped map processSample)
     } else if (inBuffers.size == controlSigBuffers.size) {
       val temp: List[(Array[Double], Array[Double])] = (inBuffers, controlSigBuffers).zipped.toList
       val bufferTuples: List[Array[(Double, Double)]] = temp.map{case (sigBuff : Array[Double],ctrlBuff: Array[Double]) => (sigBuff,ctrlBuff).zipped.toArray}
