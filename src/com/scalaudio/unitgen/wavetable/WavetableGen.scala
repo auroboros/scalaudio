@@ -29,9 +29,16 @@ case class WavetableGen(val initMode : WavetableMode, val playbackRate : Double 
 
   val incrementRate = playbackRate * (sample.samplingFreq / audioContext.config.SamplingRate)
 
-  def generateSingleSinePeriod(nSamples : AudioDuration) = ???
-  def generateSingleSquarePeriod(nSamples : AudioDuration) = ???
-  def generateSingleSawtoothPeriod(nSamples : AudioDuration) = ???
+  def generateSingleSinePeriod(duration : AudioDuration) = {
+    val w = 2 * Math.PI / duration.toSamples
+    List((0 until duration.toSamples.toInt map {i => Math.sin(w * i)}).toArray)
+  }
+  def generateSingleSquarePeriod(duration : AudioDuration) = {
+    val w = 2 * Math.PI / duration.toSamples
+    List((0 until duration.toSamples.toInt map {i => Math.signum(Math.sin(w * i))}).toArray)
+  }
+  def generateSingleSawtoothPeriod(duration : AudioDuration) =
+    List((0 until duration.toSamples.toInt map {x => (x.toDouble / duration.toSamples) * 2 - 1}).toArray)
 
   var position : Double = 0
   internalBuffers = List.fill(sample.wavetable.size)(Array.fill(audioContext.config.FramesPerBuffer)(0))
