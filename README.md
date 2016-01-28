@@ -1,10 +1,7 @@
 scalaudio
 
-RATE ISSUES...
-Maybe use some blocking queue to limit the number of buffers that can be produced ahead of time when real-time mode is enabled?
-Except then need to be able to poll how many buffers are waiting to be written basically
-
 To Do:
+- "Precomputed" section of AudioContext for common constructs (val to hold range 1 to (bufferSize-1) for example)
 - Refactor timing events (Ramp, ADSR curve, TimedEvent itself) to use AudioDurations
 - Maybe there should be subtype of filter for those that support Signal / ControlRate controls?
 - Need generic format for channel filling etc. in signal / ControlRate controls

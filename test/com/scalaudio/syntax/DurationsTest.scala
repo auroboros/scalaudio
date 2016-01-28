@@ -30,6 +30,8 @@ class DurationsTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers {
   }
 
   "Audio duration" should "convert properly" in {
+    implicit val audioContext = AudioContext()
+
     println((5 seconds).toSamples)
     println((5 seconds).toBuffers)
   }

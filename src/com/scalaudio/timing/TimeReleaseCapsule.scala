@@ -30,7 +30,7 @@ case class TimeReleaseCapsule(val initTimedEvents : List[TimedEvent])(implicit a
 
   // Updates internal buffer
   override def computeBuffer(params : Option[UnitParams] = None): Unit =
-    0 to (audioContext.config.FramesPerBuffer - 1) foreach { (s: Int) =>
+    0 until audioContext.config.FramesPerBuffer foreach { (s: Int) =>
       val currentTime = (audioContext.State.currentBuffer buffers) + (s samples)
       val startedEvents = sortedTimedEvents.filter(_.startTime <= currentTime)
       val inProgressEvents = startedEvents.filter(_.endTime > currentTime) // Not greater than or equals, since final frame will be endVal anyway

@@ -11,6 +11,7 @@ trait AudioTimepiece {
 
   def play(duration : AudioDuration)(implicit audioContext: AudioContext, outputEngines : List[OutputEngine]) = {
     if (audioContext.config.AutoStartStop) start
+    println("Started audio")
 
     1 to duration.toBuffers.toInt foreach {_ =>
       audioContext.advanceFrame
@@ -22,6 +23,7 @@ trait AudioTimepiece {
     }
 
     if (audioContext.config.AutoStartStop) stop
+    println("Stopped audio")
   }
 
   def start(implicit audioContext: AudioContext) = audioContext.start

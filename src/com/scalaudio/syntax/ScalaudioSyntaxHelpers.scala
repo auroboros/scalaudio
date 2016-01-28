@@ -18,7 +18,7 @@ trait ScalaudioSyntaxHelpers {
   implicit def bufferList2ChannelSetManipulator(bufferList: List[Array[Double]]) = new ChannelSetManipulator(bufferList)
 
   // "Durations" syntax
-  implicit def finiteDuration2AudioDuration(duration : FiniteDuration) : AudioDuration = finiteDuration2AudioDuration(duration)
+  implicit def finiteDuration2AudioDuration(duration : FiniteDuration)(implicit audioContext: AudioContext) : AudioDuration = AudioDuration(DurationConverter.finiteDuration2Samples(duration))
 
   implicit def int2AudioDurationRichInt(n : Int)(implicit audioContext: AudioContext) = AudioDurationRichInt(n)
 

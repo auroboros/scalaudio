@@ -24,8 +24,8 @@ case class Sampler(filenames : List[String])(implicit audioContext: AudioContext
   override def computeBuffer(params : Option[UnitParams] = None) = {
     val ds : DoubleSample = soundSamples.head._2
     // TODO: Refactor for efficiency now that there is no return
-    internalBuffers = (0 to ds.audioBuffers.size - 1).toList.map { (channel: Int) =>
-      (0 to audioContext.config.FramesPerBuffer - 1).toArray map {frame =>
+    internalBuffers = (0 until ds.audioBuffers.size).toList.map { (channel: Int) =>
+      (0 until audioContext.config.FramesPerBuffer).toArray map {frame =>
         val sample : Double = ds.audioBuffers(channel)(currentIndex)
         currentIndex = (currentIndex + 1) % ds.length
         sample

@@ -10,8 +10,8 @@ class SawtoothGen(val initFreq : Pitch = PitchRichInt(440).Hz)(implicit audioCon
   setFreq(initFreq)
 
   override def computeBuffer(params : Option[UnitParams] = None) = {
-    0 to (audioContext.config.FramesPerBuffer - 1) foreach (i =>
-      internalBuffers(0)(i) = (((w * i + phi) % period) / period) * 2 - 1
+    0 until audioContext.config.FramesPerBuffer foreach (i =>
+      internalBuffers.head(i) = (((w * i + phi) % period) / period) * 2 - 1
     )
     phi += phiInc
   }

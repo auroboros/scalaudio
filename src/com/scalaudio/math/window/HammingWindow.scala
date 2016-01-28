@@ -12,6 +12,6 @@ class HammingWindow(val length : Int, val alpha : Double = 25.0/46.0, val beta :
   /** Construct a generalized Hamming Window */
   def construct(length: Int, alpha: Double, beta: Double) : Array[Double] = {
     val scaler: Double = 2.0 * Math.PI / (length - 1)
-    (0 to (length - 1) map (i => alpha - (beta * (Math.cos(i * scaler))))).toArray
+    (0 until length map (i => alpha - (beta * Math.cos(i * scaler)))).toArray
   }
 }

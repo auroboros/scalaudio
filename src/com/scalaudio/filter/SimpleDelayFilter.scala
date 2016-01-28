@@ -12,8 +12,8 @@ case class SimpleDelayFilter(val lengthInSamples : Int) extends Filter {
     if (delayBuffers.isEmpty) {
       delayBuffers = List.fill(inBuffers.size)(mutable.Queue.fill(lengthInSamples)(0))
     }
-    0 to (inBuffers.size - 1) map (channel => inBuffers(channel) foreach (sample => delayBuffers(channel).enqueue(sample)))
-    (0 to (inBuffers.size - 1)).toList map (channel => (1 to inBuffers(0).size map (_ => delayBuffers(channel).dequeue)).toArray)
+    0 until inBuffers.size map (channel => inBuffers(channel) foreach (sample => delayBuffers(channel).enqueue(sample)))
+    (0 until inBuffers.size).toList map (channel => (1 to inBuffers(0).size map (_ => delayBuffers(channel).dequeue)).toArray)
   }
 
 }

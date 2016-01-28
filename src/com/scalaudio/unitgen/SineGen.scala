@@ -30,7 +30,7 @@ case class SineGen(val initFreq : Pitch = PitchRichDouble(440).Hz, val initPhase
       case None =>
     }
 
-    0 to (audioContext.config.FramesPerBuffer - 1) foreach (i =>
+    0 until audioContext.config.FramesPerBuffer foreach (i =>
       internalBuffers(0)(i) = Math.sin(w * i + phi)
     )
     phi += phiInc
