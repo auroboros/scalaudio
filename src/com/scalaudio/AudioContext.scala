@@ -7,7 +7,9 @@ import com.scalaudio.engine.{OutputEngine, Playback}
 /**
   * Created by johnmcgill on 12/18/15.
   */
-case class ScalaudioConfig(val AutoStartStop : Boolean = true,
+case class ScalaudioConfig(val BeatsPerMinute : Double = 120,
+                           val BeatsPerMeasure : Double = 4,
+                            val AutoStartStop : Boolean = true,
                            val FramesPerBuffer : Int = 32,
                            val NOutChannels : Int = 2, // ("Samples per frame")
                            val NInChannels : Int = 1,

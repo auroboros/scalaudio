@@ -35,4 +35,11 @@ class DurationsTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers {
     println((5 seconds).toSamples)
     println((5 seconds).toBuffers)
   }
+
+  "Beats" should "calc based on beats per minute" in {
+    implicit val audioContext = AudioContext(ScalaudioConfig(BeatsPerMinute = 120))
+
+    assert((2 beats).toSamples / audioContext.config.SamplingRate.toDouble == 1) // 2 beats is 1 second
+    assert((120 beats).toSamples / audioContext.config.SamplingRate.toDouble == 60) // 120 beats is 1 minute (by definition)
+  }
 }

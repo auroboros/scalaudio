@@ -1,4 +1,4 @@
-package com.scalaudio.unitgen.wavetable
+package com.scalaudio.unitgen.samplers
 
 import com.scalaudio.AudioContext
 import com.scalaudio.engine.AudioTimepiece
