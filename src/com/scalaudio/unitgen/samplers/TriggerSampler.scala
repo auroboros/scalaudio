@@ -10,12 +10,11 @@ import scala.concurrent.duration._
 /**
   * Created by johnmcgill on 1/5/16.
   */
-case class Sampler(val sampleDeck : List[SampleDeck])(implicit audioContext: AudioContext) extends UnitGen with ScalaudioSyntaxHelpers {
+case class TriggerSampler(wtType : WavetableType, triggerTimes : Option[List[AudioDuration]] = None)(implicit audioContext: AudioContext) extends UnitGen with ScalaudioSyntaxHelpers {
   import SamplerUtils._
 
-  val soundSamples : Map[String, SamplerTape] = (sampleDeck.zipWithIndex map {case (deck,i) => (deck.label, SamplerTape(wavetableMode2Sample(deck.wtType, 10 seconds), new SampleState(), deck.triggerTimes))}).toMap
+  val sampleTape : SamplerTape = SamplerTape(wavetableMode2Sample(wtType, 10 seconds), new SampleState(), triggerTimes)
 
-  val sampleTape = soundSamples.head._2
   internalBuffers = List.fill(sampleTape.soundSample.wavetable.size)(Array.fill(audioContext.config.FramesPerBuffer)(0))
 
   override def computeBuffer(params : Option[UnitParams] = None) =
@@ -33,10 +32,10 @@ case class Sampler(val sampleDeck : List[SampleDeck])(implicit audioContext: Aud
   }
 
   def triggerCheck(currentTime : AudioDuration) =
-    soundSamples.values.filter(_.triggerTimes.exists(_ == currentTime)).foreach(_.state.activate())
+    if (sampleTape.triggerTimes.exists(_ == currentTime)) activateSoundSample()
 
-  def activateSoundSample(sampleId : String) =
-    soundSamples.get(sampleId) foreach (_.state.activate())
+  def activateSoundSample() =
+    sampleTape.state.activate()
 
   //TODO : De-dupe this (it's in WavetableGen as well)
   def interpolatedSample(channel : Int, position : Double) : Double = {
@@ -45,8 +44,6 @@ case class Sampler(val sampleDeck : List[SampleDeck])(implicit audioContext: Aud
     linearInterpolate(sampleTape.soundSample.wavetable(channel)(ind1), sampleTape.soundSample.wavetable(channel)(ind2), interpAmount)
   }
 }
-
-case class SampleDeck(label : String, wtType : WavetableType, triggerTimes : Option[List[AudioDuration]] = None)
 
 case class SamplerTape(soundSample: SoundSample, var state : SampleState, triggerTimes : Option[List[AudioDuration]])(implicit audioContext: AudioContext) {
   val incrementRate : Double = state.playbackRate * (soundSample.samplingFreq / audioContext.config.SamplingRate)
