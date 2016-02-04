@@ -10,7 +10,7 @@ import scala.concurrent.duration._
 /**
   * Created by johnmcgill on 1/5/16.
   */
-case class TriggerSampler(wtType : WavetableType, triggerTimes : Option[List[AudioDuration]] = None)(implicit audioContext: AudioContext) extends UnitGen with ScalaudioSyntaxHelpers {
+case class TriggerSampler(wtType : WavetableType, triggerTimes : List[AudioDuration] = Nil)(implicit audioContext: AudioContext) extends UnitGen with ScalaudioSyntaxHelpers {
   import SamplerUtils._
 
   val sampleTape : SamplerTape = SamplerTape(wavetableMode2Sample(wtType, 10 seconds), new SampleState(), triggerTimes)
@@ -32,7 +32,7 @@ case class TriggerSampler(wtType : WavetableType, triggerTimes : Option[List[Aud
   }
 
   def triggerCheck(currentTime : AudioDuration) =
-    if (sampleTape.triggerTimes.exists(_ == currentTime)) activateSoundSample()
+    if (sampleTape.triggerTimes.contains(currentTime)) activateSoundSample()
 
   def activateSoundSample() =
     sampleTape.state.activate()
@@ -45,7 +45,7 @@ case class TriggerSampler(wtType : WavetableType, triggerTimes : Option[List[Aud
   }
 }
 
-case class SamplerTape(soundSample: SoundSample, var state : SampleState, triggerTimes : Option[List[AudioDuration]])(implicit audioContext: AudioContext) {
+case class SamplerTape(soundSample: SoundSample, var state : SampleState, triggerTimes : List[AudioDuration])(implicit audioContext: AudioContext) {
   val incrementRate : Double = state.playbackRate * (soundSample.samplingFreq / audioContext.config.SamplingRate)
 }
 
