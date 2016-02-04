@@ -17,27 +17,27 @@ import org.scalatest.{FlatSpec, Matchers}
 class SamplerTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers {
 
   "Sampler" should "come on come on get happy" in {
-    implicit val audioContext : AudioContext = AudioContext()
-
-    val wavFilename = "/Users/johnmcgill/nocode/samples/M1F1-int16-AFsp.wav"
-    val sampler = Sampler(List(wavFilename))
-
-    val dsOption : Option[DoubleSample] = sampler.soundSamples.get(wavFilename)
-    dsOption match {
-      case Some(ds) => println(ds.audioBuffers.head.length * audioContext.config.SamplingRate / ds.frameRate)
-      case None => throw new Exception("No sample...")
-    }
+//    implicit val audioContext : AudioContext = AudioContext()
+//
+//    val wavFilename = "/Users/johnmcgill/nocode/samples/M1F1-int16-AFsp.wav"
+//    val sampler = Sampler(List(wavFilename))
+//
+//    val dsOption : Option[DoubleSample] = sampler.soundSamples.get(wavFilename)
+//    dsOption match {
+//      case Some(ds) => println(ds.audioBuffers.head.length * audioContext.config.SamplingRate / ds.frameRate)
+//      case None => throw new Exception("No sample...")
+//    }
   }
 
   "Sampler" should "dump some buffers if frame rate is same?" in {
-    implicit val audioContext : AudioContext = AudioContext(ScalaudioConfig(SamplingRate = 44100, NOutChannels = 2))
-    //SamplingRate = 44100 // 4000, 6000, 8000
-
-    val wavFilename = "/Users/johnmcgill/nocode/samples/Media-Convert_test5_PCM_Stereo_VBR_8SS_44100Hz.wav"
-    val sampler = new Sampler(List(wavFilename)) with AudioTimepiece
-
-//    1 to 100 foreach (_ => println(sampler.outputBuffers))
-    sampler.play(3000 buffers)
+//    implicit val audioContext : AudioContext = AudioContext(ScalaudioConfig(SamplingRate = 44100, NOutChannels = 2))
+//    //SamplingRate = 44100 // 4000, 6000, 8000
+//
+//    val wavFilename = "/Users/johnmcgill/nocode/samples/Media-Convert_test5_PCM_Stereo_VBR_8SS_44100Hz.wav"
+//    val sampler = new Sampler(List(wavFilename)) with AudioTimepiece
+//
+////    1 to 100 foreach (_ => println(sampler.outputBuffers))
+//    sampler.play(3000 buffers)
 
   }
 

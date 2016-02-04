@@ -3,16 +3,14 @@ package com.scalaudio.unitgen.samplers
 import java.io.File
 
 import com.scalaudio.jsyn.util.AdaptedJavaSoundSampleLoader
-import com.scalaudio.syntax.{ScalaudioSyntaxHelpers, AudioDuration}
-
-import scala.concurrent.duration._
+import com.scalaudio.syntax.AudioDuration
 
 /**
   * Created by johnmcgill on 2/1/16.
   */
 object SamplerUtils {
   // TODO : remove hardcoded default duration
-  def wavetableMode2Sample(wtMode : WavetableType, periodLength : AudioDuration = AudioDuration(44100 * 10)) : SoundSample =
+  def wavetableMode2Sample(wtMode : WavetableType, periodLength : AudioDuration) : SoundSample =
     wtMode match {
       case fs : FileSample => fileSample2Sample(fs)
       case s : SoundSample => s
@@ -24,6 +22,12 @@ object SamplerUtils {
   def fileSample2Sample(filesample : FileSample) : SoundSample = {
     val doubleSample = AdaptedJavaSoundSampleLoader.loadDoubleSample(new File(filesample.filename))
     SoundSample(doubleSample.audioBuffers, doubleSample.frameRate)
+  }
+
+  // TODO: Remove method (its just for testing access from Clojure)
+  def generateSingleSinePeriodFromLong(duration : Long) = {
+    val w = 2 * Math.PI / duration
+    List((0 until duration.toInt map {i => Math.sin(w * i)}).toArray)
   }
 
   def generateSingleSinePeriod(duration : AudioDuration) = {
