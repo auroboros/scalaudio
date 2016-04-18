@@ -25,9 +25,9 @@ object SamplerUtils {
   }
 
   // TODO: Remove method (its just for testing access from Clojure)
-  def generateSingleSinePeriodFromLong(duration : Long) = {
+  def generateSingleSinePeriodFromLong(duration : Long): Array[Double] = {
     val w = 2 * Math.PI / duration
-    List((0 until duration.toInt map {i => Math.sin(w * i)}).toArray)
+    (0 until duration.toInt map { i => Math.sin(w * i)}).toArray
   }
 
   def generateSingleSinePeriod(duration : AudioDuration) = {
@@ -48,5 +48,5 @@ sealed trait WavetableType
 case class Sine() extends WavetableType
 case class Square() extends WavetableType
 case class Sawtooth() extends WavetableType
-case class SoundSample(val wavetable : List[Array[Double]], val samplingFreq : Double) extends WavetableType
-case class FileSample(val filename : String) extends WavetableType
+case class SoundSample(wavetable : List[Array[Double]], samplingFreq : Double) extends WavetableType
+case class FileSample(filename : String) extends WavetableType

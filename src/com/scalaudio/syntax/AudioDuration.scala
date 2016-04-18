@@ -9,7 +9,7 @@ import scala.concurrent.duration.FiniteDuration
   * Created by johnmcgill on 1/18/16.
   */
 // TODO: allow this to accept some form of samples as input instead since this is really the smallest indivisible unit?
-case class AudioDuration(val nSamples : Long)(implicit audioContext: AudioContext) extends Ordered[AudioDuration] {
+case class AudioDuration(nSamples : Long)(implicit audioContext: AudioContext) extends Ordered[AudioDuration] {
   import DurationConverter._
 
   def toSamples : Long = nSamples
@@ -49,7 +49,7 @@ object DurationConverter {
     (nSamples.toDouble / audioContext.config.SamplingRate) seconds
 }
 
-case class AudioDurationRichInt(val n : Int)(implicit audioContext: AudioContext) {
+case class AudioDurationRichInt(n : Int)(implicit audioContext: AudioContext) {
   import DurationConverter._
 
   def samples = AudioDuration(n)
@@ -59,4 +59,6 @@ case class AudioDurationRichInt(val n : Int)(implicit audioContext: AudioContext
   def beats = AudioDuration(beats2Samples(n))
 
   def measures = AudioDuration(measures2Samples(n))
+
+//  def measure&beat = AudioDuration(beats2Samples(n)) // Should be an implicit on a tuple?
 } //TODO: should be able to give these as Doubles as well
