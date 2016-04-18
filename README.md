@@ -1,18 +1,15 @@
-scalaudio
+#scalaudio
 
-To Do:
-- "Precomputed" section of AudioContext for common constructs (val to hold range 1 to (bufferSize-1) for example)
-- Refactor timing events (Ramp, ADSR curve, TimedEvent itself) to use AudioDurations
-- Maybe there should be subtype of filter for those that support Signal / ControlRate controls?
-- Need generic format for channel filling etc. in signal / ControlRate controls
-- Should create "1st buffer" notion for supplying warning messages that aren't exceptions so its not repetitive?
-- Audio input UnitGen needs to be fixed/tested (should be on own thread?)
-- Sawtooth needs to be fixed (octave?)
+scalaudio is a library is to facilitate audio synthesis/analysis on the JVM by wrapping the Java Sound API in more productive syntax. Its goal is to provide extreme flexibility while reducing verbosity of audio processing code, with the added bonus of type-checking. It aims to be pretty modular (can create different config contexts, strap on different output engines) yet use the same syntax for both real-time and offline processing.
 
-Questions:
-- Is internal caching of buffers really necessary if intention is to use flow of building frameFuncs to feed anonymous UnitGens?
-- Could go fully functional & treat filters as Singleton if no state is involved. Could have UnitGens recurse with state so its not stored internally?
-Only problem is this shifts responsible to user to manage buffer updates (only call outputbuffer once since there will be no record of currentFrame)
-Could prep recursion and pass back that function to be executed? So "state" is more just passing around of closures?
-- Consider how to treat off-by-one issues surrounding duration (should a duration of 10 span 11 frames, start doesn't count...? Is it worth the misnomer
-if calculations are easier?)
+###why?
+This project was initially created to facilitate my own computer music composition & audio machine learning projects but I decided to open source it since I only get to work on it in spurts (between my dayjob, other music composition, and toying around with audio in Clojure... some lib from that venture will probably be appearing here soon as well).
+
+It was loosely inspired by Phil Burk's excellent library JSyn (in fact, JSyn is still a dependency as scalaudio borrows some of its utils, though this dependency will likely be cut in a future release).
+
+###contribute!
+I welcome contributors and will happily review/accept PRs as well as entertaining discussion about fundamental, possibly far-reaching changes to the library core. It is currently somewhat functional but there is clearly some identity crisis concerning handling of sample-rate vs control rate signal, for example. (I do have some ideas for most of these issues but would love for a person with some ingenuity to try to leap-frog to something even better).
+
+Some working examples will be uploaded ASAP (though the test folder gives some good hints, as many of those ARE working tests... just can't vouch for 100% passing at this time as the library underwent a lot of rapid evolutions in the first few months of work).
+
+If you write and engage me I will be way more likely to continue work on this project, so please do!
