@@ -49,7 +49,7 @@ case class ScalaudioConfig(BeatsPerMinute: Double = 120,
                            ...
 ```                           
 #####AudioContext
-An AudioContext is basically an operating workspace pinned to a particular Scalaudio config. If no config is passed in, the default config will be used. This context should usually be defined implicitly, as most of the libraries functions accept it implicitly and it is should be transparently passed through most scopes.
+An AudioContext is basically an operating workspace pinned to a particular Scalaudio config. If no config is passed in, the default config will be used. This context should usually be defined implicitly, as most of the library's functions accept it implicitly and pass it transparently through inner scopes.
 ```scala
 implicit val audioContext = AudioContext()
 ```
