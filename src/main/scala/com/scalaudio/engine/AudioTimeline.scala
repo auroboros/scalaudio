@@ -6,7 +6,7 @@ import com.scalaudio.syntax.{UnitParams, AudioDuration}
 /**
   * Created by johnmcgill on 1/22/16.
   */
-trait AudioTimepiece {
+trait AudioTimeline {
   def outputBuffers(params : Option[UnitParams] = None)(implicit audioContext: AudioContext) : List[Array[Double]]
 
   def play(duration : AudioDuration)(implicit audioContext: AudioContext, outputEngines : List[OutputEngine]) = {

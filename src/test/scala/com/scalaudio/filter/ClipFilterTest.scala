@@ -1,7 +1,7 @@
 package com.scalaudio.filter
 
 import com.scalaudio.{ScalaudioConfig, AudioContext}
-import com.scalaudio.engine.{AudioTimepiece, Playback}
+import com.scalaudio.engine.{AudioTimeline, Playback}
 import com.scalaudio.filter.mix.Splitter
 import com.scalaudio.syntax.ScalaudioSyntaxHelpers
 import com.scalaudio.unitgen.{FuncGen, SineGen, UnitGen}
@@ -27,7 +27,7 @@ class ClipFilterTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers 
     val splitter : Splitter = Splitter(2)
     val testFrameFunc: () => List[Array[Double]] = () => sineGen.outputBuffers() feed clipper.processBuffers feed splitter.processBuffers
 
-    val playableUnitGen = new FuncGen(testFrameFunc) with AudioTimepiece
+    val playableUnitGen = new FuncGen(testFrameFunc) with AudioTimeline
     playableUnitGen.play(1000 buffers)
   }
 }

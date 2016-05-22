@@ -1,6 +1,6 @@
 package com.scalaudio.sigchains
 
-import com.scalaudio.engine.{AudioTimepiece, Playback}
+import com.scalaudio.engine.{AudioTimeline, Playback}
 import com.scalaudio.filter.mix.{StereoPanner, Splitter}
 import com.scalaudio.filter.{Filter, GainFilter}
 import com.scalaudio.syntax.ScalaudioSyntaxHelpers
@@ -16,7 +16,7 @@ class SimpleChainTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers
   "SignalChain abstraction" should "playback mono SignalChain with nil filter list" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(NOutChannels = 1))
 
-    val sigChain = new SignalChain(new NoiseGen, Nil) with AudioTimepiece
+    val sigChain = new SignalChain(new NoiseGen, Nil) with AudioTimeline
 
     sigChain.play(1000 buffers)
   }
@@ -24,7 +24,7 @@ class SimpleChainTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers
   "SignalChain abstraction" should "playback stereo SignalChain only if signal is split" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(NOutChannels = 2))
 
-    val sigChain = new SignalChain(new NoiseGen, List(Splitter(2))) with AudioTimepiece
+    val sigChain = new SignalChain(new NoiseGen, List(Splitter(2))) with AudioTimeline
 
     sigChain.play(1000 buffers)
   }
@@ -42,7 +42,7 @@ class SimpleChainTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers
     implicit val audioContext = AudioContext(ScalaudioConfig())
 
     val filterChain : List[Filter] = List(new GainFilter(.5), new GainFilter(.75))
-    val sigChainList = new SignalChain(new NoiseGen, filterChain) with AudioTimepiece
+    val sigChainList = new SignalChain(new NoiseGen, filterChain) with AudioTimeline
 
     sigChainList.play(1000 buffers)
     sigChainList.stop
@@ -52,7 +52,7 @@ class SimpleChainTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers
     implicit val audioContext = AudioContext(ScalaudioConfig())
 
     val filterChain : List[Filter] = List(new StereoPanner(.5))
-    val sigChainList = new SignalChain(new NoiseGen, filterChain) with AudioTimepiece
+    val sigChainList = new SignalChain(new NoiseGen, filterChain) with AudioTimeline
 
     sigChainList.play(1000 buffers)
     sigChainList.stop
