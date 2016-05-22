@@ -8,7 +8,7 @@ import com.scalaudio.syntax.UnitParams
   * Created by johnmcgill on 12/19/15.
   */
 // TODO: This class may be obsolete now that FuncGen exists
-case class SignalChain(val startGen : UnitGen, val filterChain : List[Filter])(implicit audioContext: AudioContext) extends UnitGen {
+case class SignalChain(startGen : UnitGen, filterChain : List[Filter])(implicit audioContext: AudioContext) extends UnitGen {
   val frameFunc = () => {
       if (filterChain.isEmpty) {
         startGen.outputBuffers()

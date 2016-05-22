@@ -13,13 +13,13 @@ import scala.concurrent.duration._
 case class TriggerSampler(wtType : WavetableType, triggerTimes : List[AudioDuration] = Nil)(implicit audioContext: AudioContext) extends UnitGen with ScalaudioSyntaxHelpers {
   import SamplerUtils._
 
-  val sampleTape : SamplerTape = SamplerTape(wavetableMode2Sample(wtType, 10 seconds), new SampleState(), triggerTimes)
+  val sampleTape : SamplerTape = SamplerTape(wavetableMode2Sample(wtType, 10.seconds), new SampleState(), triggerTimes)
 
   internalBuffers = List.fill(sampleTape.soundSample.wavetable.size)(Array.fill(audioContext.config.FramesPerBuffer)(0))
 
   override def computeBuffer(params : Option[UnitParams] = None) =
     0 until audioContext.config.FramesPerBuffer foreach { s =>
-      triggerCheck((currentFrame buffers) + AudioDuration(s))
+      triggerCheck(currentFrame.buffers + AudioDuration(s))
       sampleTape.soundSample.wavetable.indices foreach { c =>
         internalBuffers(c)(s) = computeSample(c, sampleTape.state.position, 1)
       }

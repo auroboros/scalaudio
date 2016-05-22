@@ -13,12 +13,12 @@ import scala.concurrent.duration._
 /**
   * Created by johnmcgill on 1/24/16.
   */
-case class WavetableGen(val initMode : WavetableType, val playbackRate : Double = 1)(implicit audioContext : AudioContext) extends UnitGen with ScalaudioSyntaxHelpers {
+case class WavetableGen(initMode : WavetableType, playbackRate : Double = 1)(implicit audioContext : AudioContext) extends UnitGen with ScalaudioSyntaxHelpers {
   // TODO: Playback rate vs osc frequency (can be given in case class signatures...). Or maybe use wavetable osc to match in compute block...
   import SamplerUtils._
 
   // Determines resolution, essentially (lower = more interpolation, higher = bigger buffer)
-  val periodLength : AudioDuration = 10 seconds
+  val periodLength : AudioDuration = 10.seconds
 
   val sample : SoundSample = wavetableMode2Sample(initMode, periodLength)
 

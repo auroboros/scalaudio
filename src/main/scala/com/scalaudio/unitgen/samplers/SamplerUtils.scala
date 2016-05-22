@@ -4,6 +4,7 @@ import java.io.File
 
 import com.scalaudio.jsyn.util.AdaptedJavaSoundSampleLoader
 import com.scalaudio.syntax.AudioDuration
+import com.scalaudio.types._
 
 /**
   * Created by johnmcgill on 2/1/16.
@@ -48,5 +49,5 @@ sealed trait WavetableType
 case class Sine() extends WavetableType
 case class Square() extends WavetableType
 case class Sawtooth() extends WavetableType
-case class SoundSample(wavetable : List[Array[Double]], samplingFreq : Double) extends WavetableType
+case class SoundSample(wavetable : MultiChannelAudio, samplingFreq : Double) extends WavetableType
 case class FileSample(filename : String) extends WavetableType

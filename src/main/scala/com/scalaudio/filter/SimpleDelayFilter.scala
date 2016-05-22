@@ -5,7 +5,7 @@ import scala.collection.mutable
 /**
   * Created by johnmcgill on 1/17/16.
   */
-case class SimpleDelayFilter(val lengthInSamples : Int) extends Filter {
+case class SimpleDelayFilter(lengthInSamples : Int) extends Filter {
   var delayBuffers : List[mutable.Queue[Double]] = Nil
 
   override def processBuffers(inBuffers: List[Array[Double]]): List[Array[Double]] = {
