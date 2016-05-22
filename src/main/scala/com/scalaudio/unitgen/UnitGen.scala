@@ -7,7 +7,7 @@ import com.scalaudio.types._
 
 
 trait UnitGen extends BufferComputer {
-  def outputBuffers(params : Option[UnitParams] = None)(implicit audioContext: AudioContext) : MultiChannelAudio = {
+  def outputBuffers(params : Option[UnitParams] = None)(implicit audioContext: AudioContext) : MultichannelAudio = {
     if (lastComputedFrame != currentFrame) {
       computeBuffer(params)
       lastComputedFrame = currentFrame

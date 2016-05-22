@@ -30,7 +30,7 @@ anonUnitGen.play(1000 buffers)
 Probably the core thesis of this library is the bufferFunc unit gen. This is a very tiny convenience wrapper that represents an anonymous unit gen. What is the point? Well, the point is really that an entire signal chain can be viewed as an anonymous unit generator. The output collection component (AudioTimeline) is essentially just looking for a parameterless function it can call repeatedly to generate buffers. As long as the signal chain ends with a component that has such a signature (represented by the abstract "outputBuffers()" signature in AudioTimeline), it can fit into the playback engine. Originally I had developed a method of constructing a SignalChain unit gen that was essentially the combination of unitgens/filters, but it seemed silly to prescribe an arbitrary shape to this structure where a lot of flexibility would typically be desired. Therefore, this was replaced with the FuncGen, a simple wrapper that accepts a constructor arg for a function that generates signal output.
 The implementation is pretty simple --
 ```scala
-case class FuncGen(bufferFunc : () => List[Array[Double]]) extends UnitGen {
+case class FuncGen(bufferFunc : () => MultichannelAudio) extends UnitGen {
   override def computeBuffer(params : Option[UnitParams] = None) = internalBuffers = bufferFunc()
 }
 ```
@@ -64,6 +64,17 @@ Output engines include Playback, Recording, etc. (in the future, writing analysi
 ```scala
 trait AudioTimeline {
   def play(duration : AudioDuration)(implicit audioContext: AudioContext, outputEngines : List[OutputEngine]) = ...
+```
+#####Type Aliases
+To make signal flow more comprehensible (though arguably making naive code-reading less clear), a number of type aliases are introduced for different types of signal.
+```scala
+package object types {
+  type AudioSignal = Array[Double]
+  type ControlSignal = Double
+  type Signal = Either[ControlSignal, AudioSignal]
+
+  type MultichannelAudio = List[AudioSignal]
+}
 ```
 #####AudioDuration
 AudioDuration is similar to Scala's FiniteDuration but supports more audio terminology (beats, measures, buffers, samples). This allows for us to re-express the duration in different terms as is convenient (with whole samples being the finest resolution). AudioDurations can be converted to/from FiniteDuration pretty easily, so typical durations ("5 seconds") can be passed in most places where AudioDurations are required and will be converted implicitly via methods in ScalaudioSyntaxHelpers.

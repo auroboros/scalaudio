@@ -8,5 +8,5 @@ package object types {
   type ControlSignal = Double
   type Signal = Either[ControlSignal, AudioSignal]
 
-  type MultiChannelAudio = List[AudioSignal]
+  type MultichannelAudio = List[AudioSignal]
 }

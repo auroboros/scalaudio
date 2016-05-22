@@ -8,13 +8,13 @@ import com.scalaudio.types._
   * Created by johnmcgill on 12/19/15.
   */
 trait Filter extends BufferComputer {
-  def processBuffers(inBuffers : MultiChannelAudio) : MultiChannelAudio
+  def processBuffers(inBuffers : MultichannelAudio) : MultichannelAudio
 }
 
 trait ControllableFilter extends Filter {
-  def processBuffersWithSignal(inBuffers : MultiChannelAudio, controlSigBuffers : MultiChannelAudio) : MultiChannelAudio
+  def processBuffersWithSignal(inBuffers : MultichannelAudio, controlSigBuffers : MultichannelAudio) : MultichannelAudio
 
-  def processBuffersWithControl(inBuffers : MultiChannelAudio, controlVal : Double) : MultiChannelAudio
+  def processBuffersWithControl(inBuffers : MultichannelAudio, controlVal : Double) : MultichannelAudio
 }
 
 trait SampleIndependentControllableFilter extends ControllableFilter {
@@ -22,10 +22,10 @@ trait SampleIndependentControllableFilter extends ControllableFilter {
 
   def processSample(sig : Double, ctrl : Double): Double
 
-  final override def processBuffers(inBuffers : MultiChannelAudio) : MultiChannelAudio =
+  final override def processBuffers(inBuffers : MultichannelAudio) : MultichannelAudio =
     processBuffersWithControl(inBuffers, defaultCtrlParam)
 
-  final override def processBuffersWithSignal(inBuffers : MultiChannelAudio, controlSigBuffers : MultiChannelAudio) : MultiChannelAudio =
+  final override def processBuffersWithSignal(inBuffers : MultichannelAudio, controlSigBuffers : MultichannelAudio) : MultichannelAudio =
     if (controlSigBuffers.size == 1) {
       inBuffers map (b => (b, controlSigBuffers.head).zipped map processSample)
     } else if (inBuffers.size == controlSigBuffers.size) {
@@ -39,6 +39,6 @@ trait SampleIndependentControllableFilter extends ControllableFilter {
   // TODO: This control val & maybe also gain in constructor should be given as List (gain vals for each channel or single that is applied to all)
   // Maybe there is some even better generic way to expand signal if necessary so that this 1 applies to all or value for each channel pattern
   // can be replicated across many filters?
-  final override def processBuffersWithControl(inBuffers : MultiChannelAudio, controlVal : ControlSignal) : MultiChannelAudio =
+  final override def processBuffersWithControl(inBuffers : MultichannelAudio, controlVal : ControlSignal) : MultichannelAudio =
     inBuffers map (_ map (s => processSample(s,controlVal)))
 }

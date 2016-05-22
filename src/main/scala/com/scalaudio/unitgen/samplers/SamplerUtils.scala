@@ -49,5 +49,5 @@ sealed trait WavetableType
 case class Sine() extends WavetableType
 case class Square() extends WavetableType
 case class Sawtooth() extends WavetableType
-case class SoundSample(wavetable : MultiChannelAudio, samplingFreq : Double) extends WavetableType
+case class SoundSample(wavetable : MultichannelAudio, samplingFreq : Double) extends WavetableType
 case class FileSample(filename : String) extends WavetableType

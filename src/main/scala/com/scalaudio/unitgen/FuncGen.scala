@@ -8,6 +8,6 @@ import com.scalaudio.types._
   *
   * Created by johnmcgill on 1/18/16.
   */
-case class FuncGen(bufferFunc : () => MultiChannelAudio) extends UnitGen {
+case class FuncGen(bufferFunc : () => MultichannelAudio) extends UnitGen {
   override def computeBuffer(params : Option[UnitParams] = None) = internalBuffers = bufferFunc()
 }
