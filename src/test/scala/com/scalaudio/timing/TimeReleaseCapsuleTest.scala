@@ -53,9 +53,9 @@ class TimeReleaseCapsuleTest extends FlatSpec with Matchers with ScalaudioSyntax
   "Sine" should "be played through ADSR" in {
     implicit val audioContext : AudioContext = AudioContext()
 
-    val myADSR = ADSRCurve(700 buffers, .9, 100 buffers, .45, 200 buffers, 600 buffers)
-    val capsule : TimeReleaseCapsule = TimeReleaseCapsule(TimedCompositeEvent(1 buffers, myADSR) ++
-      TimedCompositeEvent(2000 buffers, myADSR) ++ TimedCompositeEvent(5000 buffers, myADSR))
+    val myADSR = ADSRCurve(700.buffers, .9, 100.buffers, .45, 200.buffers, 600.buffers)
+    val capsule : TimeReleaseCapsule = TimeReleaseCapsule(TimedCompositeEvent(1.buffers, myADSR) ++
+      TimedCompositeEvent(2000.buffers, myADSR) ++ TimedCompositeEvent(5000.buffers, myADSR))
 
     val sineGen = SineGen()
     val splitter = Splitter(2)
