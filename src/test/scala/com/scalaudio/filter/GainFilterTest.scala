@@ -1,11 +1,10 @@
 package com.scalaudio.filter
 
-import com.scalaudio.{ScalaudioConfig, AudioContext}
-import com.scalaudio.engine.{AudioTimeline, Playback}
-import com.scalaudio.filter.mix.Splitter
+import com.scalaudio.engine.AudioTimeline
 import com.scalaudio.filter.util.RangeScaler
-import com.scalaudio.syntax.{UnitParams, ScalaudioSyntaxHelpers}
+import com.scalaudio.syntax.ScalaudioSyntaxHelpers
 import com.scalaudio.unitgen._
+import com.scalaudio.{AudioContext, ScalaudioConfig}
 import org.scalatest.{FlatSpec, Matchers}
 
 /**

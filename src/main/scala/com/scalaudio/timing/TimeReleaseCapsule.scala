@@ -1,7 +1,7 @@
 package com.scalaudio.timing
 
 import com.scalaudio.AudioContext
-import com.scalaudio.syntax.{UnitParams, ScalaudioSyntaxHelpers}
+import com.scalaudio.syntax.ScalaudioSyntaxHelpers
 import com.scalaudio.unitgen.UnitGen
 
 /**
@@ -10,7 +10,7 @@ import com.scalaudio.unitgen.UnitGen
   */
 // TODO: Would probably be more efficient to implement as mutable list & chop off outdated pieces rather than using filter
 // (test on 2nd element, discard first if second now applies)
-case class TimeReleaseCapsule(val initTimedEvents : List[TimedEvent])(implicit audioContext: AudioContext) extends UnitGen with ScalaudioSyntaxHelpers {
+case class TimeReleaseCapsule(initTimedEvents : List[TimedEvent])(implicit audioContext: AudioContext) extends UnitGen with ScalaudioSyntaxHelpers {
   val sortedTimedEvents = initTimedEvents.sortBy(_.startTime)
   internalBuffers = List(Array.fill(audioContext.config.FramesPerBuffer)(0))
 

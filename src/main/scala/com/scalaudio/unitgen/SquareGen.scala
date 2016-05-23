@@ -1,7 +1,7 @@
 package com.scalaudio.unitgen
 
 import com.scalaudio.AudioContext
-import com.scalaudio.syntax.{UnitParams, Pitch, PitchRichInt}
+import com.scalaudio.syntax.{Pitch, PitchRichInt}
 
 /**
   * Created by johnmcgill on 12/21/15.

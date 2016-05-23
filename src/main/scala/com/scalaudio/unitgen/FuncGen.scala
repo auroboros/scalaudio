@@ -1,6 +1,5 @@
 package com.scalaudio.unitgen
 
-import com.scalaudio.syntax.UnitParams
 import com.scalaudio.types._
 
 /**

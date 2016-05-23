@@ -5,8 +5,11 @@ package com.scalaudio
   */
 package object types {
   type AudioSignal = Array[Double]
-  type ControlSignal = Double
-  type Signal = Either[ControlSignal, AudioSignal]
+  type AudioRate[T] = Array[T]
+
+  type ControlRate[T] = T
+
+  type Signal[T] = Either[ControlRate[T], AudioRate[T]]
 
   type MultichannelAudio = List[AudioSignal]
 }

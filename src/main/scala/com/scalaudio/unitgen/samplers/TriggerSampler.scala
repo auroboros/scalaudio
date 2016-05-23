@@ -1,9 +1,8 @@
 package com.scalaudio.unitgen.samplers
 
 import com.scalaudio.AudioContext
-import com.scalaudio.engine.Playback
 import com.scalaudio.math._
-import com.scalaudio.syntax.{AudioDuration, ScalaudioSyntaxHelpers, UnitParams}
+import com.scalaudio.syntax.{AudioDuration, ScalaudioSyntaxHelpers}
 import com.scalaudio.unitgen.UnitGen
 
 import scala.concurrent.duration._

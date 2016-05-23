@@ -1,7 +1,6 @@
 package com.scalaudio.unitgen
 
 import com.scalaudio.AudioContext
-import com.scalaudio.syntax.UnitParams
 
 /**
   * Created by johnmcgill on 12/18/15.
