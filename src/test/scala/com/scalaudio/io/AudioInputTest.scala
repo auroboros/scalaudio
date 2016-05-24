@@ -1,9 +1,8 @@
 package com.scalaudio.io
 
-import com.scalaudio.{ScalaudioConfig, AudioContext}
-import com.scalaudio.engine.{AudioTimeline, Playback}
 import com.scalaudio.syntax.ScalaudioSyntaxHelpers
 import com.scalaudio.unitgen.LineIn
+import com.scalaudio.{AudioContext, ScalaudioConfig}
 import org.scalatest.{FlatSpec, Matchers}
 
 /**
@@ -11,10 +10,9 @@ import org.scalatest.{FlatSpec, Matchers}
   */
 class AudioInputTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers {
   "LineIn" should "be able to passthrough audio" in {
-    implicit val audioContext = AudioContext(ScalaudioConfig())
+    implicit val audioContext = AudioContext(ScalaudioConfig(nInChannels = 1, nOutChannels = 1))
 
-    val passthrough = new LineIn with AudioTimeline
-
+    val passthrough = LineIn()
     passthrough.play(100000 buffers)
   }
 }

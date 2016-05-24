@@ -1,7 +1,6 @@
 package com.scalaudio.unitgen.samplers
 
 import com.scalaudio.AudioContext
-import com.scalaudio.engine.AudioTimeline
 import com.scalaudio.syntax.ScalaudioSyntaxHelpers
 import org.scalatest.{FlatSpec, Matchers}
 
@@ -14,7 +13,7 @@ class TriggerSamplerTest extends FlatSpec with Matchers with ScalaudioSyntaxHelp
   "Sampler" should "play back once when manually activated" in {
     implicit val audioContest = AudioContext()
 
-    val sampler = new TriggerSampler(FileSample("/Users/johnmcgill/nocode/samples/Yamaha-TG100-Whistle-C5.wav")) with AudioTimeline
+    val sampler = new TriggerSampler(FileSample("/Users/johnmcgill/nocode/samples/Yamaha-TG100-Whistle-C5.wav"))
 
     sampler.activateSoundSample()
     sampler.play(5 seconds)
@@ -24,7 +23,7 @@ class TriggerSamplerTest extends FlatSpec with Matchers with ScalaudioSyntaxHelp
     implicit val audioContest = AudioContext()
 
     val sampler = new TriggerSampler(FileSample("/Users/johnmcgill/nocode/samples/Yamaha-TG100-Whistle-C5.wav"),
-      List(1 beats, 2 beats, 4 beats, 7 beats, 10 beats)) with AudioTimeline
+      List(1 beats, 2 beats, 4 beats, 7 beats, 10 beats))
 
     sampler.play(4 measures)
   }

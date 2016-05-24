@@ -39,6 +39,6 @@ trait SampleIndependentControllableFilter extends ControllableFilter {
   // TODO: This control val & maybe also gain in constructor should be given as List (gain vals for each channel or single that is applied to all)
   // Maybe there is some even better generic way to expand signal if necessary so that this 1 applies to all or value for each channel pattern
   // can be replicated across many filters?
-  final override def processBuffersWithControl(inBuffers : MultichannelAudio, controlVal : ControlSignal) : MultichannelAudio =
+  final override def processBuffersWithControl(inBuffers : MultichannelAudio, controlVal : Double) : MultichannelAudio =
     inBuffers map (_ map (s => processSample(s,controlVal)))
 }

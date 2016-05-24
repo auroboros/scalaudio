@@ -1,7 +1,6 @@
 package com.scalaudio.unitgen.samplers
 
 import com.scalaudio.AudioContext
-import com.scalaudio.engine.AudioTimeline
 import com.scalaudio.filter.mix.Splitter
 import com.scalaudio.syntax.ScalaudioSyntaxHelpers
 import com.scalaudio.unitgen.FuncGen
@@ -14,7 +13,7 @@ class WavetableGenTest extends FlatSpec with Matchers with ScalaudioSyntaxHelper
   "Wavetable" should "play sample at original speed" in {
       implicit val audioContext = AudioContext()
 
-    val wtGen = new WavetableGen(FileSample("/Users/johnmcgill/nocode/samples/Yamaha-TG100-Whistle-C5.wav")) with AudioTimeline
+    val wtGen = new WavetableGen(FileSample("/Users/johnmcgill/nocode/samples/Yamaha-TG100-Whistle-C5.wav"))
 
 //    val firstBuffer = wtGen.outputBuffers()
     wtGen.play(2000 buffers)
@@ -23,7 +22,7 @@ class WavetableGenTest extends FlatSpec with Matchers with ScalaudioSyntaxHelper
   "Wavetable" should "play sample at double speed" in {
     implicit val audioContext = AudioContext() // PIECE: Try different values here
 
-    val wtGen = new WavetableGen(FileSample("/Users/johnmcgill/nocode/samples/Yamaha-TG100-Whistle-C5.wav"), 2) with AudioTimeline
+    val wtGen = new WavetableGen(FileSample("/Users/johnmcgill/nocode/samples/Yamaha-TG100-Whistle-C5.wav"), 2)
 
     //    val firstBuffer = wtGen.outputBuffers()
     wtGen.play(2000 buffers)
@@ -32,7 +31,7 @@ class WavetableGenTest extends FlatSpec with Matchers with ScalaudioSyntaxHelper
   "Wavetable" should "play sample at half speed" in {
     implicit val audioContext = AudioContext() // PIECE: Try different values here
 
-    val wtGen = new WavetableGen(FileSample("/Users/johnmcgill/nocode/samples/Yamaha-TG100-Whistle-C5.wav"), .5) with AudioTimeline
+    val wtGen = new WavetableGen(FileSample("/Users/johnmcgill/nocode/samples/Yamaha-TG100-Whistle-C5.wav"), .5)
 
     //    val firstBuffer = wtGen.outputBuffers()
     wtGen.play(2000 buffers)
@@ -43,7 +42,7 @@ class WavetableGenTest extends FlatSpec with Matchers with ScalaudioSyntaxHelper
 
     val wtGen = new WavetableGen(Sawtooth(), 440)
     val splitter = Splitter(2)
-    val funcGen = new FuncGen(() => {wtGen.outputBuffers() feed splitter.processBuffers}) with AudioTimeline
+    val funcGen = new FuncGen(() => {wtGen.outputBuffers() feed splitter.processBuffers})
 
     //    val firstBuffer = wtGen.outputBuffers()
     funcGen.play(2000 buffers)
@@ -54,7 +53,7 @@ class WavetableGenTest extends FlatSpec with Matchers with ScalaudioSyntaxHelper
 
     val wtGen = new WavetableGen(Sine(), 440)
     val splitter = Splitter(2)
-    val funcGen = new FuncGen(() => {wtGen.outputBuffers() feed splitter.processBuffers}) with AudioTimeline
+    val funcGen = new FuncGen(() => {wtGen.outputBuffers() feed splitter.processBuffers})
 
     //    val firstBuffer = wtGen.outputBuffers()
     funcGen.play(2000 buffers)
@@ -65,7 +64,7 @@ class WavetableGenTest extends FlatSpec with Matchers with ScalaudioSyntaxHelper
 
     val wtGen = new WavetableGen(Square(), 440)
     val splitter = Splitter(2)
-    val funcGen = new FuncGen(() => {wtGen.outputBuffers() feed splitter.processBuffers}) with AudioTimeline
+    val funcGen = new FuncGen(() => {wtGen.outputBuffers() feed splitter.processBuffers})
 
     //    val firstBuffer = wtGen.outputBuffers()
     funcGen.play(2000 buffers)

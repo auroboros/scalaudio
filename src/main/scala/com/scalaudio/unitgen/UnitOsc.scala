@@ -1,27 +1,45 @@
 package com.scalaudio.unitgen
 
 import com.scalaudio.AudioContext
-import com.scalaudio.syntax.Pitch
+import com.scalaudio.syntax.{Pitch, PitchRichDouble}
+import com.scalaudio.types._
 
 /**
   * Created by johnmcgill on 1/6/16.
   */
-abstract class UnitOsc(implicit audioContext: AudioContext) extends UnitGen {
-  internalBuffers = List(Array.fill(framesPerBuffer)(0))
+case class OscillatorParams(freq : Option[Signal[Pitch]] = None, phase : Option[Signal[Double]] = None)
 
-  def framesPerBuffer(implicit audioContext: AudioContext) = audioContext.config.FramesPerBuffer
+abstract class UnitOsc(val initFreq : Pitch, val initPhase : Double)(implicit audioContext: AudioContext) extends UnitGen {
+  type UnitParams = OscillatorParams
 
   protected var phi : Double = 0 // phase : should be in radians in case freq changes
-
   protected var freq : Pitch = Pitch(0)
   protected var w : Double = 0 // Creates 0 to 2pi phaser with length of the period, essentially?
   protected var phiInc : Double = 0
   protected var period : Double = 0
 
+  // State initialization
+  internalBuffers = List(Array.fill(framesPerBuffer)(0))
+  handleParams(OscillatorParams(Some(Left(initFreq)), Some(Left(initPhase))))
+
+  def framesPerBuffer(implicit audioContext: AudioContext) = audioContext.config.framesPerBuffer
+
   def setFreq(newFreq : Pitch)(implicit audioContext: AudioContext) = {
     freq = newFreq
-    period = audioContext.config.SamplingRate / freq.toHz
-    w = 2 * Math.PI * freq.toHz / audioContext.config.SamplingRate
-    phiInc = w * audioContext.config.FramesPerBuffer
+    period = audioContext.config.samplingRate / freq.toHz
+    w = 2 * Math.PI * freq.toHz / audioContext.config.samplingRate
+    phiInc = w * audioContext.config.framesPerBuffer
+  }
+
+  def handleParams(params: OscillatorParams, frame: Int = 0) = {
+    params.freq foreach {
+      case Left(controlFreq) => if (frame == 0) setFreq(controlFreq)
+      case Right(signalFreq) => setFreq(signalFreq(frame))
+    }
+
+    params.phase foreach {
+      case Left(controlPhase) => if (frame == 0) phi = controlPhase
+      case Right(signalPhase) => phi = signalPhase(frame)
+    }
   }
 }

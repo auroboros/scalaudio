@@ -1,9 +1,8 @@
 package com.scalaudio.syntax
 
-import com.scalaudio.{ScalaudioConfig, AudioContext}
-import com.scalaudio.engine.{AudioTimeline, Playback}
 import com.scalaudio.filter.mix.Splitter
 import com.scalaudio.unitgen.{NoiseGen, SignalChain}
+import com.scalaudio.{AudioContext, ScalaudioConfig}
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.duration._
@@ -22,9 +21,9 @@ class DurationsTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers {
   }
 
   "Durations syntax sugar" should "convert a finite duration to samples (int or long)" in {
-    implicit val audioContext = AudioContext(ScalaudioConfig(NOutChannels = 2))
+    implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 2))
 
-    val sigChain = new SignalChain(new NoiseGen, List(Splitter(2))) with AudioTimeline
+    val sigChain = new SignalChain(new NoiseGen, List(Splitter(2)))
 
     sigChain.play(5 seconds) // THIS IS COMPUTING SAMPLES YET PLAY WANTS FRAMES...
   }
@@ -37,9 +36,9 @@ class DurationsTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers {
   }
 
   "Beats" should "calc based on beats per minute" in {
-    implicit val audioContext = AudioContext(ScalaudioConfig(BeatsPerMinute = 120))
+    implicit val audioContext = AudioContext(ScalaudioConfig(beatsPerMinute = 120))
 
-    assert((2 beats).toSamples / audioContext.config.SamplingRate.toDouble == 1) // 2 beats is 1 second
-    assert((120 beats).toSamples / audioContext.config.SamplingRate.toDouble == 60) // 120 beats is 1 minute (by definition)
+    assert((2 beats).toSamples / audioContext.config.samplingRate.toDouble == 1) // 2 beats is 1 second
+    assert((120 beats).toSamples / audioContext.config.samplingRate.toDouble == 60) // 120 beats is 1 minute (by definition)
   }
 }

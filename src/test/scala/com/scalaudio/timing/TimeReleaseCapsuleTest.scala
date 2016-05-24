@@ -1,7 +1,6 @@
 package com.scalaudio.timing
 
 import com.scalaudio.AudioContext
-import com.scalaudio.engine.{AudioTimeline, Playback}
 import com.scalaudio.filter.GainFilter
 import com.scalaudio.filter.mix.Splitter
 import com.scalaudio.syntax.ScalaudioSyntaxHelpers
@@ -53,15 +52,15 @@ class TimeReleaseCapsuleTest extends FlatSpec with Matchers with ScalaudioSyntax
   "Sine" should "be played through ADSR" in {
     implicit val audioContext : AudioContext = AudioContext()
 
-    val myADSR = ADSRCurve(700 buffers, .9, 100 buffers, .45, 200 buffers, 600 buffers)
-    val capsule : TimeReleaseCapsule = TimeReleaseCapsule(TimedCompositeEvent(1 buffers, myADSR) ++
-      TimedCompositeEvent(2000 buffers, myADSR) ++ TimedCompositeEvent(5000 buffers, myADSR))
+    val myADSR = ADSRCurve(700.buffers, .9, 100.buffers, .45, 200.buffers, 600.buffers)
+    val capsule : TimeReleaseCapsule = TimeReleaseCapsule(TimedCompositeEvent(1.buffers, myADSR) ++
+      TimedCompositeEvent(2000.buffers, myADSR) ++ TimedCompositeEvent(5000.buffers, myADSR))
 
     val sineGen = SineGen()
     val splitter = Splitter(2)
     val gainController = GainFilter()
     val frameFunc = {() => gainController.processBuffersWithControl(sineGen.outputBuffers(), capsule.outputControlValue) feed splitter.processBuffers}
-    val sigChain =  new FuncGen(frameFunc) with AudioTimeline
+    val sigChain =  new FuncGen(frameFunc)
 
     sigChain.play(10000 buffers)
   }

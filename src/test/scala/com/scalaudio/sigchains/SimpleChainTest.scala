@@ -1,11 +1,10 @@
 package com.scalaudio.sigchains
 
-import com.scalaudio.engine.{AudioTimeline, Playback}
-import com.scalaudio.filter.mix.{StereoPanner, Splitter}
+import com.scalaudio.filter.mix.{Splitter, StereoPanner}
 import com.scalaudio.filter.{Filter, GainFilter}
 import com.scalaudio.syntax.ScalaudioSyntaxHelpers
 import com.scalaudio.unitgen.{NoiseGen, SignalChain, SineGen}
-import com.scalaudio.{ScalaudioConfig, AudioContext}
+import com.scalaudio.{AudioContext, ScalaudioConfig}
 import org.scalatest.{FlatSpec, Matchers}
 
 /**
@@ -14,17 +13,17 @@ import org.scalatest.{FlatSpec, Matchers}
 class SimpleChainTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers {
 
   "SignalChain abstraction" should "playback mono SignalChain with nil filter list" in {
-    implicit val audioContext = AudioContext(ScalaudioConfig(NOutChannels = 1))
+    implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
-    val sigChain = new SignalChain(new NoiseGen, Nil) with AudioTimeline
+    val sigChain = new SignalChain(new NoiseGen, Nil)
 
     sigChain.play(1000 buffers)
   }
 
   "SignalChain abstraction" should "playback stereo SignalChain only if signal is split" in {
-    implicit val audioContext = AudioContext(ScalaudioConfig(NOutChannels = 2))
+    implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 2))
 
-    val sigChain = new SignalChain(new NoiseGen, List(Splitter(2))) with AudioTimeline
+    val sigChain = new SignalChain(new NoiseGen, List(Splitter(2)))
 
     sigChain.play(1000 buffers)
   }
@@ -42,19 +41,17 @@ class SimpleChainTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers
     implicit val audioContext = AudioContext(ScalaudioConfig())
 
     val filterChain : List[Filter] = List(new GainFilter(.5), new GainFilter(.75))
-    val sigChainList = new SignalChain(new NoiseGen, filterChain) with AudioTimeline
+    val sigChainList = new SignalChain(new NoiseGen, filterChain)
 
     sigChainList.play(1000 buffers)
-    sigChainList.stop
   }
 
   "Panner" should "pan some noise" in {
     implicit val audioContext = AudioContext(ScalaudioConfig())
 
     val filterChain : List[Filter] = List(new StereoPanner(.5))
-    val sigChainList = new SignalChain(new NoiseGen, filterChain) with AudioTimeline
+    val sigChainList = new SignalChain(new NoiseGen, filterChain)
 
     sigChainList.play(1000 buffers)
-    sigChainList.stop
   }
 }
