@@ -6,10 +6,10 @@ import com.scalaudio.engine.Interleaver
 /**
   * Created by johnmcgill on 12/20/15.
   */
-class LineIn(implicit audioContext: AudioContext) extends UnitGen {
+case class LineIn()(implicit audioContext: AudioContext) extends UnitGen {
   override def computeBuffer(params : Option[UnitParams] = None) = {
-    var buffer : Array[Double] = Array[Double](audioContext.config.FramesPerBuffer * audioContext.config.NInChannels)
+    var buffer : Array[Double] = Array[Double](audioContext.config.framesPerBuffer * audioContext.config.nInChannels)
     audioContext.audioInput.read(buffer)
-    internalBuffers = if (audioContext.config.NInChannels > 1) Interleaver.deinterleave(buffer, audioContext.config.NInChannels) else List(buffer)
+    internalBuffers = if (audioContext.config.nInChannels > 1) Interleaver.deinterleave(buffer, audioContext.config.nInChannels) else List(buffer)
   }
 }

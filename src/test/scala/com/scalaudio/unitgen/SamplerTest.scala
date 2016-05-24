@@ -4,9 +4,6 @@ import java.io.File
 
 import com.jsyn.data.FloatSample
 import com.jsyn.util.SampleLoader._
-import com.scalaudio.unitgen.samplers.TriggerSampler
-import com.scalaudio.{ScalaudioConfig, AudioContext}
-import com.scalaudio.engine.{Playback, AudioTimeline}
 import com.scalaudio.jsyn.util.{AdaptedJavaSoundSampleLoader, DoubleSample}
 import com.scalaudio.syntax.ScalaudioSyntaxHelpers
 import org.scalatest.{FlatSpec, Matchers}

@@ -21,17 +21,17 @@ case class WavetableGen(initMode : WavetableType, playbackRate : Double = 1)(imp
 
 //  def scaledLength : AudioDuration = AudioDuration((sample.wavetable.head.length / (sample.samplingFreq / audioContext.config.SamplingRate) / playbackRate).toLong)
 
-  val incrementRate : Double = playbackRate * (sample.samplingFreq / audioContext.config.SamplingRate)
+  val incrementRate : Double = playbackRate * (sample.samplingFreq / audioContext.config.samplingRate)
 
   var position : Double = 0
-  internalBuffers = List.fill(sample.wavetable.size)(Array.fill(audioContext.config.FramesPerBuffer)(0))
+  internalBuffers = List.fill(sample.wavetable.size)(Array.fill(audioContext.config.framesPerBuffer)(0))
 
   // Updates internal buffer
   override def computeBuffer(params : Option[UnitParams] = None) : Unit = {
     sample.wavetable.indices foreach {c =>
-      0 until audioContext.config.FramesPerBuffer foreach {s => internalBuffers(c)(s) = interpolatedSample(c,(position + s * incrementRate) % sample.wavetable.head.length)}
+      0 until audioContext.config.framesPerBuffer foreach { s => internalBuffers(c)(s) = interpolatedSample(c,(position + s * incrementRate) % sample.wavetable.head.length)}
     }
-    position = (position + audioContext.config.FramesPerBuffer * incrementRate) % sample.wavetable.head.length
+    position = (position + audioContext.config.framesPerBuffer * incrementRate) % sample.wavetable.head.length
   }
 
   def interpolatedSample(channel : Int, position : Double) : Double = {

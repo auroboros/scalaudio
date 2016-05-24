@@ -14,10 +14,10 @@ case class TriggerSampler(wtType : WavetableType, triggerTimes : List[AudioDurat
 
   val sampleTape : SamplerTape = SamplerTape(wavetableMode2Sample(wtType, 10.seconds), new SampleState(), triggerTimes)
 
-  internalBuffers = List.fill(sampleTape.soundSample.wavetable.size)(Array.fill(audioContext.config.FramesPerBuffer)(0))
+  internalBuffers = List.fill(sampleTape.soundSample.wavetable.size)(Array.fill(audioContext.config.framesPerBuffer)(0))
 
   override def computeBuffer(params : Option[UnitParams] = None) =
-    0 until audioContext.config.FramesPerBuffer foreach { s =>
+    0 until audioContext.config.framesPerBuffer foreach { s =>
       triggerCheck(currentFrame.buffers + AudioDuration(s))
       sampleTape.soundSample.wavetable.indices foreach { c =>
         internalBuffers(c)(s) = computeSample(c, sampleTape.state.position, 1)
@@ -45,7 +45,7 @@ case class TriggerSampler(wtType : WavetableType, triggerTimes : List[AudioDurat
 }
 
 case class SamplerTape(soundSample: SoundSample, var state : SampleState, triggerTimes : List[AudioDuration])(implicit audioContext: AudioContext) {
-  val incrementRate : Double = state.playbackRate * (soundSample.samplingFreq / audioContext.config.SamplingRate)
+  val incrementRate : Double = state.playbackRate * (soundSample.samplingFreq / audioContext.config.samplingRate)
 }
 
 //TODO: incrementRate needs to be dynamically determined a la playbackRate * (sample.samplingFreq / audioContext.config.SamplingRate)

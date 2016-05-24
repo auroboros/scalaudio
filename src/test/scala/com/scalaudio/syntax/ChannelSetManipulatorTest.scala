@@ -1,10 +1,9 @@
 package com.scalaudio.syntax
 
-import com.scalaudio.{ScalaudioConfig, AudioContext}
-import com.scalaudio.engine.AudioTimeline
 import com.scalaudio.filter.GainFilter
 import com.scalaudio.filter.mix.StereoPanner
 import com.scalaudio.unitgen._
+import com.scalaudio.{AudioContext, ScalaudioConfig}
 import org.scalatest.{FlatSpec, Matchers}
 
 /**
@@ -13,7 +12,7 @@ import org.scalatest.{FlatSpec, Matchers}
 class ChannelSetManipulatorTest extends FlatSpec with Matchers with ScalaudioSyntaxHelpers {
 
   "BufferFeeder rich type" should "kick in & feed dat buffer" in {
-    implicit val audioContext = AudioContext(ScalaudioConfig(NOutChannels = 1))
+    implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
     val sineGen : SineGen = SineGen(550 Hz)
     val panner : StereoPanner = StereoPanner()
@@ -33,12 +32,12 @@ class ChannelSetManipulatorTest extends FlatSpec with Matchers with ScalaudioSyn
       noiseGen.outputBuffers() feed panner.processBuffers
     }
 
-    val playableUnitGen = new FuncGen(testFrameFunc) with AudioTimeline
+    val playableUnitGen = new FuncGen(testFrameFunc)
     playableUnitGen.play(1000 buffers)
   }
 
   "Several sine gens" should "be able to be mixed & played" in {
-    implicit val audioContext = AudioContext(ScalaudioConfig(NOutChannels = 1))
+    implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
     val sg1 : SineGen = SineGen()
     val sg2 : SineGen = SineGen(873 Hz)
@@ -46,13 +45,13 @@ class ChannelSetManipulatorTest extends FlatSpec with Matchers with ScalaudioSyn
     val sg4 : SineGen = SineGen(921 Hz)
     val gain : GainFilter = GainFilter(.1)
 
-    val playableUnitGen = new FuncGen({() => sg1.outputBuffers() mix sg2.outputBuffers() mix sg3.outputBuffers() mix sg4.outputBuffers() feed gain.processBuffers}) with AudioTimeline
+    val playableUnitGen = new FuncGen({() => sg1.outputBuffers() mix sg2.outputBuffers() mix sg3.outputBuffers() mix sg4.outputBuffers() feed gain.processBuffers})
 
     playableUnitGen.play(1000 buffers)
   }
 
   "Several stereo-panned sine gens" should "be able to be mixed & played" in {
-    implicit val audioContext = AudioContext(ScalaudioConfig(NOutChannels = 2))
+    implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 2))
 
     val sg1 : SineGen = SineGen()
     val pan1 : StereoPanner = StereoPanner(.2)
@@ -64,7 +63,7 @@ class ChannelSetManipulatorTest extends FlatSpec with Matchers with ScalaudioSyn
     val pan4 : StereoPanner = StereoPanner(1)
     val gain : GainFilter = GainFilter(.1)
 
-    val playableUnitGen = new UnitGen with AudioTimeline {
+    val playableUnitGen = new UnitGen {
       def computeBuffer(params : Option[UnitParams] = None) = (sg1.outputBuffers() feed pan1.processBuffers) mix
         (sg2.outputBuffers() feed pan2.processBuffers) mix
         (sg3.outputBuffers() feed pan3.processBuffers) mix

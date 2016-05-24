@@ -22,13 +22,13 @@ abstract class UnitOsc(val initFreq : Pitch, val initPhase : Double)(implicit au
   internalBuffers = List(Array.fill(framesPerBuffer)(0))
   handleParams(OscillatorParams(Some(Left(initFreq)), Some(Left(initPhase))))
 
-  def framesPerBuffer(implicit audioContext: AudioContext) = audioContext.config.FramesPerBuffer
+  def framesPerBuffer(implicit audioContext: AudioContext) = audioContext.config.framesPerBuffer
 
   def setFreq(newFreq : Pitch)(implicit audioContext: AudioContext) = {
     freq = newFreq
-    period = audioContext.config.SamplingRate / freq.toHz
-    w = 2 * Math.PI * freq.toHz / audioContext.config.SamplingRate
-    phiInc = w * audioContext.config.FramesPerBuffer
+    period = audioContext.config.samplingRate / freq.toHz
+    w = 2 * Math.PI * freq.toHz / audioContext.config.samplingRate
+    phiInc = w * audioContext.config.framesPerBuffer
   }
 
   def handleParams(params: OscillatorParams, frame: Int = 0) = {
