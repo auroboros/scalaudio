@@ -16,7 +16,7 @@ abstract class UnitOsc(val initFreq : Pitch, val initPhase : Double)(implicit au
   protected var freq : Pitch = Pitch(0)
   protected var w : Double = 0 // Creates 0 to 2pi phaser with length of the period, essentially?
   protected var phiInc : Double = 0
-  protected var period : Double = 0
+  protected var period : Double = 0 // Only here for sawtooth gen??
 
   // State initialization
   internalBuffers = List(Array.fill(framesPerBuffer)(0))

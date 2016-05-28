@@ -15,7 +15,7 @@ trait OutputTerminal {
     println("Started audio")
 
     1 to duration.toBuffers.toInt foreach {_ =>
-      audioContext.advanceFrame()
+      audioContext.advanceByBuffer()
 
       if (audioContext.config.debugEnabled && audioContext.config.reportClipping && containsClipping(audioOut))
         println("CLIP!")

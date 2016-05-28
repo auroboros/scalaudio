@@ -39,7 +39,8 @@ case class AudioContext(config: ScalaudioConfig = ScalaudioConfig()) {
 
   object State {
     var currentBuffer = 0
+    var currentSample = 0 // For AMP
   }
 
-  def advanceFrame() = State.currentBuffer += 1
+  def advanceByBuffer() = State.currentBuffer += 1
 }
