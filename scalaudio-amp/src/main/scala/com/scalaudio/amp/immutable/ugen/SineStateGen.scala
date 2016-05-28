@@ -9,11 +9,10 @@ import com.scalaudio.AudioContext
 object SineStateGen {
   def nextState(current: SineState)(implicit audioContext: AudioContext) : SineState = {
     val w = 2 * Math.PI * current.pitch.toHz / audioContext.config.samplingRate
-    val phiInc = w * audioContext.config.framesPerBuffer
 
     current.copy(
-      sample = Math.sin(w * current.phi),
-      phi = current.phi + phiInc
+      sample = Math.sin(current.phi),
+      phi = current.phi + w
     )
   }
 }

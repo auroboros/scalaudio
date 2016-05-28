@@ -4,6 +4,9 @@ package com.scalaudio
   * Created by johnmcgill on 5/22/16.
   */
 package object types {
+  type Sample = Double
+  type Frame = List[Sample]
+
   type AudioSignal = Array[Double]
   type AudioRate[T] = Array[T]
 

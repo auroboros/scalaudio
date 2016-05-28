@@ -1,4 +1,4 @@
-name := "scalaudio"
+name := "scalaudio-core"
 
 version := "0.01"
 

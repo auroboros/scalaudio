@@ -10,11 +10,10 @@ import com.scalaudio.types._
   */
 trait AmpOutput {
   // TODO: Make this a class and have it accept/house the frameFunc?
-
-  var bufferedOutput: MultichannelAudio
+  var bufferedOutput : MultichannelAudio = Nil
 
   // Multichannel sample (frame?)
-  def sampleOut(implicit audioContext: AudioContext): List[Double]
+  def sampleOut(implicit audioContext: AudioContext): Frame
 
   def initialize()(implicit audioContext: AudioContext) = {
     val c = audioContext.config
