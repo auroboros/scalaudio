@@ -1,4 +1,4 @@
-scalaudio.iml
+*.iml
 .idea/
 classes/
 target/
