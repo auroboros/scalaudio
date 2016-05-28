@@ -1,7 +1,7 @@
 package com.scalaudio.amp.engine
 
-import com.scalaudio.AudioContext
-import com.scalaudio.types.Frame
+import com.scalaudio.core.AudioContext
+import com.scalaudio.core.types.Frame
 
 /**
   * Created by johnmcgill on 5/28/16.

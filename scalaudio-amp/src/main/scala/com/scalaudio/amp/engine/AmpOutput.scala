@@ -1,9 +1,9 @@
 package com.scalaudio.amp.engine
 
-import com.scalaudio.AudioContext
-import com.scalaudio.engine.OutputEngine
-import com.scalaudio.syntax.AudioDuration
-import com.scalaudio.types._
+import com.scalaudio.core.AudioContext
+import com.scalaudio.core.engine.OutputEngine
+import com.scalaudio.core.syntax.AudioDuration
+import com.scalaudio.core.types.{Frame, MultichannelAudio}
 
 /**
   * Created by johnmcgill on 5/27/16.

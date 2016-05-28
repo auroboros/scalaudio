@@ -1,9 +1,8 @@
 package com.scalaudio.amp.immutable.ugen
 
-import com.scalaudio.amp.engine.{AmpOutput, FrameFuncAmpOutput}
-import com.scalaudio.{AudioContext, ScalaudioConfig}
-import com.scalaudio.syntax.ScalaudioSyntaxHelpers
-import com.scalaudio.types.Frame
+import com.scalaudio.amp.engine.FrameFuncAmpOutput
+import com.scalaudio.core.syntax.ScalaudioSyntaxHelpers
+import com.scalaudio.core.{AudioContext, ScalaudioConfig}
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.duration._

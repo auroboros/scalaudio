@@ -1,10 +1,15 @@
 package com.scalaudio.amp.immutable.ugen
 
-import com.scalaudio.AudioContext
+import com.scalaudio.core.AudioContext
+import com.scalaudio.core.syntax.Pitch
+import com.scalaudio.core.types.Sample
 
 /**
   * Created by johnmcgill on 5/27/16.
   */
+case class SineState(sample: Sample,
+                     pitch: Pitch,
+                     phi: Double)
 
 object SineStateGen {
   def nextState(current: SineState)(implicit audioContext: AudioContext) : SineState = {
