@@ -4,6 +4,7 @@ import java.io.File
 
 import com.jsyn.util.WaveFileWriter
 import com.scalaudio.core.AudioContext
+import com.scalaudio.core.types.AudioSignal
 
 /**
   * Created by johnmcgill on 1/6/16.
@@ -15,7 +16,7 @@ case class Recording(filename : String)(implicit audioContext: AudioContext) ext
   writer.setSamplesPerFrame(audioContext.config.nOutChannels)
   writer.setBitsPerSample(16)
 
-  def handleBuffer(buffers : List[Array[Double]]) = record(buffers)
+  override def handleAudio(buffers : List[Array[Double]]) = record(buffers)
 
   def record(buffers : List[Array[Double]]) = {
     // Default is stereo, 16 bits.
@@ -27,4 +28,6 @@ case class Recording(filename : String)(implicit audioContext: AudioContext) ext
 
     writer.write(Interleaver.interleave(buffers))
   }
+
+  override def handlePreInterleavedBuffer(buffer: AudioSignal): Unit = ???
 }

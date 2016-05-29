@@ -1,6 +1,7 @@
 package com.scalaudio.core.engine
 
 import com.scalaudio.core.AudioContext
+import com.scalaudio.core.types.{AudioSignal, MultichannelAudio}
 
 /**
   * Playback trait -- mix this in to a UnitGen to make it playable
@@ -8,9 +9,9 @@ import com.scalaudio.core.AudioContext
   * Created by johnmcgill on 12/20/15.
   */
 case class Playback()(implicit audioContext: AudioContext) extends OutputEngine {
-  def handleBuffer(buffers: List[Array[Double]]) = play(buffers)
+  override def handleAudio(buffers: MultichannelAudio) = playAudio(buffers)
 
-  def play(buffers: List[Array[Double]]) = {
+  def playAudio(buffers: MultichannelAudio) = {
     if (buffers.length != audioContext.config.nOutChannels)
       throw new Exception("Playback -- this device outputs incompatible number of channels. This playback system requires " + audioContext.config.nOutChannels)
 
@@ -19,4 +20,6 @@ case class Playback()(implicit audioContext: AudioContext) extends OutputEngine 
     else
       audioContext.audioOutput.write(buffers.head)
   }
+
+  override def handlePreInterleavedBuffer(buffer: AudioSignal) : Unit = audioContext.audioOutput.write(buffer)
 }

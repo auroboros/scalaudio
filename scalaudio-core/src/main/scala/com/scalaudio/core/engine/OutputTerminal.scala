@@ -20,7 +20,7 @@ trait OutputTerminal {
       if (audioContext.config.debugEnabled && audioContext.config.reportClipping && containsClipping(audioOut))
         println("CLIP!")
 
-      outputEngines foreach (_.handleBuffer(audioOut))
+      outputEngines foreach (_.handleAudio(audioOut))
     }
 
     if (audioContext.config.autoStartStop) audioContext.stop()

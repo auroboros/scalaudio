@@ -3,14 +3,14 @@ package com.scalaudio.amp.engine
 import com.scalaudio.core.AudioContext
 import com.scalaudio.core.engine.OutputEngine
 import com.scalaudio.core.syntax.AudioDuration
-import com.scalaudio.core.types.{Frame, MultichannelAudio}
+import com.scalaudio.core.types.{AudioSignal, Frame, MultichannelAudio}
 
 /**
   * Created by johnmcgill on 5/27/16.
   */
 trait AmpOutput {
   // TODO: Make this a class and have it accept/house the frameFunc?
-  var bufferedOutput : MultichannelAudio = Nil
+  var bufferedOutput : AudioSignal = Array.empty[Double]
 
   // Multichannel sample (frame?)
   def sampleOut(implicit audioContext: AudioContext): Frame
@@ -23,7 +23,7 @@ trait AmpOutput {
       println("Started audio")
     }
 
-    bufferedOutput = List.fill(c.nOutChannels)(Array.fill(c.framesPerBuffer)(0.0))
+    bufferedOutput = Array.fill(c.framesPerBuffer * c.nOutChannels)(0.0)
   }
 
   def play(duration: AudioDuration)(implicit audioContext: AudioContext, outputEngines: List[OutputEngine]) = {
@@ -34,7 +34,7 @@ trait AmpOutput {
       val offset = absoluteSample % audioContext.config.framesPerBuffer
 
       if (offset == 0)
-        outputEngines foreach (_.handleBuffer(bufferedOutput))
+        outputEngines foreach (_.handlePreInterleavedBuffer(bufferedOutput))
 
       // This all might be stupid waste of time because filling internal buffer is
       // essentially an unnecessary interleave/de-interleave? Can pass interleaved
