@@ -1,7 +1,7 @@
 package com.scalaudio.amp.immutable.filter
 
 import com.scalaudio.amp.engine.FrameFuncAmpOutput
-import com.scalaudio.amp.immutable.ugen.{SineState, SineStateGen}
+import com.scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
 import com.scalaudio.core.AudioContext
 import com.scalaudio.core.syntax.ScalaudioSyntaxHelpers
 import com.scalaudio.core.types.Frame
@@ -16,7 +16,7 @@ class FilterSpec extends FlatSpec with Matchers with ScalaudioSyntaxHelpers {
   "Gain & splitter" should "be chainable on sine" in {
     implicit val audioContext = AudioContext()
 
-    var sineState = SineState(0, 440.Hz, 0)
+    var sineState = OscState(0, 440.Hz, 0)
     var splitterOut : Frame = Nil
 
     val frameFunc = () => {

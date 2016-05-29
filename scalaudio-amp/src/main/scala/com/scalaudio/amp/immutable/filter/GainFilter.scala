@@ -1,6 +1,5 @@
 package com.scalaudio.amp.immutable.filter
 
-import com.scalaudio.amp.immutable.ugen.SineState
 import com.scalaudio.core.AudioContext
 import com.scalaudio.core.types.Frame
 

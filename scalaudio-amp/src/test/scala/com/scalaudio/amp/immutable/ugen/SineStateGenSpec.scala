@@ -14,7 +14,7 @@ class SineStateGenSpec extends FlatSpec with Matchers with ScalaudioSyntaxHelper
   "Sine state gen" should "be scriptable as a ugen" in {
     implicit val audioContext = AudioContext()
 
-    var state = SineState(0, 440.Hz, 0)
+    var state = OscState(0, 440.Hz, 0)
 
     1 to 1000 foreach {_ =>
       state = SineStateGen.nextState(state)
@@ -25,7 +25,7 @@ class SineStateGenSpec extends FlatSpec with Matchers with ScalaudioSyntaxHelper
   "Sine state gen" should "produce sine audio output" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
-    var state = SineState(0, 440.Hz, 0)
+    var state : OscState = OscState(0, 440.Hz, 0)
 
     val frameFunc = () => {
       state = SineStateGen.nextState(state)
