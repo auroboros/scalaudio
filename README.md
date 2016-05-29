@@ -2,10 +2,9 @@
 
 scalaudio is a library is to facilitate audio synthesis/analysis on the JVM by wrapping the Java Sound API in more productive syntax. Its goal is to provide extreme flexibility while reducing verbosity of audio processing code, with the added bonus of type-checking. It aims to be pretty modular (DI for config and output engines via implicits) yet use the same syntax for both real-time and offline processing. Efficiency is a secondary goal, though even in current form some mutable data structures are used to avoid performance snags of constant memory allocation.
 
-###Main Modules
-core
-
-[scalaudioAMP](https://github.com/auroboros/scalaudio/tree/master/scalaudio-amp)
+###Modules
+* core -- engine utils & a bunch of unitgens/processors based on traditional buffer-by-buffer processing
+* [scalaudioAMP](https://github.com/auroboros/scalaudio/tree/master/scalaudio-amp) -- unitgens/processors focused on sample-by-sample processing & based on immutable messaging pipelines for state simplification
 
 ###Getting started
 
