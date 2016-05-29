@@ -3,7 +3,7 @@ package com.scalaudio.amp.engine
 import com.scalaudio.core.AudioContext
 import com.scalaudio.core.engine.OutputEngine
 import com.scalaudio.core.syntax.AudioDuration
-import com.scalaudio.core.types.{AudioSignal, Frame, MultichannelAudio}
+import com.scalaudio.core.types.{AudioSignal, Frame}
 
 /**
   * Created by johnmcgill on 5/27/16.
@@ -34,12 +34,13 @@ trait AmpOutput {
       val offset = absoluteSample % audioContext.config.framesPerBuffer
 
       if (offset == 0)
-        outputEngines foreach (_.handlePreInterleavedBuffer(bufferedOutput))
+        outputEngines foreach (_.handleBuffers(Left(bufferedOutput)))
 
       // This all might be stupid waste of time because filling internal buffer is
       // essentially an unnecessary interleave/de-interleave? Can pass interleaved
       // 1-D array straight to output engine
-      sampleOut.zipWithIndex.foreach { case (s: Double, i: Int) => bufferedOutput(i)(offset) = s }
+      val frame = sampleOut
+      frame.zipWithIndex.foreach { case (s: Double, i: Int) => bufferedOutput(offset * frame.length + i) = s }
     }
 
     if (audioContext.config.autoStartStop) audioContext.stop()

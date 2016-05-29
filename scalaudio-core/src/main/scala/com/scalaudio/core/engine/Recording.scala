@@ -4,7 +4,7 @@ import java.io.File
 
 import com.jsyn.util.WaveFileWriter
 import com.scalaudio.core.AudioContext
-import com.scalaudio.core.types.AudioSignal
+import com.scalaudio.core.types.{AudioSignal, MultichannelAudio}
 
 /**
   * Created by johnmcgill on 1/6/16.
@@ -16,18 +16,20 @@ case class Recording(filename : String)(implicit audioContext: AudioContext) ext
   writer.setSamplesPerFrame(audioContext.config.nOutChannels)
   writer.setBitsPerSample(16)
 
-  override def handleAudio(buffers : List[Array[Double]]) = record(buffers)
+  override def handleBuffers(output : Either[AudioSignal, MultichannelAudio]) = record(output)
 
-  def record(buffers : List[Array[Double]]) = {
+  def record(output : Either[AudioSignal, MultichannelAudio]) = {
     // Default is stereo, 16 bits.
 //    val recorder = new WaveRecorder(synth, waveFile)
     System.out.println("Writing to WAV file " + waveFile.getAbsolutePath)
 
-    if (buffers.length != audioContext.config.nOutChannels)
-      throw new Exception("Playback -- this device outputs incompatible number of channels. This recording system requires " + audioContext.config.nOutChannels)
+    output match {
+      case Left(audioSignal) => writer.write(audioSignal)
+      case Right(multichannelAudio) =>
+        if (multichannelAudio.length != audioContext.config.nOutChannels)
+          throw new Exception("Playback -- this device outputs incompatible number of channels. This recording system requires " + audioContext.config.nOutChannels)
 
-    writer.write(Interleaver.interleave(buffers))
+        writer.write(Interleaver.interleave(multichannelAudio))
+    }
   }
-
-  override def handlePreInterleavedBuffer(buffer: AudioSignal): Unit = ???
 }
