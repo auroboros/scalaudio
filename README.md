@@ -2,15 +2,20 @@
 
 scalaudio is a library is to facilitate audio synthesis/analysis on the JVM by wrapping the Java Sound API in more productive syntax. Its goal is to provide extreme flexibility while reducing verbosity of audio processing code, with the added bonus of type-checking. It aims to be pretty modular (DI for config and output engines via implicits) yet use the same syntax for both real-time and offline processing. Efficiency is a secondary goal, though even in current form some mutable data structures are used to avoid performance snags of constant memory allocation.
 
+###Main Modules
+core
+
+[scalaudioAMP](https://github.com/auroboros/scalaudio/tree/master/scalaudio-amp)
+
 ###Getting started
 
 #####Single channel noise generator example
 ```scala
 object MyFirstComposition extends App with ScalaudioSyntaxHelpers {
-    implicit val audioContext = AudioContext(ScalaudioConfig(NOutChannels = 1))
+  implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
-    val noiseGen = new NoiseGen with AudioTimeline
-    noiseGen.play(5 seconds)
+  val noiseGen = NoiseGen()
+  noiseGen.play(5 seconds)
 }
 ```
 #####FuncGen (anonymous UnitGen -- the main thesis)
@@ -24,7 +29,7 @@ val testBufferFunc : () => List[Array[Double]] = () => {
   noiseGen.outputBuffers() feed panner.processBuffers // feed is a provided syntax helper for chaining
 }
 
-val anonUnitGen = new FuncGen(testBufferFunc) with AudioTimeline
+val anonUnitGen = new FuncGen(testBufferFunc)
 anonUnitGen.play(1000 buffers)
 ```
 Probably the core thesis of this library is the bufferFunc unit gen. This is a very tiny convenience wrapper that represents an anonymous unit gen. What is the point? Well, the point is really that an entire signal chain can be viewed as an anonymous unit generator. The output collection component (AudioTimeline) is essentially just looking for a parameterless function it can call repeatedly to generate buffers. As long as the signal chain ends with a component that has such a signature (represented by the abstract "outputBuffers()" signature in AudioTimeline), it can fit into the playback engine. Originally I had developed a method of constructing a SignalChain unit gen that was essentially the combination of unitgens/filters, but it seemed silly to prescribe an arbitrary shape to this structure where a lot of flexibility would typically be desired. Therefore, this was replaced with the FuncGen, a simple wrapper that accepts a constructor arg for a function that generates signal output.
@@ -38,14 +43,14 @@ case class FuncGen(bufferFunc : () => MultichannelAudio) extends UnitGen {
 #####ScalaudioConfig
 ScalaudioConfig contains a bunch of the parameters relevant to system configuration. Many are experimental but here is a sampling of some of the currently most relevant pieces... Defaults are supplied for all, so this can be constructed only explicitly specifying the values the user wishes to override.
 ```scala
-case class ScalaudioConfig(BeatsPerMinute: Double = 120,
-                           BeatsPerMeasure: Double = 4,
-                           AutoStartStop: Boolean = true,
-                           FramesPerBuffer: Int = 32,
-                           NOutChannels: Int = 2,
-                           NInChannels: Int = 1,
-                           SamplingRate: Int = 44100,
-                           FFTBufferSize: Int = 32,
+case class ScalaudioConfig(beatsPerMinute: Double = 120,
+                           beatsPerMeasure: Double = 4,
+                           autoStartStop: Boolean = true,
+                           framesPerBuffer: Int = 32,
+                           nOutChannels: Int = 2,
+                           nInChannels: Int = 1,
+                           samplingRate: Int = 44100,
+                           fftBufferSize: Int = 32,
                            ...
 ```                           
 #####AudioContext
@@ -69,9 +74,15 @@ trait AudioTimeline {
 To make signal flow more comprehensible (though arguably making naive code-reading less clear), a number of type aliases are introduced for different types of signal.
 ```scala
 package object types {
+  type Sample = Double
+  type Frame = List[Sample]
+
   type AudioSignal = Array[Double]
-  type ControlSignal = Double
-  type Signal = Either[ControlSignal, AudioSignal]
+  type AudioRate[T] = Array[T]
+
+  type ControlRate[T] = T
+
+  type Signal[T] = Either[ControlRate[T], AudioRate[T]]
 
   type MultichannelAudio = List[AudioSignal]
 }
