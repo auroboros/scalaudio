@@ -1,6 +1,6 @@
 To Do:
+- In writing to sound output, offer non-interleaving version of method & just make AMP generate pre-interleaved buffers since it fits that format naturally anyway?
 - "Precomputed" section of AudioContext for common constructs (val to hold range 1 to (bufferSize-1) for example)
-- Refactor timing events (Ramp, ADSR curve, TimedEvent itself) to use AudioDurations
 - Maybe there should be subtype of filter for those that support Signal / ControlRate controls?
 - Need generic format for channel filling etc. in signal / ControlRate controls
 - Should create "1st buffer" notion for supplying warning messages that aren't exceptions so its not repetitive?
