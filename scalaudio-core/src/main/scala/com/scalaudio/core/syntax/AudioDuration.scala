@@ -3,7 +3,7 @@ package com.scalaudio.core.syntax
 import com.scalaudio.core.AudioContext
 
 import scala.concurrent.duration.{FiniteDuration, _}
-
+import com.scalaudio.core.math
 /**
   * Created by johnmcgill on 1/18/16.
   */
@@ -13,7 +13,8 @@ case class AudioDuration(nSamples : Long)(implicit audioContext: AudioContext) e
 
   def toSamples : Long = nSamples
 
-  // TODO: Terminology here (& throughout codebase) is wrong... This isn't really a frame, its a buffer of frames...
+  def nextSample : AudioDuration = AudioDuration(nSamples + 1)
+
   def toBuffers : Long = samples2Buffers(nSamples) // TODO: Should be Double?? Buffer is not smallest unit in system
 
   def toBeats : Double = samples2Beats(nSamples)
@@ -25,6 +26,15 @@ case class AudioDuration(nSamples : Long)(implicit audioContext: AudioContext) e
   def -(other : AudioDuration) : AudioDuration = AudioDuration(nSamples - other.nSamples)
 
   override def compare(that: AudioDuration) : Int = Math.signum(nSamples - that.nSamples).toInt
+
+  def /(other : AudioDuration) : Double = nSamples.toDouble / other.nSamples
+}
+
+object AudioDuration {
+  import math._
+
+  def linearDurationInterpolation(partialDur: AudioDuration, fullDur: AudioDuration, startVal: Double, endVal: Double) : Double =
+    linearInterpolate(startVal, endVal, partialDur / fullDur)
 }
 
 object DurationConverter {

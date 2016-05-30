@@ -21,17 +21,4 @@ class SineStateGenSpec extends FlatSpec with Matchers with ScalaudioSyntaxHelper
       println(state)
     }
   }
-
-  "Sine state gen" should "produce sine audio output" in {
-    implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
-
-    var state : OscState = OscState(0, 440.Hz, 0)
-
-    val frameFunc = () => {
-      state = SineStateGen.nextState(state)
-      List(state.sample)
-    }
-
-    FrameFuncAmpOutput(frameFunc).play(5 seconds)
-  }
 }
