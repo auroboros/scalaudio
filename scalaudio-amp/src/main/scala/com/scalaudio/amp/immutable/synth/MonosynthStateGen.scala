@@ -1,7 +1,7 @@
 package com.scalaudio.amp.immutable.synth
 
 import com.scalaudio.amp.immutable.envelope.{AdsrEnvelope, EnvelopeState, EnvelopeStateGen, PointEnvelope}
-import com.scalaudio.amp.immutable.ugen.{OscState, SineStateGen, UnitOsc}
+import com.scalaudio.amp.immutable.ugen.{OscState, SineStateGen, OscStateGen}
 import com.scalaudio.core.AudioContext
 import com.scalaudio.core.syntax.{AudioDuration, Pitch, ScalaudioSyntaxHelpers}
 import com.scalaudio.core.types.Sample
@@ -34,7 +34,7 @@ object MonosynthStateGen extends ScalaudioSyntaxHelpers {
     )
   }
 
-  def nextState(s: MonosynthState, o: UnitOsc)(implicit audioContext: AudioContext): MonosynthState = {
+  def nextState(s: MonosynthState, o: OscStateGen)(implicit audioContext: AudioContext): MonosynthState = {
     val newPitchState = EnvelopeStateGen.nextState(s.pitchEnvState)
     val newAdsrState = EnvelopeStateGen.nextState(s.adsrEnvState)
     val newOscState = o.nextState(s.oscState.copy(pitch = newPitchState.value.Hz))
