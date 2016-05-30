@@ -3,7 +3,7 @@ package com.scalaudio.amp.immutable.envelope
 import com.scalaudio.core.AudioContext
 import com.scalaudio.core.syntax.AudioDuration
 
-import scala.collection.immutable.{SortedMap, TreeMap}
+import scala.collection.immutable.SortedMap
 
 /**
   * Created by johnmcgill on 5/29/16.

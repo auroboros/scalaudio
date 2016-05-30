@@ -17,7 +17,7 @@ case class MonosynthState(sample: Sample,
                           adsrEnvState: EnvelopeState)
 
 object MonosynthStateGen extends ScalaudioSyntaxHelpers {
-  def decodeInitialState(notes: SortedMap[AudioDuration, (Pitch, AdsrEnvelope)]): MonosynthState = {
+  def decodeInitialState(notes: SortedMap[AudioDuration, (Pitch, AdsrEnvelope)])(implicit audioContext: AudioContext): MonosynthState = {
     val initPitchEnvState = EnvelopeState(
       0,
       notes.map(entry => entry._1 -> PointEnvelope(entry._2._1.freqInHz))
@@ -34,10 +34,10 @@ object MonosynthStateGen extends ScalaudioSyntaxHelpers {
     )
   }
 
-  def nextState[T >: UnitOsc](s: MonosynthState)(implicit audioContext: AudioContext): MonosynthState = {
+  def nextState(s: MonosynthState, o: UnitOsc)(implicit audioContext: AudioContext): MonosynthState = {
     val newPitchState = EnvelopeStateGen.nextState(s.pitchEnvState)
     val newAdsrState = EnvelopeStateGen.nextState(s.adsrEnvState)
-    val newOscState = SineStateGen.nextState(s.oscState.copy(pitch = newPitchState.value.Hz))
+    val newOscState = o.nextState(s.oscState.copy(pitch = newPitchState.value.Hz))
 
     s.copy(
       sample = newOscState.sample * newAdsrState.value,
