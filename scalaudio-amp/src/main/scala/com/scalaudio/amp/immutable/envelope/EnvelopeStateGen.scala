@@ -3,13 +3,13 @@ package com.scalaudio.amp.immutable.envelope
 import com.scalaudio.core.AudioContext
 import com.scalaudio.core.syntax.AudioDuration
 
-import scala.collection.immutable.TreeMap
+import scala.collection.immutable.SortedMap
 
 /**
   * Created by johnmcgill on 5/29/16.
   */
 case class EnvelopeState(value: Double,
-                         remainingEvents: TreeMap[AudioDuration, EnvelopeSegment])
+                         remainingEvents: SortedMap[AudioDuration, EnvelopeSegment])
 
 object EnvelopeStateGen {
   def nextState(s: EnvelopeState)(implicit audioContext: AudioContext): EnvelopeState = {
