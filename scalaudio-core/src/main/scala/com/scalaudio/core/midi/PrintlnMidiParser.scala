@@ -1,30 +1,13 @@
 package com.scalaudio.core.midi
 
-import javax.sound.midi.{MidiDevice, MidiMessage, Receiver}
-
-import com.jsyn.devices.javasound.MidiDeviceTools
 import com.jsyn.midi.{MessageParser, MidiConstants}
 
 /**
-  * Created by johnmcgill on 5/30/16.
-  *
-  * Bunch of stuff adapted from JSyn
+  * Created by johnmcgill on 6/1/16.
   */
-class CustomReceiver extends Receiver {
-  val messageParser = new MyParser()
-
-  def close() {
-    System.out.print("Closed.")
-  }
-
-  def send(message: MidiMessage, timeStamp: Long) {
-    val bytes: Array[Byte] = message.getMessage
-    messageParser.parse(bytes)
-  }
-}
-
-class MyParser extends MessageParser {
+case class PrintlnMidiParser() extends MessageParser {
   override def controlChange(channel: Int, index: Int, value: Int) {
+    println("ctrl change")
     if (index == 1) {
       //      vibratoDepth = 0.1 * value / 128.0
       //      lfo.amplitude.set(vibratoDepth)
@@ -43,10 +26,12 @@ class MyParser extends MessageParser {
   }
 
   override def noteOff(channel: Int, noteNumber: Int, velocity: Int) {
+    println("note off")
     //    allocator.noteOff(noteNumber, synth.createTimeStamp)
   }
 
   override def noteOn(channel: Int, noteNumber: Int, velocity: Int) {
+    println("note on")
     //    val frequency: Double = convertPitchToFrequency(noteNumber)
     //    val amplitude: Double = velocity / (4 * 128.0)
     //    val timeStamp: TimeStamp = synth.createTimeStamp
@@ -54,24 +39,8 @@ class MyParser extends MessageParser {
   }
 
   override def pitchBend(channel: Int, bend: Int) {
+    println("pitch bend")
     val fraction: Double = (bend - MidiConstants.PITCH_BEND_CENTER) / MidiConstants.PITCH_BEND_CENTER.toDouble
     System.out.println("bend = " + bend + ", fraction = " + fraction)
-  }
-}
-
-object Midi {
-
-  def connectKeyboard(): Unit = {
-    val keyboard: MidiDevice = MidiDeviceTools.findKeyboard
-    val receiver: Receiver = new CustomReceiver
-    // Just use default synthesizer.
-    if (keyboard != null) {
-      keyboard.open()
-      keyboard.getTransmitter.setReceiver(receiver)
-      System.out.println("Play MIDI keyboard: " + keyboard.getDeviceInfo.getDescription)
-    }
-    else {
-      System.out.println("Could not find a keyboard.")
-    }
   }
 }
