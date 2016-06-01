@@ -15,6 +15,7 @@ case class MonosynthState(sample: Sample,
                           oscState: OscState,
                           pitchEnvState: EnvelopeState,
                           adsrEnvState: EnvelopeState)
+// TODO: Make realtime by having state have a copy method that accepts a note-on?
 
 object MonosynthStateGen extends ScalaudioSyntaxHelpers {
   def decodeInitialState(notes: SortedMap[AudioDuration, (Pitch, AdsrEnvelope)])(implicit audioContext: AudioContext): MonosynthState = {
