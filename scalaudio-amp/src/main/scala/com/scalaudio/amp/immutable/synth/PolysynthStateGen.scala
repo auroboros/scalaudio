@@ -12,7 +12,7 @@ import scala.collection.immutable.SortedMap
   * Created by johnmcgill on 5/30/16.
   */
 case class PolysynthState(sample: Sample,
-                          remainingNotes: SortedMap[AudioDuration, (Pitch, AdsrEnvelope)],
+                          remainingNotes: SortedMap[AudioDuration, List[(Pitch, AdsrEnvelope)]],
                           voicesPlaying: List[PolysynthVoiceState])
 
 case class PolysynthVoiceState(sample: Sample,
@@ -26,7 +26,7 @@ object PolysynthStateGen {
   def nextState(s: PolysynthState, o: OscStateGen)(implicit audioContext: AudioContext): PolysynthState = {
     // add new voices
     val newVoices : List[PolysynthVoiceState] = s.remainingNotes.takeWhile(_._1 <= audioContext.currentTime)
-      .map{note => newVoice(o, note._2._1, note._2._2)}.toList
+      .flatMap{noteList => noteList._2.map(note => newVoice(o, note._1, note._2))}.toList
     // remove finished voices
     val liveVoices = (newVoices ::: s.voicesPlaying).filterNot(_.finished)
     // update live voice states

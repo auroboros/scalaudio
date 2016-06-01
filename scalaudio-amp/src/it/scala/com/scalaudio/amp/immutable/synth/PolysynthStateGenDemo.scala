@@ -20,22 +20,22 @@ class PolysynthStateGenDemo extends IntegrationTestHarness {
       400.millis,
       .5,
       500.millis, //600
-      115.millis)  //15
+      115.millis) //15
 
-    val notes: SortedMap[AudioDuration, (Pitch, AdsrEnvelope)] =
+    val notes: SortedMap[AudioDuration, List[(Pitch, AdsrEnvelope)]] =
       TreeMap(
-        (1.second: AudioDuration) ->(440.Hz, adsrTemplate),
-        (2.second: AudioDuration) ->(550.Hz, adsrTemplate),
-        (3.second: AudioDuration) ->(660.Hz, adsrTemplate),
-        (4.second: AudioDuration) ->(880.Hz, adsrTemplate),
-        (4001.millis: AudioDuration) ->(445.Hz, adsrTemplate),
-        (5.second: AudioDuration) ->(220.Hz, adsrTemplate),
-        (7.second: AudioDuration) ->(770.Hz, adsrTemplate),
-        (7001.millis: AudioDuration) ->(330.Hz, adsrTemplate),
-        (8.second: AudioDuration) -> (660.Hz, adsrTemplate),
-        (8200.millis: AudioDuration) -> (550.Hz, adsrTemplate),
-        (8500.millis: AudioDuration) -> (660.Hz, adsrTemplate),
-        (9.second: AudioDuration) -> (440.Hz, adsrTemplate)
+        (1.second: AudioDuration) -> List((440.Hz, adsrTemplate)),
+        (2.second: AudioDuration) -> List((550.Hz, adsrTemplate)),
+        (3.second: AudioDuration) -> List((660.Hz, adsrTemplate)),
+        (4.second: AudioDuration) -> List((880.Hz, adsrTemplate),
+          (445.Hz, adsrTemplate)),
+        (5.second: AudioDuration) -> List((220.Hz, adsrTemplate)),
+        (7.second: AudioDuration) -> List((770.Hz, adsrTemplate),
+          (330.Hz, adsrTemplate)),
+        (8.second: AudioDuration) -> List((660.Hz, adsrTemplate)),
+        (8200.millis: AudioDuration) -> List((550.Hz, adsrTemplate)),
+        (8500.millis: AudioDuration) -> List((660.Hz, adsrTemplate)),
+        (9.second: AudioDuration) -> List((440.Hz, adsrTemplate))
       )
 
     var polysynthState = PolysynthState(0, notes, Nil)
