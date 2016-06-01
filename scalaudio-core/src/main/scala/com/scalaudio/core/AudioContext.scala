@@ -2,6 +2,7 @@ package com.scalaudio.core
 
 import com.jsyn.devices.javasound.JavaSoundAudioDevice
 import com.jsyn.devices.{AudioDeviceInputStream, AudioDeviceManager, AudioDeviceOutputStream}
+import com.scalaudio.core.syntax.AudioDuration
 
 /**
   * Created by johnmcgill on 12/18/15.
@@ -40,6 +41,8 @@ case class AudioContext(config: ScalaudioConfig = ScalaudioConfig()) {
     var currentBuffer = 0
     var currentSample = 0 // For AMP //TODO: Just change this to currentTime using AudioDuration?
   }
+
+  def currentTime : AudioDuration = AudioDuration(State.currentSample)(this) // For AMP
 
   def advanceByBuffer() = State.currentBuffer += 1
 }
