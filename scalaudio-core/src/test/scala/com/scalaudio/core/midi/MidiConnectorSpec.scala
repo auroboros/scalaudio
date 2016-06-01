@@ -8,6 +8,8 @@ import org.scalatest.{FlatSpec, Matchers}
   */
 class MidiConnectorSpec extends FlatSpec with Matchers with ScalaudioSyntaxHelpers {
   "MidiConnector" should "attach some MIDI input to the dummy parser" in {
-    MidiConnector.connectKeyboard(PrintlnMidiParser())
+    MidiConnector.connectKeyboard(SimpleMidiReceiver(PrintlnMidiParser()))
+
+    Thread.sleep(10000)
   }
 }

@@ -13,9 +13,8 @@ import com.jsyn.midi.{MessageParser, MidiConstants}
 
 object MidiConnector {
 
-  def connectKeyboard(messageParser: MessageParser): Unit = {
+  def connectKeyboard(receiver: Receiver): Unit = {
     val keyboard: MidiDevice = MidiDeviceTools.findKeyboard
-    val receiver: Receiver = SimpleMidiReceiver(messageParser)
 
     // Just use default synthesizer.
     if (keyboard != null) {
