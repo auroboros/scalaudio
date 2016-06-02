@@ -9,6 +9,7 @@ import com.scalaudio.core.midi._
 
 import scala.collection.mutable.ListBuffer
 import scala.collection._
+import scala.collection.immutable.TreeMap
 
 /**
   * Created by johnmcgill on 6/2/16.
@@ -41,16 +42,23 @@ class MonosynthMidiReceiver(adsrTemplate: AdsrEnvelope)(implicit audioContext: A
 
   def addCommandToState(s: MonosynthState, c: MidiCommand): MonosynthState =
     c match {
-      case NoteOn(channel, noteNumber, velocity) =>
-        if (unmatchedNoteOns.isEmpty) {
-
-        }
-        s.copy(pitchEnvState = s.pitchEnvState.copy(value = noteNumber))
-      case NoteOff(channel, noteNumber, velocity) =>
-        s.copy(
+      case n@NoteOn(channel, noteNumber, velocity) =>
+        val newState = s.copy(
           adsrEnvState = s.adsrEnvState.copy(
-            remainingEvents = s.adsrEnvState.remainingEvents ++ adsrTemplate.asLinearEnvelopes(audioContext)
-          )
+            remainingEvents = s.adsrEnvState.remainingEvents ++ adsrTemplate.asLinearEnvelopes(audioContext.currentTime).take(2)
+          ),
+          pitchEnvState = s.pitchEnvState.copy(value = noteNumber)
         )
+        unmatchedNoteOns.update(s"$channel-$noteNumber", n)
+        newState
+      case NoteOff(channel, noteNumber, velocity) =>
+        unmatchedNoteOns -= s"$channel-$noteNumber"
+        if (unmatchedNoteOns.isEmpty)
+          s.copy(
+            adsrEnvState = s.adsrEnvState.copy(
+              remainingEvents = s.adsrEnvState.remainingEvents ++ TreeMap(adsrTemplate.asLinearEnvelopes(audioContext.currentTime).last)
+            )
+          )
+        else s
     }
 }
