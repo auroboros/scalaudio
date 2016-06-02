@@ -1,8 +1,9 @@
 package com.scalaudio.amp.immutable.synth
 
 import com.scalaudio.amp.immutable.envelope.{AdsrEnvelope, EnvelopeState, EnvelopeStateGen, PointEnvelope}
-import com.scalaudio.amp.immutable.ugen.{OscState, SineStateGen, OscStateGen}
+import com.scalaudio.amp.immutable.ugen.{OscState, OscStateGen, SineStateGen}
 import com.scalaudio.core.AudioContext
+import com.scalaudio.core.midi.MidiCommand
 import com.scalaudio.core.syntax.{AudioDuration, Pitch, ScalaudioSyntaxHelpers}
 import com.scalaudio.core.types.Sample
 
