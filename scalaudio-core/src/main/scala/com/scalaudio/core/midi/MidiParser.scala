@@ -2,6 +2,8 @@ package com.scalaudio.core.midi
 
 /**
   * Created by johnmcgill on 6/1/16.
+  *
+  * adapted from Jsyn
   */
 object MidiParser {
   def parse(var1: Array[Byte]) : MidiCommand = {
@@ -16,7 +18,7 @@ object MidiParser {
         if (var5 == 0) {
           NoteOff(var4, var1(1), var5)
         } else {
-          NoteOff(var4, var1(1), var5)
+          NoteOn(var4, var1(1), var5)
         }
       case 176 =>
         CtrlChange(var4, var1(1), var1(2))
