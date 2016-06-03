@@ -3,7 +3,7 @@ package com.scalaudio.amp.midi
 import com.scalaudio.amp.engine.FrameFuncAmpOutput
 import com.scalaudio.amp.immutable.envelope.AdsrEnvelope
 import com.scalaudio.amp.immutable.synth.MonosynthStateGen
-import com.scalaudio.amp.immutable.ugen.SineStateGen
+import com.scalaudio.amp.immutable.ugen.{SineStateGen, SquareStateGen}
 import com.scalaudio.core.midi.MidiConnector
 import com.scalaudio.core.syntax.{AudioDuration, Pitch}
 import com.scalaudio.core.{AudioContext, IntegrationTestHarness, ScalaudioConfig}
@@ -23,7 +23,7 @@ class MonosynthMidiReceiverDemo extends IntegrationTestHarness {
       40.millis,
       .5,
       60.millis,
-      15.millis)
+      115.millis)
 
     var monosynthState = MonosynthStateGen.decodeInitialState(TreeMap.empty[AudioDuration, (Pitch, AdsrEnvelope)])
 
@@ -33,11 +33,11 @@ class MonosynthMidiReceiverDemo extends IntegrationTestHarness {
     val frameFunc = () => {
       monosynthState = MonosynthStateGen.nextState(
         midiReceiver.processMidiCommandsIntoState(monosynthState),
-        SineStateGen
+        SquareStateGen
       )
       List(monosynthState.sample)
     }
 
-    FrameFuncAmpOutput(frameFunc).play(20.seconds)
+    FrameFuncAmpOutput(frameFunc).play(1000.seconds)
   }
 }
