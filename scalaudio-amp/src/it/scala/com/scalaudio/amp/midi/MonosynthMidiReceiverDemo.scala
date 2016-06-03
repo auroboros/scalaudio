@@ -27,7 +27,7 @@ class MonosynthMidiReceiverDemo extends IntegrationTestHarness {
 
     var monosynthState = MonosynthStateGen.decodeInitialState(TreeMap.empty[AudioDuration, (Pitch, AdsrEnvelope)])
 
-    val midiReceiver = MonosynthMidiReceiver(adsrTemplate)
+    val midiReceiver = MonosynthMidiReceiver(adsrTemplate, 200.millis)
     MidiConnector.connectKeyboard(midiReceiver)
 
     val frameFunc = () => {

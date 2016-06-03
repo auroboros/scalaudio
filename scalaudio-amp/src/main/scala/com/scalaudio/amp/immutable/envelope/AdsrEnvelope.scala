@@ -14,13 +14,13 @@ case class AdsrEnvelope(attackDuration: AudioDuration,
                         sustainDuration: AudioDuration,
                         releaseDuration: AudioDuration) {
 
-  def asLinearEnvelopes(startTime: AudioDuration): SortedMap[AudioDuration, LinearEnvelope] = {
+  def asLinearEnvelopes(startTime: AudioDuration, startVal: Double = 0): SortedMap[AudioDuration, LinearEnvelope] = {
     val decayStart = startTime + attackDuration
     val sustainStart = decayStart + decayDuration
     val releaseStart = sustainStart + sustainDuration
 
     TreeMap(
-      startTime -> LinearEnvelope(0, attackPeak, attackDuration),
+      startTime -> LinearEnvelope(startVal, attackPeak, attackDuration),
       decayStart -> LinearEnvelope(attackPeak, decayRestingPoint, decayDuration),
       releaseStart -> LinearEnvelope(decayRestingPoint, 0, releaseDuration)
     )

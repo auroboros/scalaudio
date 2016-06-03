@@ -2,21 +2,21 @@ package com.scalaudio.amp.midi
 
 import javax.sound.midi.{MidiMessage, Receiver}
 
-import com.scalaudio.amp.immutable.envelope.AdsrEnvelope
+import com.scalaudio.amp.immutable.envelope.{AdsrEnvelope, EnvelopeSegment, LinearEnvelope}
 import com.scalaudio.amp.immutable.synth.MonosynthState
 import com.scalaudio.core.AudioContext
 import com.scalaudio.core.midi._
-import com.scalaudio.core.syntax.ScalaudioSyntaxHelpers
+import com.scalaudio.core.syntax.{AudioDuration, ScalaudioSyntaxHelpers}
 
-import scala.collection._
 import scala.collection.immutable.TreeMap
+import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 /**
   * Created by johnmcgill on 6/2/16.
   */
-case class MonosynthMidiReceiver(adsrTemplate: AdsrEnvelope)(implicit audioContext: AudioContext) extends Receiver with ScalaudioSyntaxHelpers {
-  val unmatchedNoteOns: mutable.Map[String, NoteOn] = mutable.Map.empty[String, NoteOn]
+case class MonosynthMidiReceiver(adsrTemplate: AdsrEnvelope, glissDuration: AudioDuration)(implicit audioContext: AudioContext) extends Receiver with ScalaudioSyntaxHelpers {
+  val unmatchedNoteOns: mutable.LinkedHashMap[String, NoteOn] = mutable.LinkedHashMap.empty[String, NoteOn]
   val unprocessedCommands: ListBuffer[MidiCommand] = ListBuffer[MidiCommand]()
 
   def close() {
@@ -47,24 +47,40 @@ case class MonosynthMidiReceiver(adsrTemplate: AdsrEnvelope)(implicit audioConte
       case n@NoteOn(channel, noteNumber, velocity) =>
         println("adding noteon")
         val newState = s.copy(
-          adsrEnvState = s.adsrEnvState.copy(
-            remainingEvents = s.adsrEnvState.remainingEvents ++ adsrTemplate.asLinearEnvelopes(audioContext.currentTime).take(2)
-          ),
-          pitchEnvState = s.pitchEnvState.copy(value = noteNumber.MidiPitch.toHz)
+          adsrEnvState = if (unmatchedNoteOns.isEmpty) {
+            s.adsrEnvState.copy(
+              remainingEvents = adsrTemplate.asLinearEnvelopes(audioContext.currentTime, s.adsrEnvState.value).take(2)
+            )
+          } else s.adsrEnvState,
+          pitchEnvState = if (unmatchedNoteOns.isEmpty) s.pitchEnvState.copy(
+            value = noteNumber.MidiPitch.toHz,
+            remainingEvents = TreeMap.empty[AudioDuration, EnvelopeSegment]
+          )
+          else {
+            s.pitchEnvState.copy(remainingEvents = TreeMap(
+              audioContext.currentTime -> LinearEnvelope(s.pitchEnvState.value, noteNumber.MidiPitch.toHz, glissDuration)
+            ))
+          }
         )
         println(noteNumber.MidiPitch.toHz)
         unmatchedNoteOns.update(s"$channel-$noteNumber", n)
         newState
       case NoteOff(channel, noteNumber, velocity) =>
         println("adding noteoff")
+        val repitch = (unmatchedNoteOns.size > 1) && (unmatchedNoteOns.last._1 == s"$channel-$noteNumber")
+
         unmatchedNoteOns -= s"$channel-$noteNumber"
-        if (unmatchedNoteOns.isEmpty)
-          s.copy(
-            adsrEnvState = s.adsrEnvState.copy(
-              remainingEvents = s.adsrEnvState.remainingEvents ++ TreeMap(adsrTemplate.asLinearEnvelopes(audioContext.currentTime).last)
-            )
+
+        s.copy(
+          adsrEnvState = if (unmatchedNoteOns.isEmpty) s.adsrEnvState.copy(
+            remainingEvents = TreeMap(audioContext.currentTime -> LinearEnvelope(s.adsrEnvState.value, 0, adsrTemplate.releaseDuration))
           )
-        else s
+          else s.adsrEnvState,
+          pitchEnvState = if (repitch) s.pitchEnvState.copy(
+            remainingEvents = TreeMap(audioContext.currentTime -> LinearEnvelope(s.pitchEnvState.value, unmatchedNoteOns.last._2.noteNumber.MidiPitch.toHz, glissDuration))
+          )
+          else s.pitchEnvState
+        )
       case _ => s
     }
   }

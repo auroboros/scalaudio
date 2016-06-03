@@ -26,7 +26,7 @@ class MonosynthMidiReceiverSpec extends FlatSpec with Matchers with ScalaudioSyn
       60.millis,
       15.millis)
 
-    val midiReceiver = MonosynthMidiReceiver(adsrTemplate)
+    val midiReceiver = MonosynthMidiReceiver(adsrTemplate, 30.millis)
 
     val newState = midiReceiver.addCommandToState(MonosynthStateGen.decodeInitialState(), NoteOn(1, 22, 100))
 
