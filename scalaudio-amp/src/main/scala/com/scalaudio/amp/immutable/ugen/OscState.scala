@@ -1,7 +1,6 @@
 package com.scalaudio.amp.immutable.ugen
 
-import com.scalaudio.core.syntax.Pitch
-import com.scalaudio.core.types._
+import com.scalaudio.core.types.{Pitch, _}
 
 /**
   * Created by johnmcgill on 5/29/16.

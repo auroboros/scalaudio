@@ -1,14 +1,13 @@
 package com.scalaudio.amp.immutable.envelope
 
-import com.scalaudio.core.AudioContext
-import com.scalaudio.core.syntax.ScalaudioSyntaxHelpers
+import com.scalaudio.core.{AudioContext, CoreSyntax}
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.duration._
 /**
   * Created by johnmcgill on 5/29/16.
   */
-class LinearEnvelopeSpec extends FlatSpec with Matchers with ScalaudioSyntaxHelpers {
+class LinearEnvelopeSpec extends FlatSpec with Matchers with CoreSyntax {
   "Linear envelope with 1 sec dur" should "start on start val & end on endval" in {
     implicit val audioContext = AudioContext()
 

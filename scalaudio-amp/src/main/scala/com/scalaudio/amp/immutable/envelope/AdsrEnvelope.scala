@@ -1,6 +1,6 @@
 package com.scalaudio.amp.immutable.envelope
 
-import com.scalaudio.core.syntax.AudioDuration
+import com.scalaudio.core.types.AudioDuration
 
 import scala.collection.immutable.{SortedMap, TreeMap}
 

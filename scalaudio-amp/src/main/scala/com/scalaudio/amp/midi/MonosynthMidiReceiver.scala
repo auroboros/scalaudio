@@ -4,9 +4,9 @@ import javax.sound.midi.{MidiMessage, Receiver}
 
 import com.scalaudio.amp.immutable.envelope.{AdsrEnvelope, EnvelopeSegment, LinearEnvelope}
 import com.scalaudio.amp.immutable.synth.MonosynthState
-import com.scalaudio.core.AudioContext
+import com.scalaudio.core.{AudioContext, CoreSyntax}
 import com.scalaudio.core.midi._
-import com.scalaudio.core.syntax.{AudioDuration, ScalaudioSyntaxHelpers}
+import com.scalaudio.core.types.AudioDuration
 
 import scala.collection.immutable.TreeMap
 import scala.collection.mutable
@@ -15,7 +15,7 @@ import scala.collection.mutable.ListBuffer
 /**
   * Created by johnmcgill on 6/2/16.
   */
-case class MonosynthMidiReceiver(adsrTemplate: AdsrEnvelope, glissDuration: AudioDuration)(implicit audioContext: AudioContext) extends Receiver with ScalaudioSyntaxHelpers {
+case class MonosynthMidiReceiver(adsrTemplate: AdsrEnvelope, glissDuration: AudioDuration)(implicit audioContext: AudioContext) extends Receiver with CoreSyntax {
   val unmatchedNoteOns: mutable.LinkedHashMap[String, NoteOn] = mutable.LinkedHashMap.empty[String, NoteOn]
   val unprocessedCommands: ListBuffer[MidiCommand] = ListBuffer[MidiCommand]()
 

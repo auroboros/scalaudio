@@ -9,11 +9,16 @@ lazy val root = project.in(file("."))
   .settings(Defaults.itSettings: _*)
   .settings(publish :=())
   .settings(publishLocal :=())
-  .aggregate(scalaudioCore, scalaudioAmp)
+  .aggregate(scalaudioCore, scalaudioBuffer, scalaudioAmp)
 
 lazy val scalaudioCore = project.in(file("scalaudio-core"))
   .configs(IntegrationTest)
   .settings(Defaults.itSettings: _*)
+
+lazy val scalaudioBuffer = project.in(file("scalaudio-buffer"))
+  .configs(IntegrationTest)
+  .settings(Defaults.itSettings: _*)
+  .dependsOn(scalaudioCore % "test->test;compile->compile")
 
 lazy val scalaudioAmp = project.in(file("scalaudio-amp"))
   .configs(IntegrationTest)

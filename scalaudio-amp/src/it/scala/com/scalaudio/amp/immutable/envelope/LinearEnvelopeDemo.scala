@@ -3,8 +3,8 @@ package com.scalaudio.amp.immutable.envelope
 import com.scalaudio.amp.engine.FrameFuncAmpOutput
 import com.scalaudio.amp.immutable.filter.GainFilter
 import com.scalaudio.amp.immutable.ugen.{OscState, SquareStateGen}
-import com.scalaudio.core.syntax.{AudioDuration, ScalaudioSyntaxHelpers}
-import com.scalaudio.core.{AudioContext, ScalaudioConfig}
+import com.scalaudio.core.types.AudioDuration
+import com.scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.collection.immutable.TreeMap
@@ -12,7 +12,7 @@ import scala.concurrent.duration._
 /**
   * Created by johnmcgill on 5/29/16.
   */
-class LinearEnvelopeDemo extends FlatSpec with Matchers with ScalaudioSyntaxHelpers {
+class LinearEnvelopeDemo extends FlatSpec with Matchers with CoreSyntax {
   "Square wave with linear env" should "ramp up over 5 seconds" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 

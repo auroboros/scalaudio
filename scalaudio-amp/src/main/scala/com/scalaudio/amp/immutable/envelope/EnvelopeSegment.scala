@@ -1,7 +1,7 @@
 package com.scalaudio.amp.immutable.envelope
 
 import com.scalaudio.core.AudioContext
-import com.scalaudio.core.syntax.AudioDuration
+import com.scalaudio.core.types.AudioDuration
 
 /**
   * Created by johnmcgill on 5/29/16.
