@@ -21,6 +21,7 @@ object EnergyAnalyzerStateGen {
     val compute = (audioContext.currentTime.toSamples % s.computeInterval) == 0
 
     s.copy(
+      // only fulfills option if energy level is computed this sample
       energyLevel = if (compute) Some(EnergyLevel.ofSignal(s.analysisBuffer, s.algorithm))
       else None
     )
