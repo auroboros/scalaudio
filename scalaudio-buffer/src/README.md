@@ -1,0 +1,6 @@
+##Buffer-Based Signal Processing Engine
+This module includes synthesis components from the first design of the engine, which is targeted at traditional buffer-based processing (the engine's inner loop expects a full audio buffer to pass to the system audio output). This may provide some efficiency gains but introduces some impedance between sample-rate and control-rate signals (control rate is applied once per buffer). Special care must be taken since the master clock is basically jumping at intervals of 1 buffer (introduces issues like "how do we handle real-time input? add it to a queue & process with the next buffer? create an internal clock within the generators that uses a finer time resolution?"). The introduction of the AMP module was largely to experiment with veering away from this non-ideal approach, with the mutable piece of that library (not yet released) intended to regain some of the performance benefits of mutable data / caching.
+#####BufferSyntax
+This trait includes a bunch of implicit conversions and other useful syntactic sugar, and is basically meant to be mixed in with your main composition script (it is implied in above examples; see: all tests). At the time of writing, BufferSyntax includes
+  * "Signal Flow" syntax ("feed" & "mix", via implicit conversion to ChannelSetManipulator)
+  * "Timing Events" syntax
