@@ -2,7 +2,7 @@ package com.scalaudio.amp.immutable.synth
 
 import com.scalaudio.amp.AmpSyntax
 import com.scalaudio.amp.engine.FrameFuncAmpOutput
-import com.scalaudio.amp.immutable.envelope.AdsrEnvelope
+import com.scalaudio.amp.immutable.control.AdsrEnvelope
 import com.scalaudio.amp.immutable.ugen.SineStateGen
 import com.scalaudio.core.types.{AudioDuration, Pitch}
 import com.scalaudio.core.{AudioContext, IntegrationTestHarness, ScalaudioConfig}

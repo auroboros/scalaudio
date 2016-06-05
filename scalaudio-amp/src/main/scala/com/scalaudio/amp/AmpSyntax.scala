@@ -1,6 +1,6 @@
 package com.scalaudio.amp
 
-import com.scalaudio.amp.immutable.envelope.AdsrEnvelope
+import com.scalaudio.amp.immutable.control.AdsrEnvelope
 import com.scalaudio.core.types.Pitch
 
 /**

@@ -2,7 +2,7 @@ package com.scalaudio.amp.midi
 
 import javax.sound.midi.{MidiMessage, Receiver}
 
-import com.scalaudio.amp.immutable.envelope.{AdsrEnvelope, EnvelopeSegment, LinearEnvelope}
+import com.scalaudio.amp.immutable.control.{AdsrEnvelope, EnvelopeSegment, LinearEnvelope}
 import com.scalaudio.amp.immutable.synth.MonosynthState
 import com.scalaudio.core.{AudioContext, CoreSyntax}
 import com.scalaudio.core.midi._

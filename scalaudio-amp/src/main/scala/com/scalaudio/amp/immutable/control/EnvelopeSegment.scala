@@ -1,4 +1,4 @@
-package com.scalaudio.amp.immutable.envelope
+package com.scalaudio.amp.immutable.control
 
 import com.scalaudio.core.AudioContext
 import com.scalaudio.core.types.AudioDuration

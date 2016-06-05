@@ -1,6 +1,6 @@
 package com.scalaudio.amp.midi
 
-import com.scalaudio.amp.immutable.envelope.AdsrEnvelope
+import com.scalaudio.amp.immutable.control.AdsrEnvelope
 import com.scalaudio.amp.immutable.synth.MonosynthStateGen
 import com.scalaudio.core.midi.NoteOn
 import com.scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}

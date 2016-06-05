@@ -1,6 +1,6 @@
 package com.scalaudio.amp.immutable.synth
 
-import com.scalaudio.amp.immutable.envelope.{AdsrEnvelope, EnvelopeState, EnvelopeStateGen}
+import com.scalaudio.amp.immutable.control.{AdsrEnvelope, EnvelopeState, EnvelopeStateGen}
 import com.scalaudio.amp.immutable.ugen.{OscState, OscStateGen}
 import com.scalaudio.core.AudioContext
 import com.scalaudio.core.types.{AudioDuration, Pitch, Sample}

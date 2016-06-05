@@ -1,4 +1,4 @@
-package com.scalaudio.amp.immutable.envelope
+package com.scalaudio.amp.immutable.control
 
 import com.scalaudio.amp.engine.FrameFuncAmpOutput
 import com.scalaudio.amp.immutable.filter.GainFilter

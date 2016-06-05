@@ -1,4 +1,4 @@
-package com.scalaudio.amp.immutable.envelope
+package com.scalaudio.amp.immutable.control
 
 import com.scalaudio.core.{AudioContext, CoreSyntax}
 import org.scalatest.{FlatSpec, Matchers}
