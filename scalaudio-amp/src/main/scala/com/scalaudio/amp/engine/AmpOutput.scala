@@ -2,8 +2,7 @@ package com.scalaudio.amp.engine
 
 import com.scalaudio.core.AudioContext
 import com.scalaudio.core.engine.OutputEngine
-import com.scalaudio.core.syntax.AudioDuration
-import com.scalaudio.core.types.{AudioSignal, Frame}
+import com.scalaudio.core.types.{AudioDuration, AudioSignal, Frame}
 
 /**
   * Created by johnmcgill on 5/27/16.

@@ -2,7 +2,7 @@ package com.scalaudio.core
 
 import com.jsyn.devices.javasound.JavaSoundAudioDevice
 import com.jsyn.devices.{AudioDeviceInputStream, AudioDeviceManager, AudioDeviceOutputStream}
-import com.scalaudio.core.syntax.AudioDuration
+import com.scalaudio.core.types.AudioDuration
 
 /**
   * Created by johnmcgill on 12/18/15.

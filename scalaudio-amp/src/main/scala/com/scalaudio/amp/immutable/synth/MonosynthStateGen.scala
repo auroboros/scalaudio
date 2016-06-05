@@ -2,9 +2,8 @@ package com.scalaudio.amp.immutable.synth
 
 import com.scalaudio.amp.immutable.envelope.{AdsrEnvelope, EnvelopeState, EnvelopeStateGen, PointEnvelope}
 import com.scalaudio.amp.immutable.ugen.{OscState, OscStateGen}
-import com.scalaudio.core.AudioContext
-import com.scalaudio.core.syntax.{AudioDuration, Pitch, ScalaudioSyntaxHelpers}
-import com.scalaudio.core.types.Sample
+import com.scalaudio.core.{AudioContext, CoreSyntax}
+import com.scalaudio.core.types.{AudioDuration, Pitch, Sample}
 
 import scala.collection.immutable.{SortedMap, TreeMap}
 
@@ -18,7 +17,7 @@ case class MonosynthState(sample: Sample,
 
 // TODO: Make realtime by having state have a copy method that accepts a note-on?
 
-object MonosynthStateGen extends ScalaudioSyntaxHelpers {
+object MonosynthStateGen extends CoreSyntax {
   def decodeInitialState(notes: SortedMap[AudioDuration, (Pitch, AdsrEnvelope)] = TreeMap.empty[AudioDuration, (Pitch, AdsrEnvelope)])
                         (implicit audioContext: AudioContext): MonosynthState = {
     val initPitchEnvState = EnvelopeState(

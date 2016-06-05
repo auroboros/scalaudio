@@ -3,8 +3,7 @@ package com.scalaudio.amp.midi
 import com.scalaudio.amp.immutable.envelope.AdsrEnvelope
 import com.scalaudio.amp.immutable.synth.MonosynthStateGen
 import com.scalaudio.core.midi.NoteOn
-import com.scalaudio.core.{AudioContext, ScalaudioConfig}
-import com.scalaudio.core.syntax.ScalaudioSyntaxHelpers
+import com.scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.duration._
@@ -12,7 +11,7 @@ import scala.concurrent.duration._
 /**
   * Created by johnmcgill on 6/2/16.
   */
-class MonosynthMidiReceiverSpec extends FlatSpec with Matchers with ScalaudioSyntaxHelpers {
+class MonosynthMidiReceiverSpec extends FlatSpec with Matchers with CoreSyntax {
 
   "MonosynthReceiver" should "add a single attack/decay for a note on" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
