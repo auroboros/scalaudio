@@ -18,7 +18,7 @@ class MonosynthMidiReceiverDemo extends IntegrationTestHarness {
 
   "Monosynth Midi receiver" should "play sines in real-time" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
-    val adsrTemplate = AdsrEnvelope(30.millis,
+    val adsrTemplate = AdsrEnvelope(10.millis,
       .95,
       40.millis,
       .5,
@@ -27,17 +27,17 @@ class MonosynthMidiReceiverDemo extends IntegrationTestHarness {
 
     var monosynthState = MonosynthStateGen.decodeInitialState(TreeMap.empty[AudioDuration, (Pitch, AdsrEnvelope)])
 
-    val midiReceiver = MonosynthMidiReceiver(adsrTemplate, 200.millis)
+    val midiReceiver = MonosynthMidiReceiver(adsrTemplate, 150.millis)
     MidiConnector.connectKeyboard(midiReceiver)
 
     val frameFunc = () => {
       monosynthState = MonosynthStateGen.nextState(
         midiReceiver.processMidiCommandsIntoState(monosynthState),
-        SquareStateGen
+        SineStateGen
       )
       List(monosynthState.sample)
     }
 
-    FrameFuncAmpOutput(frameFunc).play(1000.seconds)
+    FrameFuncAmpOutput(frameFunc).play(5000.seconds)
   }
 }
