@@ -1,6 +1,6 @@
 package com.scalaudio.buffer.filter
 
-import com.scalaudio.buffer.engine.BufferComputer
+import com.scalaudio.buffer.BufferComputer
 import com.scalaudio.core.types.MultichannelAudio
 
 /**

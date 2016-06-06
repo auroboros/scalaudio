@@ -59,7 +59,7 @@ class TimeReleaseCapsuleTest extends FlatSpec with Matchers with BufferSyntax {
     val sineGen = SineGen()
     val splitter = Splitter(2)
     val gainController = GainFilter()
-    val frameFunc = {() => gainController.processBuffersWithControl(sineGen.outputBuffers(), capsule.outputControlValue) feed splitter.processBuffers}
+    val frameFunc = {() => gainController.processBuffersWithControl(sineGen.outputBuffers(), capsule.outputControlValue) chain splitter.processBuffers}
     val sigChain =  new FuncGen(frameFunc)
 
     sigChain.play(10000 buffers)

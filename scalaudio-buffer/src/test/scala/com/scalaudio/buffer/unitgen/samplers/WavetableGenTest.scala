@@ -43,7 +43,7 @@ class WavetableGenTest extends FlatSpec with Matchers with BufferSyntax {
 
     val wtGen = new WavetableGen(Sawtooth(), 440)
     val splitter = Splitter(2)
-    val funcGen = new FuncGen(() => {wtGen.outputBuffers() feed splitter.processBuffers})
+    val funcGen = new FuncGen(() => {wtGen.outputBuffers() chain splitter.processBuffers})
 
     //    val firstBuffer = wtGen.outputBuffers()
     funcGen.play(2000 buffers)
@@ -54,7 +54,7 @@ class WavetableGenTest extends FlatSpec with Matchers with BufferSyntax {
 
     val wtGen = new WavetableGen(Sine(), 440)
     val splitter = Splitter(2)
-    val funcGen = new FuncGen(() => {wtGen.outputBuffers() feed splitter.processBuffers})
+    val funcGen = new FuncGen(() => {wtGen.outputBuffers() chain splitter.processBuffers})
 
     //    val firstBuffer = wtGen.outputBuffers()
     funcGen.play(2000 buffers)
@@ -65,7 +65,7 @@ class WavetableGenTest extends FlatSpec with Matchers with BufferSyntax {
 
     val wtGen = new WavetableGen(Square(), 440)
     val splitter = Splitter(2)
-    val funcGen = new FuncGen(() => {wtGen.outputBuffers() feed splitter.processBuffers})
+    val funcGen = new FuncGen(() => {wtGen.outputBuffers() chain splitter.processBuffers})
 
     //    val firstBuffer = wtGen.outputBuffers()
     funcGen.play(2000 buffers)

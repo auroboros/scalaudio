@@ -29,7 +29,7 @@ class GainFilterTest extends FlatSpec with Matchers with BufferSyntax {
     val slowSineGen : SineGen = SineGen(14 Hz) // new SquareGen(6)
     val gainFilter : GainFilter = GainFilter()
     val rangeScaler : RangeScaler = RangeScaler(0,1)
-    val testFrameFunc: () => List[Array[Double]] = () => gainFilter.processBuffersWithSignal(sineGen.outputBuffers(), slowSineGen.outputBuffers() feed rangeScaler.processBuffers)
+    val testFrameFunc: () => List[Array[Double]] = () => gainFilter.processBuffersWithSignal(sineGen.outputBuffers(), slowSineGen.outputBuffers() chain rangeScaler.processBuffers)
 
     val playableUnitGen = new FuncGen(testFrameFunc)
     playableUnitGen.play(10000 buffers)

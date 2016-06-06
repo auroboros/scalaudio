@@ -1,6 +1,6 @@
 package com.scalaudio.amp.immutable.ugen
 
-import com.scalaudio.amp.engine.FrameFuncAmpOutput
+import com.scalaudio.core.engine.samplewise.FrameFuncAmpOutput
 import com.scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 import org.scalatest.{FlatSpec, Matchers}
 

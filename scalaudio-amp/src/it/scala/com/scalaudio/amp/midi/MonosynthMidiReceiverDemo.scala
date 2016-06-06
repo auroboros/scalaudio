@@ -1,12 +1,12 @@
 package com.scalaudio.amp.midi
 
-import com.scalaudio.amp.engine.FrameFuncAmpOutput
 import com.scalaudio.amp.immutable.control.AdsrEnvelope
 import com.scalaudio.amp.immutable.synth.MonosynthStateGen
 import com.scalaudio.amp.immutable.ugen.{SineStateGen, SquareStateGen}
+import com.scalaudio.core.engine.samplewise.FrameFuncAmpOutput
 import com.scalaudio.core.midi.MidiConnector
 import com.scalaudio.core.types.{AudioDuration, Pitch}
-import com.scalaudio.core.{AudioContext, ScalaudioCoreTestHarness, ScalaudioConfig}
+import com.scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 
 import scala.collection.immutable.TreeMap
 import scala.concurrent.duration._

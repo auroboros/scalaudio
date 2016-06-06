@@ -16,7 +16,7 @@ class RangeScalerTest extends FlatSpec with Matchers with BufferSyntax {
     val sineGen : SineGen = SineGen()
     val rangeScaler : RangeScaler = RangeScaler(7,8)
 
-    val frameFunc: () => List[Array[Double]] = () => sineGen.outputBuffers() feed rangeScaler.processBuffers
+    val frameFunc: () => List[Array[Double]] = () => sineGen.outputBuffers() chain rangeScaler.processBuffers
 
     1 to 1000 foreach (_ => frameFunc() foreach (_ foreach (s => assert(s >= 7 && s <= 8))))
   }

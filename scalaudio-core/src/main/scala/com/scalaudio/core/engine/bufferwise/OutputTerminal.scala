@@ -1,4 +1,4 @@
-package com.scalaudio.buffer.engine
+package com.scalaudio.core.engine.bufferwise
 
 import com.scalaudio.core.AudioContext
 import com.scalaudio.core.engine.OutputEngine

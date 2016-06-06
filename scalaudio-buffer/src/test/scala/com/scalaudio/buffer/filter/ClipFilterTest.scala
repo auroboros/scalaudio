@@ -15,7 +15,7 @@ class ClipFilterTest extends FlatSpec with Matchers with BufferSyntax {
   "Clip filter" should "clip values to given min & max" in {
     val sineGen : SineGen = new SineGen()
     val clipper : ClipFilter = ClipFilter(-.2, .2)
-    val frameFunc: () => List[Array[Double]] = () => sineGen.outputBuffers() feed clipper.processBuffers
+    val frameFunc: () => List[Array[Double]] = () => sineGen.outputBuffers() chain clipper.processBuffers
 
     1 to 1000 foreach (_ => frameFunc() foreach (_ foreach (s => assert(s >= -.2 && s <= .2))))
   }
@@ -24,7 +24,7 @@ class ClipFilterTest extends FlatSpec with Matchers with BufferSyntax {
     val sineGen : SineGen = new SineGen()
     val clipper : ClipFilter = ClipFilter(-.1, .8)
     val splitter : Splitter = Splitter(2)
-    val testFrameFunc: () => List[Array[Double]] = () => sineGen.outputBuffers() feed clipper.processBuffers feed splitter.processBuffers
+    val testFrameFunc: () => List[Array[Double]] = () => sineGen.outputBuffers() chain clipper.processBuffers chain splitter.processBuffers
 
     val playableUnitGen = new FuncGen(testFrameFunc)
     playableUnitGen.play(1000 buffers)

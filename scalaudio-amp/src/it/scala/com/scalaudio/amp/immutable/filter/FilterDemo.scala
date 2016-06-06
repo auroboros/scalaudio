@@ -1,7 +1,7 @@
 package com.scalaudio.amp.immutable.filter
 
-import com.scalaudio.amp.engine.FrameFuncAmpOutput
 import com.scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
+import com.scalaudio.core.engine.samplewise.FrameFuncAmpOutput
 import com.scalaudio.core.{AudioContext, CoreSyntax}
 import com.scalaudio.core.types._
 import org.scalatest.{FlatSpec, Matchers}

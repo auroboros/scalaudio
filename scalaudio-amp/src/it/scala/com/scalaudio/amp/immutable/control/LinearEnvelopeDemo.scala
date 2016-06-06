@@ -1,8 +1,8 @@
 package com.scalaudio.amp.immutable.control
 
-import com.scalaudio.amp.engine.FrameFuncAmpOutput
 import com.scalaudio.amp.immutable.filter.GainFilter
 import com.scalaudio.amp.immutable.ugen.{OscState, SquareStateGen}
+import com.scalaudio.core.engine.samplewise.FrameFuncAmpOutput
 import com.scalaudio.core.types.AudioDuration
 import com.scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 import org.scalatest.{FlatSpec, Matchers}

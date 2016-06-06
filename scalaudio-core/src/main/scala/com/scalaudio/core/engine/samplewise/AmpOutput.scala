@@ -1,4 +1,4 @@
-package com.scalaudio.amp.engine
+package com.scalaudio.core.engine.samplewise
 
 import com.scalaudio.core.AudioContext
 import com.scalaudio.core.engine.OutputEngine

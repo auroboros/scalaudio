@@ -1,7 +1,8 @@
 package com.scalaudio.buffer.unitgen
 
-import com.scalaudio.buffer.engine.{BufferComputer, OutputTerminal}
+import com.scalaudio.buffer.BufferComputer
 import com.scalaudio.core.AudioContext
+import com.scalaudio.core.engine.bufferwise.OutputTerminal
 import com.scalaudio.core.types.MultichannelAudio
 
 /**

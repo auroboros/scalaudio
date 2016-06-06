@@ -19,7 +19,7 @@ class ChannelSetManipulatorTest extends FlatSpec with Matchers with BufferSyntax
     val panner : StereoPanner = StereoPanner()
 
 //    bufferList2BufferFeeder(sineGen.outputBuffers) feed (panner.processBuffers(_))
-    val outBuffers : List[Array[Double]] = sineGen.outputBuffers() feed panner.processBuffers
+    val outBuffers : List[Array[Double]] = sineGen.outputBuffers() chain panner.processBuffers
   }
 
   "Anon unit gen" should "be able to playback" in {
@@ -30,7 +30,7 @@ class ChannelSetManipulatorTest extends FlatSpec with Matchers with BufferSyntax
 
     //    bufferList2BufferFeeder(sineGen.outputBuffers) feed (panner.processBuffers(_))
     val testFrameFunc : () => List[Array[Double]] = () => {
-      noiseGen.outputBuffers() feed panner.processBuffers
+      noiseGen.outputBuffers() chain panner.processBuffers
     }
 
     val playableUnitGen = new FuncGen(testFrameFunc)
@@ -46,7 +46,7 @@ class ChannelSetManipulatorTest extends FlatSpec with Matchers with BufferSyntax
     val sg4 : SineGen = SineGen(921 Hz)
     val gain : GainFilter = GainFilter(.1)
 
-    val playableUnitGen = new FuncGen({() => sg1.outputBuffers() mix sg2.outputBuffers() mix sg3.outputBuffers() mix sg4.outputBuffers() feed gain.processBuffers})
+    val playableUnitGen = new FuncGen({() => sg1.outputBuffers() mix sg2.outputBuffers() mix sg3.outputBuffers() mix sg4.outputBuffers() chain gain.processBuffers})
 
     playableUnitGen.play(1000 buffers)
   }
@@ -65,10 +65,10 @@ class ChannelSetManipulatorTest extends FlatSpec with Matchers with BufferSyntax
     val gain : GainFilter = GainFilter(.1)
 
     val playableUnitGen = new UnitGen {
-      def computeBuffer(params : Option[UnitParams] = None) = (sg1.outputBuffers() feed pan1.processBuffers) mix
-        (sg2.outputBuffers() feed pan2.processBuffers) mix
-        (sg3.outputBuffers() feed pan3.processBuffers) mix
-        (sg4.outputBuffers() feed pan4.processBuffers) feed gain.processBuffers
+      def computeBuffer(params : Option[UnitParams] = None) = (sg1.outputBuffers() chain pan1.processBuffers) mix
+        (sg2.outputBuffers() chain pan2.processBuffers) mix
+        (sg3.outputBuffers() chain pan3.processBuffers) mix
+        (sg4.outputBuffers() chain pan4.processBuffers) chain gain.processBuffers
     }
     playableUnitGen.play(1000 buffers)
   }
