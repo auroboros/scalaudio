@@ -9,7 +9,7 @@ import com.scalaudio.core.types.Frame
 case class SetGain(gain: Double)
 
 class GainActor(var gain: Double) extends SignalActor {
-  var bufferedFrame : Frame = Nil
+  var bufferedFrame : Frame = Array.empty[Double]
 
   override def receive = {
     case SetGain(g) => gain = g

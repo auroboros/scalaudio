@@ -15,7 +15,7 @@ class FilterDemo extends FlatSpec with Matchers with CoreSyntax {
     implicit val audioContext = AudioContext()
 
     var sineState = OscState(0, 440.Hz, 0)
-    var splitterOut : Frame = Nil
+    var splitterOut : Frame = Array.empty[Double]
 
     val frameFunc = () => {
       sineState = SineStateGen.nextState(sineState)

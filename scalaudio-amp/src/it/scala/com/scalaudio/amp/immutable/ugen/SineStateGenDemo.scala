@@ -16,7 +16,7 @@ class SineStateGenDemo extends FlatSpec with Matchers with CoreSyntax {
 
     val frameFunc = () => {
       state = SineStateGen.nextState(state)
-      List(state.sample)
+      Array(state.sample)
     }
 
     FrameFuncAmpOutput(frameFunc).play(5 seconds)

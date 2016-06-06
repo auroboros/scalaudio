@@ -11,10 +11,10 @@ class SineActorDemo extends ScalaudioCoreTestHarness {
   "Sine actor" should "produce sine audio output" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
-    val sineActor = new SineActor(480.Hz)
+    val sineActor = new SineActor(440.Hz)
 
     val frameFunc = () => {
-      List(sineActor.nextSample())
+      Array(sineActor.nextSample())
     }
 
     FrameFuncAmpOutput(frameFunc).play(5 seconds)

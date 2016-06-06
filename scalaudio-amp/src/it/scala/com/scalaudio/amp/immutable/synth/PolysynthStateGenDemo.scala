@@ -44,7 +44,7 @@ class PolysynthStateGenDemo extends ScalaudioCoreTestHarness with AmpSyntax {
 
     val frameFunc = () => {
       polysynthState = PolysynthStateGen.nextState(polysynthState, SineStateGen)
-      List(polysynthState.sample * .2)
+      Array(polysynthState.sample * .2)
     }
 
     FrameFuncAmpOutput(frameFunc).play(11.seconds)

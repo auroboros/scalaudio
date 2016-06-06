@@ -24,7 +24,7 @@ class MidiReceiverSpec extends ScalaudioCoreTestHarness {
     val frameFunc = () => {
       if (pendingSynthCmds.nonEmpty) println(pendingSynthCmds)
       pendingSynthCmds.clear()
-      List(0.0 : Sample)
+      Array(0.0 : Sample)
     }
 
     FrameFuncAmpOutput(frameFunc).play(15 seconds)

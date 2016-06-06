@@ -16,7 +16,7 @@ class SquareStateGenDemo extends FlatSpec with Matchers with CoreSyntax {
 
     val frameFunc = () => {
       state = SquareStateGen.nextState(state)
-      List(state.sample)
+      Array(state.sample)
     }
 
     FrameFuncAmpOutput(frameFunc).play(2 seconds)

@@ -5,7 +5,7 @@ package com.scalaudio.core
   */
 package object types {
   type Sample = Double
-  type Frame = List[Sample]
+  type Frame = Array[Sample]
 
   type AudioSignal = Array[Double]
   type AudioRate[T] = Array[T]

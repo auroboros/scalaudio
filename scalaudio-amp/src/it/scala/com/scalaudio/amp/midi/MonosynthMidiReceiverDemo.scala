@@ -35,7 +35,7 @@ class MonosynthMidiReceiverDemo extends ScalaudioCoreTestHarness {
         midiReceiver.processMidiCommandsIntoState(monosynthState),
         SineStateGen
       )
-      List(monosynthState.sample)
+      Array(monosynthState.sample)
     }
 
     FrameFuncAmpOutput(frameFunc).play(5000.seconds)
