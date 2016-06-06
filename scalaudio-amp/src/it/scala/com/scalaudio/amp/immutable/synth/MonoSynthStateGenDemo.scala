@@ -4,7 +4,7 @@ import com.scalaudio.amp.engine.FrameFuncAmpOutput
 import com.scalaudio.amp.immutable.control.AdsrEnvelope
 import com.scalaudio.amp.immutable.ugen.SineStateGen
 import com.scalaudio.core.types.{AudioDuration, Pitch}
-import com.scalaudio.core.{AudioContext, IntegrationTestHarness, ScalaudioConfig}
+import com.scalaudio.core.{AudioContext, ScalaudioCoreTestHarness, ScalaudioConfig}
 
 import scala.collection.immutable.{SortedMap, TreeMap}
 import scala.concurrent.duration._
@@ -12,7 +12,7 @@ import scala.concurrent.duration._
 /**
   * Created by johnmcgill on 5/30/16.
   */
-class MonosynthStateGenDemo extends IntegrationTestHarness {
+class MonosynthStateGenDemo extends ScalaudioCoreTestHarness {
   "Monosynth" should "jam some beefy sinewaves" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
     val adsrTemplate = AdsrEnvelope(30.millis,

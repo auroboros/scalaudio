@@ -6,7 +6,7 @@ import com.scalaudio.amp.immutable.synth.MonosynthStateGen
 import com.scalaudio.amp.immutable.ugen.{SineStateGen, SquareStateGen}
 import com.scalaudio.core.midi.MidiConnector
 import com.scalaudio.core.types.{AudioDuration, Pitch}
-import com.scalaudio.core.{AudioContext, IntegrationTestHarness, ScalaudioConfig}
+import com.scalaudio.core.{AudioContext, ScalaudioCoreTestHarness, ScalaudioConfig}
 
 import scala.collection.immutable.TreeMap
 import scala.concurrent.duration._
@@ -14,7 +14,7 @@ import scala.concurrent.duration._
 /**
   * Created by johnmcgill on 6/2/16.
   */
-class MonosynthMidiReceiverDemo extends IntegrationTestHarness {
+class MonosynthMidiReceiverDemo extends ScalaudioCoreTestHarness {
 
   "Monosynth Midi receiver" should "play sines in real-time" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))

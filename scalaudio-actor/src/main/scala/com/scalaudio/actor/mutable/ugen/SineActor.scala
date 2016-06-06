@@ -1,6 +1,6 @@
 package com.scalaudio.actor.mutable.ugen
 
-import com.scalaudio.actor.Actor
+import com.scalaudio.actor.SignalActor
 import com.scalaudio.core.AudioContext
 import com.scalaudio.core.types.{Pitch, Sample}
 
@@ -11,12 +11,12 @@ case class SetPitch(pitch: Pitch)
 case class SetPhase(phase: Double)
 
 class SineActor(var pitch: Pitch,
-                var phase: Double)(implicit val audioContext: AudioContext) extends UgenActor {
+                var phase: Double = 0.0)(implicit val audioContext: AudioContext) extends UgenActor {
 
   var w : Option[Double] = None
   computeW()
 
-  var sampleOut : Sample = 0
+  var sampleOut : Sample = 0.0
 
   override def receive = {
     case SetPhase(p) => phase = p

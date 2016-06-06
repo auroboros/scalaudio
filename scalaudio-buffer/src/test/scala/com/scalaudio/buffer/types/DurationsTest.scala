@@ -3,14 +3,14 @@ package com.scalaudio.buffer.types
 import com.scalaudio.buffer.BufferSyntax
 import com.scalaudio.buffer.filter.mix.Splitter
 import com.scalaudio.buffer.unitgen.{NoiseGen, SignalChain}
-import com.scalaudio.core.{AudioContext, IntegrationTestHarness, ScalaudioConfig}
+import com.scalaudio.core.{AudioContext, ScalaudioCoreTestHarness, ScalaudioConfig}
 
 import scala.concurrent.duration._
 
 /**
   * Created by johnmcgill on 6/5/16.
   */
-class DurationsTest extends IntegrationTestHarness with BufferSyntax {
+class DurationsTest extends ScalaudioCoreTestHarness with BufferSyntax {
   "Durations syntax sugar" should "convert a finite duration to samples (int or long)" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 2))
 
