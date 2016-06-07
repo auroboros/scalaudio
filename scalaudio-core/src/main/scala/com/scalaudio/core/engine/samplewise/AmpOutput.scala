@@ -42,7 +42,9 @@ trait AmpOutput {
       frame.zipWithIndex.foreach { case (s: Double, i: Int) => bufferedOutput(offset * frame.length + i) = s }
     }
 
-    if (audioContext.config.autoStartStop) audioContext.stop()
-    println("Stopped audio")
+    if (audioContext.config.autoStartStop) {
+      audioContext.stop()
+      println("Stopped audio")
+    }
   }
 }

@@ -1,8 +1,7 @@
 package com.scalaudio.actor.mutable.ugen
 
-import com.scalaudio.actor.SignalActor
 import com.scalaudio.core.AudioContext
-import com.scalaudio.core.types.{Frame, Pitch, Sample}
+import com.scalaudio.core.types.{Pitch, Sample}
 
 /**
   * Created by johnmcgill on 6/5/16.
@@ -16,7 +15,7 @@ class SineActor(var pitch: Pitch,
   var w : Option[Double] = None
   computeW()
 
-  var frameOut : Frame = Array(0.0)
+  var sampleOut : Sample = 0.0
 
   override def receive = {
     case SetPhase(p) => phase = p
@@ -27,11 +26,11 @@ class SineActor(var pitch: Pitch,
 
   def computeW() = w = Some(2 * Math.PI * pitch.toHz / audioContext.config.samplingRate)
 
-  def computeFrameOut() = frameOut(0) = Math.sin(phase)
+  def computeSampleOut() = sampleOut = Math.sin(phase)
 
   override def recomputeCacheableVals() = {
     if (w.isEmpty) computeW()
-    computeFrameOut()
+    computeSampleOut()
   }
 
   override def incrementInertialState() =

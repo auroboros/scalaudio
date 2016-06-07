@@ -10,5 +10,5 @@ class SquareActor(val initPitch: Pitch,
                   val initPhase: Double = 0)
                  (override implicit val audioContext: AudioContext) extends SineActor(initPitch, initPhase){
 
-  override def computeFrameOut() = frameOut(0) = Math.signum(Math.sin(phase))
+  override def computeSampleOut() = sampleOut = Math.signum(Math.sin(phase))
 }

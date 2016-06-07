@@ -24,14 +24,20 @@ class SineBenchmark extends ScalaudioCoreTestHarness {
 
     val frameFunc = () => {
       state = SineStateGen.nextState(state)
-      Array(state.sample * .7)
+      Array(state.sample)
     }
 
     val start = Instant.now.toEpochMilli
-    FrameFuncAmpOutput(frameFunc).play(10 minutes)(audioContext, engines)
+    FrameFuncAmpOutput(frameFunc).play(5 hours)(audioContext, engines)
     val end = Instant.now.toEpochMilli
 
-    println((end - start).millis) // 4050
+    println((end - start).millis)
+
+    // 10 mins
+    // withGain: 4050 without: 4170
+
+    // 5 hrs
+    // 430568 (430 secs) (6.5 mins)
   }
 
   "scalaudioActor" should "clock sine production" in {
@@ -41,13 +47,18 @@ class SineBenchmark extends ScalaudioCoreTestHarness {
     val gainActor = new GainActor(.7)
 
     val frameFunc = () => {
-      gainActor.filter(sineActor.nextFrame())
+      Array(sineActor.nextSample())
     }
 
     val start = Instant.now.toEpochMilli
-    FrameFuncAmpOutput(frameFunc).play(10 minutes)(audioContext, engines)
+    FrameFuncAmpOutput(frameFunc).play(5 hours)(audioContext, engines)
     val end = Instant.now.toEpochMilli
 
-    println((end - start).millis) // 6740
+    println((end - start).millis)
+
+    // 10 mins
+    // withGain: 6740 without: 3975
+
+    // 403782 milliseconds
   }
 }
