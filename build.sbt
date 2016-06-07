@@ -29,3 +29,8 @@ lazy val scalaudioActor = project.in(file("scalaudio-actor"))
   .configs(IntegrationTest)
   .settings(Defaults.itSettings: _*)
   .dependsOn(scalaudioCore % "test->test;compile->compile")
+
+lazy val scalaudioBenchmark = project.in(file("scalaudio-benchmark"))
+  .configs(IntegrationTest)
+  .settings(Defaults.itSettings: _*)
+  .dependsOn(scalaudioBuffer, scalaudioAmp, scalaudioActor, scalaudioCore % "test->test;compile->compile")
