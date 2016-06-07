@@ -45,4 +45,6 @@ case class AudioContext(config: ScalaudioConfig = ScalaudioConfig()) {
   def currentTime : AudioDuration = AudioDuration(State.currentSample)(this) // For AMP
 
   def advanceByBuffer() = State.currentBuffer += 1
+
+  def advanceBySample() = State.currentSample += 1
 }
