@@ -4,7 +4,9 @@ package com.scalaudio.amp.midi
   * Created by johnmcgill on 6/1/16.
   */
 
-import com.scalaudio.core.engine.samplewise.FrameFuncAmpOutput
+import com.scalaudio.core.engine.{Bufferwise, Playback, Timeline}
+import com.scalaudio.core.engine.bufferwise.BufferOutputTerminal
+import com.scalaudio.core.engine.samplewise.AmpOutput
 import com.scalaudio.core.midi.{MidiCommand, MidiConnector, QueueingMidiReceiver}
 import com.scalaudio.core.types.Sample
 import com.scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
@@ -27,7 +29,8 @@ class MidiReceiverSpec extends ScalaudioCoreTestHarness {
       Array(0.0 : Sample)
     }
 
-    FrameFuncAmpOutput(frameFunc).play(15 seconds)
+    val output = AmpOutput(frameFunc, List(Playback()))
+    Timeline.happen(15 seconds, List(output))
   }
 
 }

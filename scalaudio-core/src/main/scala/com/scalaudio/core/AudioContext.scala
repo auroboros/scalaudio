@@ -9,7 +9,6 @@ import com.scalaudio.core.types.AudioDuration
   */
 case class ScalaudioConfig(beatsPerMinute: Double = 120,
                            beatsPerMeasure: Double = 4,
-                           autoStartStop: Boolean = true,
                            framesPerBuffer: Int = 32,
                            nOutChannels: Int = 2, // ("Samples per frame")
                            nInChannels: Int = 1,
@@ -26,13 +25,13 @@ case class AudioContext(config: ScalaudioConfig = ScalaudioConfig()) {
   var audioOutput: AudioDeviceOutputStream = audioDevice.createOutputStream(audioDevice.getDefaultOutputDeviceID, config.samplingRate, config.nOutChannels)
   var audioInput: AudioDeviceInputStream = audioDevice.createInputStream(audioDevice.getDefaultInputDeviceID, config.samplingRate, config.nOutChannels)
 
-  def start() = {
+  def startAudioIO() = {
     // TODO : Should check if input & output are connected & only start if they are (overwrite var from LineIn & Playback)
     audioInput.start()
     audioOutput.start()
   }
 
-  def stop() = {
+  def stopAudioIO() = {
     audioInput.stop()
     audioOutput.stop()
   }

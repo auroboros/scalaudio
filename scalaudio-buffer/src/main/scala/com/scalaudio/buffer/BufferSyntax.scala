@@ -2,6 +2,8 @@ package com.scalaudio.buffer
 
 import com.scalaudio.buffer.timing.{TimedCompositeEvent, TimedEvent, ValueChange}
 import com.scalaudio.buffer.types.ChannelSetManipulator
+import com.scalaudio.buffer.unitgen.UnitGen
+import com.scalaudio.core.types.MultichannelAudio
 import com.scalaudio.core.{AudioContext, CoreSyntax}
 
 /**
@@ -17,4 +19,7 @@ trait BufferSyntax extends CoreSyntax {
 
   implicit def timedCompositeEvent2TimedEventList(tce : TimedCompositeEvent) : List[TimedEvent] =
     tce.compositeEvent.toTimedEventList(tce.startTime)
+
+  implicit def unitGen2MultichannelAudioFunction(uGen: UnitGen)(implicit audioContext: AudioContext) : () => MultichannelAudio =
+    () => uGen.outputBuffers()
 }

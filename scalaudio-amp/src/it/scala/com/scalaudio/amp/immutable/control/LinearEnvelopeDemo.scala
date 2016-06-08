@@ -2,7 +2,8 @@ package com.scalaudio.amp.immutable.control
 
 import com.scalaudio.amp.immutable.filter.GainFilter
 import com.scalaudio.amp.immutable.ugen.{OscState, SquareStateGen}
-import com.scalaudio.core.engine.samplewise.FrameFuncAmpOutput
+import com.scalaudio.core.engine.{Playback, Timeline}
+import com.scalaudio.core.engine.samplewise.AmpOutput
 import com.scalaudio.core.types.AudioDuration
 import com.scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 import org.scalatest.{FlatSpec, Matchers}
@@ -27,7 +28,9 @@ class LinearEnvelopeDemo extends FlatSpec with Matchers with CoreSyntax {
       GainFilter.applyGain(Array(sineState.sample), envState.value)
     }
 
-    FrameFuncAmpOutput(frameFunc).play(7 seconds)
+    val o = AmpOutput(frameFunc,
+      List(Playback())) // TODO(IMPORTANT): Can there be convenience functions that call timeline to cover simplistic use cases? .play(7 seconds)
+    Timeline.happen(7 seconds, List(o))
   }
 
   "Square wave with multiple ramps/points" should "fluctuate accordingly" in {
@@ -46,6 +49,7 @@ class LinearEnvelopeDemo extends FlatSpec with Matchers with CoreSyntax {
       GainFilter.applyGain(Array(sineState.sample), envState.value)
     }
 
-    FrameFuncAmpOutput(frameFunc).play(15 seconds)
+    val o = AmpOutput(frameFunc, List(Playback()))
+    Timeline.happen(15 seconds, List(o))
   }
 }

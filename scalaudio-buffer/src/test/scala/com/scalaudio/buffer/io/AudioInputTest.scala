@@ -1,6 +1,8 @@
 package com.scalaudio.buffer.io
 
 import com.scalaudio.buffer.unitgen.LineIn
+import com.scalaudio.core.engine.{Bufferwise, Playback, Timeline}
+import com.scalaudio.core.engine.bufferwise.BufferOutputTerminal
 import com.scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 import org.scalatest.{FlatSpec, Matchers}
 
@@ -12,6 +14,7 @@ class AudioInputTest extends FlatSpec with Matchers with CoreSyntax {
     implicit val audioContext = AudioContext(ScalaudioConfig(nInChannels = 1, nOutChannels = 1))
 
     val passthrough = LineIn()
-    passthrough.play(100000 buffers)
+    val output = BufferOutputTerminal(() => passthrough.outputBuffers(), List(Playback()))
+    Timeline.happen(100000 buffers, List(output))
   }
 }

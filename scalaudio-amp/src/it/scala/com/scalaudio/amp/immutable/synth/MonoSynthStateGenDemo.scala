@@ -2,7 +2,8 @@ package com.scalaudio.amp.immutable.synth
 
 import com.scalaudio.amp.immutable.control.AdsrEnvelope
 import com.scalaudio.amp.immutable.ugen.SineStateGen
-import com.scalaudio.core.engine.samplewise.FrameFuncAmpOutput
+import com.scalaudio.core.engine.samplewise.AmpOutput
+import com.scalaudio.core.engine.{Playback, Timeline}
 import com.scalaudio.core.types.{AudioDuration, Pitch}
 import com.scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 
@@ -37,6 +38,7 @@ class MonosynthStateGenDemo extends ScalaudioCoreTestHarness {
       Array(monosynthState.sample)
     }
 
-    FrameFuncAmpOutput(frameFunc).play(5.seconds)
+    val o = AmpOutput(frameFunc, List(Playback()))
+    Timeline.happen(5 seconds, List(o))
   }
 }

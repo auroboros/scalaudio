@@ -5,6 +5,8 @@ import com.scalaudio.buffer.filter.GainFilter
 import com.scalaudio.buffer.filter.mix.Splitter
 import com.scalaudio.buffer.unitgen.{FuncGen, SineGen}
 import com.scalaudio.core.AudioContext
+import com.scalaudio.core.engine.{Bufferwise, Playback, Timeline}
+import com.scalaudio.core.engine.bufferwise.BufferOutputTerminal
 import org.scalatest.{FlatSpec, Matchers}
 
 /**
@@ -60,8 +62,8 @@ class TimeReleaseCapsuleTest extends FlatSpec with Matchers with BufferSyntax {
     val splitter = Splitter(2)
     val gainController = GainFilter()
     val frameFunc = {() => gainController.processBuffersWithControl(sineGen.outputBuffers(), capsule.outputControlValue) chain splitter.processBuffers}
-    val sigChain =  new FuncGen(frameFunc)
 
-    sigChain.play(10000 buffers)
+    val output = BufferOutputTerminal(frameFunc, List(Playback()))
+    Timeline.happen(10000 buffers, List(output))
   }
 }

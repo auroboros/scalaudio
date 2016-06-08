@@ -3,7 +3,9 @@ package com.scalaudio.buffer.types
 import com.scalaudio.buffer.BufferSyntax
 import com.scalaudio.buffer.filter.mix.Splitter
 import com.scalaudio.buffer.unitgen.{NoiseGen, SignalChain}
-import com.scalaudio.core.{AudioContext, ScalaudioCoreTestHarness, ScalaudioConfig}
+import com.scalaudio.core.engine.{Bufferwise, Playback, Timeline}
+import com.scalaudio.core.engine.bufferwise.BufferOutputTerminal
+import com.scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 
 import scala.concurrent.duration._
 
@@ -16,6 +18,7 @@ class DurationsTest extends ScalaudioCoreTestHarness with BufferSyntax {
 
     val sigChain = new SignalChain(new NoiseGen, List(Splitter(2)))
 
-    sigChain.play(5 seconds) // THIS IS COMPUTING SAMPLES YET PLAY WANTS FRAMES...
+    val output = BufferOutputTerminal(sigChain, List(Playback()))
+    Timeline.happen(5 seconds, List(output))
   }
 }

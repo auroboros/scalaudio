@@ -2,8 +2,9 @@ package com.scalaudio.amp.midi
 
 import com.scalaudio.amp.immutable.control.AdsrEnvelope
 import com.scalaudio.amp.immutable.synth.MonosynthStateGen
-import com.scalaudio.amp.immutable.ugen.{SineStateGen, SquareStateGen}
-import com.scalaudio.core.engine.samplewise.FrameFuncAmpOutput
+import com.scalaudio.amp.immutable.ugen.SineStateGen
+import com.scalaudio.core.engine.{Bufferwise, Playback, Timeline}
+import com.scalaudio.core.engine.samplewise.AmpOutput
 import com.scalaudio.core.midi.MidiConnector
 import com.scalaudio.core.types.{AudioDuration, Pitch}
 import com.scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
@@ -38,6 +39,7 @@ class MonosynthMidiReceiverDemo extends ScalaudioCoreTestHarness {
       Array(monosynthState.sample)
     }
 
-    FrameFuncAmpOutput(frameFunc).play(5000.seconds)
+    val output = AmpOutput(frameFunc, List(Playback()))
+    Timeline.happen(5000 seconds, List(output))
   }
 }

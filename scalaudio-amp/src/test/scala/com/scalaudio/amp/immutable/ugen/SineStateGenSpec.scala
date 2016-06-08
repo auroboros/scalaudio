@@ -1,10 +1,7 @@
 package com.scalaudio.amp.immutable.ugen
 
-import com.scalaudio.core.engine.samplewise.FrameFuncAmpOutput
-import com.scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
+import com.scalaudio.core.{AudioContext, CoreSyntax}
 import org.scalatest.{FlatSpec, Matchers}
-
-import scala.concurrent.duration._
 
 /**
   * Created by johnmcgill on 5/27/16.

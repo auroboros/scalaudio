@@ -1,6 +1,7 @@
 package com.scalaudio.amp.immutable.ugen
 
-import com.scalaudio.core.engine.samplewise.FrameFuncAmpOutput
+import com.scalaudio.core.engine.samplewise.AmpOutput
+import com.scalaudio.core.engine.{Playback, Timeline}
 import com.scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 import org.scalatest.{FlatSpec, Matchers}
 
@@ -19,6 +20,7 @@ class SineStateGenDemo extends FlatSpec with Matchers with CoreSyntax {
       Array(state.sample)
     }
 
-    FrameFuncAmpOutput(frameFunc).play(5 seconds)
+    val o = AmpOutput(frameFunc, List(Playback()))
+    Timeline.happen(5 seconds, List(o))
   }
 }
