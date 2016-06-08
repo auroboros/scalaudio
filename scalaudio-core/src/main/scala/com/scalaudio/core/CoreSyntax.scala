@@ -21,7 +21,4 @@ trait CoreSyntax {
   // "Pitch" syntax
   implicit def int2PitchRichInt(i : Int) : PitchRichInt = PitchRichInt(i)
   implicit def double2PitchRichDouble(d : Double) : PitchRichDouble = PitchRichDouble(d)
-
-  // Default output engines
-  implicit def defaultOutputEngines(implicit audioContext: AudioContext) : List[OutputEngine] = List(Playback())
 }

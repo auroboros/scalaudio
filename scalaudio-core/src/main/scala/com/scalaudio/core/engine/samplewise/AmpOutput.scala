@@ -11,7 +11,7 @@ import scala.concurrent.duration
   * Created by johnmcgill on 5/27/16.
   */
 case class AmpOutput(frameFunc: () => Frame,
-                     outputEngines: List[OutputEngine])
+                     explicitOutputEngines: Option[List[OutputEngine]] = None)
                     (implicit audioContext: AudioContext) extends OutputTerminal {
 
   val processingRate = Samplewise

@@ -35,7 +35,7 @@ class ChannelSetManipulatorTest extends FlatSpec with Matchers with BufferSyntax
       noiseGen.outputBuffers() chain panner.processBuffers
     }
 
-    val output = BufferOutputTerminal(testFrameFunc, List(Playback()))
+    val output = BufferOutputTerminal(testFrameFunc)
     Timeline.happen(1000 buffers, List(output))
   }
 
@@ -50,7 +50,7 @@ class ChannelSetManipulatorTest extends FlatSpec with Matchers with BufferSyntax
 
     val playableUnitGen = new FuncGen({() => sg1.outputBuffers() mix sg2.outputBuffers() mix sg3.outputBuffers() mix sg4.outputBuffers() chain gain.processBuffers})
 
-    val output = BufferOutputTerminal(playableUnitGen, List(Playback()))
+    val output = BufferOutputTerminal(playableUnitGen)
     Timeline.happen(1000 buffers, List(output))
   }
 
@@ -73,8 +73,8 @@ class ChannelSetManipulatorTest extends FlatSpec with Matchers with BufferSyntax
         (sg3.outputBuffers() chain pan3.processBuffers) mix
         (sg4.outputBuffers() chain pan4.processBuffers) chain gain.processBuffers
     }
-    val output = BufferOutputTerminal(playableUnitGen, List(Playback()))
-    Timeline.happen(1000 buffers, List(output))
+
+    BufferOutputTerminal(playableUnitGen).play(1000 buffers)
   }
 
 }

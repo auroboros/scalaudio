@@ -28,9 +28,7 @@ class LinearEnvelopeDemo extends FlatSpec with Matchers with CoreSyntax {
       GainFilter.applyGain(Array(sineState.sample), envState.value)
     }
 
-    val o = AmpOutput(frameFunc,
-      List(Playback())) // TODO(IMPORTANT): Can there be convenience functions that call timeline to cover simplistic use cases? .play(7 seconds)
-    Timeline.happen(7 seconds, List(o))
+    AmpOutput(frameFunc).play(7 seconds)
   }
 
   "Square wave with multiple ramps/points" should "fluctuate accordingly" in {
@@ -49,7 +47,6 @@ class LinearEnvelopeDemo extends FlatSpec with Matchers with CoreSyntax {
       GainFilter.applyGain(Array(sineState.sample), envState.value)
     }
 
-    val o = AmpOutput(frameFunc, List(Playback()))
-    Timeline.happen(15 seconds, List(o))
+    AmpOutput(frameFunc).play(15 seconds)
   }
 }

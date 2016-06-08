@@ -19,7 +19,7 @@ class SimpleChainTest extends FlatSpec with Matchers with BufferSyntax {
 
     val sigChain = new SignalChain(new NoiseGen, Nil)
 
-    val output = BufferOutputTerminal(sigChain, List(Playback()))
+    val output = BufferOutputTerminal(sigChain)
     Timeline.happen(1000 buffers, List(output))
   }
 
@@ -28,7 +28,7 @@ class SimpleChainTest extends FlatSpec with Matchers with BufferSyntax {
 
     val sigChain = new SignalChain(new NoiseGen, List(Splitter(2)))
 
-    val output = BufferOutputTerminal(sigChain, List(Playback()))
+    val output = BufferOutputTerminal(sigChain)
     Timeline.happen(1000 buffers, List(output))
   }
 
@@ -47,8 +47,7 @@ class SimpleChainTest extends FlatSpec with Matchers with BufferSyntax {
     val filterChain : List[Filter] = List(new GainFilter(.5), new GainFilter(.75))
     val sigChainList = new SignalChain(new NoiseGen, filterChain)
 
-    val output = BufferOutputTerminal(sigChainList, List(Playback()))
-    Timeline.happen(1000 buffers, List(output))
+    BufferOutputTerminal(sigChainList).play(1000 buffers)
   }
 
   "Panner" should "pan some noise" in {
@@ -57,7 +56,6 @@ class SimpleChainTest extends FlatSpec with Matchers with BufferSyntax {
     val filterChain : List[Filter] = List(new StereoPanner(.5))
     val sigChainList = new SignalChain(new NoiseGen, filterChain)
 
-    val output = BufferOutputTerminal(sigChainList, List(Playback()))
-    Timeline.happen(1000 buffers, List(output))
+    BufferOutputTerminal(sigChainList).play(1000 buffers)
   }
 }

@@ -38,7 +38,6 @@ class MonosynthStateGenDemo extends ScalaudioCoreTestHarness {
       Array(monosynthState.sample)
     }
 
-    val o = AmpOutput(frameFunc, List(Playback()))
-    Timeline.happen(5 seconds, List(o))
+    AmpOutput(frameFunc).play(5 seconds)
   }
 }

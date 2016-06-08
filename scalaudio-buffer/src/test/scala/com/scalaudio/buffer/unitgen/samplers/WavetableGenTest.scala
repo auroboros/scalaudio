@@ -19,8 +19,7 @@ class WavetableGenTest extends FlatSpec with Matchers with BufferSyntax {
     val wtGen = new WavetableGen(FileSample("/Users/johnmcgill/nocode/samples/Yamaha-TG100-Whistle-C5.wav"))
 
     //    val firstBuffer = wtGen.outputBuffers()
-    val output = BufferOutputTerminal(wtGen, List(Playback()))
-    Timeline.happen(2000 buffers, List(output))
+    BufferOutputTerminal(wtGen).play(2000 buffers)
   }
 
   "Wavetable" should "play sample at double speed" in {
@@ -29,8 +28,7 @@ class WavetableGenTest extends FlatSpec with Matchers with BufferSyntax {
     val wtGen = new WavetableGen(FileSample("/Users/johnmcgill/nocode/samples/Yamaha-TG100-Whistle-C5.wav"), 2)
 
     //    val firstBuffer = wtGen.outputBuffers()
-    val output = BufferOutputTerminal(wtGen, List(Playback()))
-    Timeline.happen(2000 buffers, List(output))
+    BufferOutputTerminal(wtGen).play(2000 buffers)
   }
 
   "Wavetable" should "play sample at half speed" in {
@@ -39,8 +37,7 @@ class WavetableGenTest extends FlatSpec with Matchers with BufferSyntax {
     val wtGen = new WavetableGen(FileSample("/Users/johnmcgill/nocode/samples/Yamaha-TG100-Whistle-C5.wav"), .5)
 
     //    val firstBuffer = wtGen.outputBuffers()
-    val output = BufferOutputTerminal(wtGen, List(Playback()))
-    Timeline.happen(2000 buffers, List(output))
+    BufferOutputTerminal(wtGen).play(2000 buffers)
   }
 
   "Wavetable" should "play a sawtooth" in {
@@ -53,8 +50,7 @@ class WavetableGenTest extends FlatSpec with Matchers with BufferSyntax {
     })
 
     //    val firstBuffer = wtGen.outputBuffers()
-    val output = BufferOutputTerminal(wtGen, List(Playback()))
-    Timeline.happen(2000 buffers, List(output))
+    BufferOutputTerminal(wtGen).play(2000 buffers)
   }
 
   "Wavetable" should "play a sine" in {
@@ -67,8 +63,7 @@ class WavetableGenTest extends FlatSpec with Matchers with BufferSyntax {
     })
 
     //    val firstBuffer = wtGen.outputBuffers()
-    val output = BufferOutputTerminal(wtGen, List(Playback()))
-    Timeline.happen(2000 buffers, List(output))
+    BufferOutputTerminal(wtGen).play(2000 buffers)
   }
 
   "Wavetable" should "play a square" in {
@@ -81,7 +76,6 @@ class WavetableGenTest extends FlatSpec with Matchers with BufferSyntax {
     })
 
     //    val firstBuffer = wtGen.outputBuffers()
-    val output = BufferOutputTerminal(wtGen, List(Playback()))
-    Timeline.happen(2000 buffers, List(output))
+    BufferOutputTerminal(wtGen).play(2000 buffers)
   }
 }

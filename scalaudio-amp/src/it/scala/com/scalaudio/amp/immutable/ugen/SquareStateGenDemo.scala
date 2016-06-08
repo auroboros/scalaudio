@@ -20,7 +20,6 @@ class SquareStateGenDemo extends FlatSpec with Matchers with CoreSyntax {
       Array(state.sample)
     }
 
-    val o = AmpOutput(frameFunc, List(Playback()))
-    Timeline.happen(2 seconds, List(o))
+    AmpOutput(frameFunc).play(2 seconds)
   }
 }

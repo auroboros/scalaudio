@@ -38,16 +38,14 @@ class AudioOutputTest extends FlatSpec with Matchers with BufferSyntax {
     implicit val audioContext = AudioContext(ScalaudioConfig())
 
     val noiseGen = NoiseGen()
-    val output = BufferOutputTerminal(noiseGen, List(Playback()))
-    Timeline.happen(1000 buffers, List(output))
+    BufferOutputTerminal(noiseGen).play(1000 buffers)
   }
 
   "Sine Generator" should "create buffer of sine on every call" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
     val sineGen = SineGen(220 Hz)
-    val output = BufferOutputTerminal(sineGen, List(Playback()))
-    Timeline.happen(1000 buffers, List(output))
+    BufferOutputTerminal(sineGen).play(1000 buffers)
   }
 
 //  "Signal chain" should "play noise" in {

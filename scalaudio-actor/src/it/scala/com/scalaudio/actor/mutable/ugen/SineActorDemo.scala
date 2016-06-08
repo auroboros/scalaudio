@@ -18,7 +18,6 @@ class SineActorDemo extends ScalaudioCoreTestHarness {
       Array(sineActor.nextSample())
     }
 
-    val output = AmpOutput(frameFunc, List(Playback()))
-    Timeline.happen(5 seconds, List(output))
+    AmpOutput(frameFunc).play(5 seconds)
   }
 }

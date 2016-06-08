@@ -20,7 +20,7 @@ class GeneratorsTest extends FlatSpec with Matchers with BufferSyntax {
     implicit val audioContext : AudioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
     val noiseGen = new NoiseGen
-    val output = BufferOutputTerminal(noiseGen, List(Playback()))
+    val output = BufferOutputTerminal(noiseGen)
     Timeline.happen(5 seconds, List(output))
   }
 
@@ -28,7 +28,7 @@ class GeneratorsTest extends FlatSpec with Matchers with BufferSyntax {
     implicit val audioContext : AudioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
     val sineGen = new SineGen(440.Hz)
-    val output = BufferOutputTerminal(sineGen, List(Playback()))
+    val output = BufferOutputTerminal(sineGen)
     Timeline.happen(1000.buffers, List(output))
   }
 
@@ -36,23 +36,20 @@ class GeneratorsTest extends FlatSpec with Matchers with BufferSyntax {
     implicit val audioContext : AudioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
     val squareGen = new SquareGen(300.Hz)
-    val output = BufferOutputTerminal(squareGen, List(Playback()))
-    Timeline.happen(1000.buffers, List(output))
+    BufferOutputTerminal(squareGen).play(1000 buffers)
   }
 
   "Sawtooth Generator" should "create buffer of sawtooth on every call" in {
     implicit val audioContext : AudioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
     val sawtoothGen = new SawtoothGen((880 * 2).Hz)
-    val output = BufferOutputTerminal(sawtoothGen, List(Playback()))
-    Timeline.happen(1000.buffers, List(output))
+    BufferOutputTerminal(sawtoothGen).play(1000 buffers)
   }
 
   "Signal chain" should "play noise" in {
     implicit val audioContext : AudioContext = AudioContext(ScalaudioConfig(nOutChannels = 2))
 
     val chain = new SignalChain(new NoiseGen, List(Splitter(2)))
-    val output = BufferOutputTerminal(chain, List(Playback()))
-    Timeline.happen(1000.buffers, List(output))
+    BufferOutputTerminal(chain).play(1000 buffers)
   }
 }

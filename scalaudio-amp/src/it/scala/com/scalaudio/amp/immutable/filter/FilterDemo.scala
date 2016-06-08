@@ -24,7 +24,6 @@ class FilterDemo extends FlatSpec with Matchers with CoreSyntax {
       GainFilter.applyGain(splitterOut, .05)
     }
 
-    val o = AmpOutput(frameFunc, List(Playback()))
-    Timeline.happen(5 seconds, List(o))
+    AmpOutput(frameFunc).play(5 seconds)
   }
 }

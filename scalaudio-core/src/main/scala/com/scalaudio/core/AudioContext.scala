@@ -2,6 +2,7 @@ package com.scalaudio.core
 
 import com.jsyn.devices.javasound.JavaSoundAudioDevice
 import com.jsyn.devices.{AudioDeviceInputStream, AudioDeviceManager, AudioDeviceOutputStream}
+import com.scalaudio.core.engine.Playback
 import com.scalaudio.core.types.AudioDuration
 
 /**
@@ -35,6 +36,8 @@ case class AudioContext(config: ScalaudioConfig = ScalaudioConfig()) {
     audioInput.stop()
     audioOutput.stop()
   }
+
+  val defaultOutputEngines = List(Playback()(this))
 
   object State {
     var currentBuffer = 0

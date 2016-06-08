@@ -29,8 +29,7 @@ class MidiReceiverSpec extends ScalaudioCoreTestHarness {
       Array(0.0 : Sample)
     }
 
-    val output = AmpOutput(frameFunc, List(Playback()))
-    Timeline.happen(15 seconds, List(output))
+    AmpOutput(frameFunc).play(15 seconds)
   }
 
 }

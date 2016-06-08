@@ -11,7 +11,7 @@ import scala.concurrent.duration
   * Created by johnmcgill on 5/22/16.
   */
 case class BufferOutputTerminal(bufferFunc: () => MultichannelAudio,
-                                outputEngines: List[OutputEngine])
+                                explicitOutputEngines: Option[List[OutputEngine]] = None)
                                (implicit audioContext: AudioContext) extends OutputTerminal {
 
   val processingRate = Bufferwise

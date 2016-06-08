@@ -20,8 +20,7 @@ class GainFilterTest extends FlatSpec with Matchers with BufferSyntax {
     val gainFilter : GainFilter = GainFilter()
     val testFrameFunc: () => List[Array[Double]] = () => gainFilter.processBuffersWithSignal(sineGen.outputBuffers(), slowSineGen.outputBuffers())
 
-    val output = BufferOutputTerminal(testFrameFunc, List(Playback()))
-    Timeline.happen(10000 buffers, List(output))
+    BufferOutputTerminal(testFrameFunc).play(10000 buffers)
   }
 
   "Gain filter" should "create tremolo when multiplying sine by scaled slow sine" in {
@@ -33,7 +32,6 @@ class GainFilterTest extends FlatSpec with Matchers with BufferSyntax {
     val rangeScaler : RangeScaler = RangeScaler(0,1)
     val testFrameFunc: () => List[Array[Double]] = () => gainFilter.processBuffersWithSignal(sineGen.outputBuffers(), slowSineGen.outputBuffers() chain rangeScaler.processBuffers)
 
-    val output = BufferOutputTerminal(testFrameFunc, List(Playback()))
-    Timeline.happen(10000 buffers, List(output))
+    BufferOutputTerminal(testFrameFunc).play(10000 buffers)
   }
 }

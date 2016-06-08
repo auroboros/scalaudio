@@ -20,8 +20,7 @@ class TriggerSamplerTest extends FlatSpec with Matchers with BufferSyntax {
 
     sampler.activateSoundSample()
 
-    val output = BufferOutputTerminal(sampler, List(Playback()))
-    Timeline.happen(5.seconds, List(output))
+    BufferOutputTerminal(sampler).play(5 seconds)
   }
 
   "Sampler" should "play on given beats" in {
@@ -30,7 +29,6 @@ class TriggerSamplerTest extends FlatSpec with Matchers with BufferSyntax {
     val sampler = new TriggerSampler(FileSample("/Users/johnmcgill/nocode/samples/Yamaha-TG100-Whistle-C5.wav"),
       List(1 beats, 2 beats, 4 beats, 7 beats, 10 beats))
 
-    val output = BufferOutputTerminal(sampler, List(Playback()))
-    Timeline.happen(4 measures, List(output))
+    BufferOutputTerminal(sampler).play(4 measures)
   }
 }

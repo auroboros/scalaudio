@@ -18,7 +18,6 @@ class DurationsTest extends ScalaudioCoreTestHarness with BufferSyntax {
 
     val sigChain = new SignalChain(new NoiseGen, List(Splitter(2)))
 
-    val output = BufferOutputTerminal(sigChain, List(Playback()))
-    Timeline.happen(5 seconds, List(output))
+    BufferOutputTerminal(sigChain).play(5 seconds)
   }
 }
