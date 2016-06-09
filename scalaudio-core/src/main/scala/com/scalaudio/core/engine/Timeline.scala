@@ -7,6 +7,8 @@ import com.scalaudio.core.types.AudioDuration
   * Created by johnmcgill on 6/7/16.
   */
 object Timeline {
+
+  // TODO: Make duration optional, have a max duration def available in audio context
   def happen(duration: AudioDuration,
              terminals: List[OutputTerminal])(implicit audioContext: AudioContext) = {
 
