@@ -9,6 +9,16 @@ import com.scalaudio.core.types.{AudioSignal, MultichannelAudio}
   * Created by johnmcgill on 12/20/15.
   */
 case class Playback()(implicit audioContext: AudioContext) extends OutputEngine {
+  def start() = {
+    audioContext.startAudioIO()
+    println("Started audio playback IO")
+  }
+
+  def stop() = {
+    audioContext.stopAudioIO()
+    println("Stopped audio playback IO")
+  }
+
   override def handleBuffers(buffers: Either[AudioSignal, MultichannelAudio]) = playAudio(buffers)
 
   def playAudio(buffers: Either[AudioSignal, MultichannelAudio]) = {

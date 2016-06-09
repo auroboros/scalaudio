@@ -2,7 +2,8 @@ package com.scalaudio.amp.immutable.control
 
 import com.scalaudio.amp.immutable.filter.GainFilter
 import com.scalaudio.amp.immutable.ugen.{OscState, SquareStateGen}
-import com.scalaudio.core.engine.samplewise.FrameFuncAmpOutput
+import com.scalaudio.core.engine.{Playback, Timeline}
+import com.scalaudio.core.engine.samplewise.AmpOutput
 import com.scalaudio.core.types.AudioDuration
 import com.scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 import org.scalatest.{FlatSpec, Matchers}
@@ -27,7 +28,7 @@ class LinearEnvelopeDemo extends FlatSpec with Matchers with CoreSyntax {
       GainFilter.applyGain(Array(sineState.sample), envState.value)
     }
 
-    FrameFuncAmpOutput(frameFunc).play(7 seconds)
+    AmpOutput(frameFunc).play(7 seconds)
   }
 
   "Square wave with multiple ramps/points" should "fluctuate accordingly" in {
@@ -46,6 +47,6 @@ class LinearEnvelopeDemo extends FlatSpec with Matchers with CoreSyntax {
       GainFilter.applyGain(Array(sineState.sample), envState.value)
     }
 
-    FrameFuncAmpOutput(frameFunc).play(15 seconds)
+    AmpOutput(frameFunc).play(15 seconds)
   }
 }

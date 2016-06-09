@@ -2,6 +2,7 @@ package com.scalaudio.core
 
 import com.jsyn.devices.javasound.JavaSoundAudioDevice
 import com.jsyn.devices.{AudioDeviceInputStream, AudioDeviceManager, AudioDeviceOutputStream}
+import com.scalaudio.core.engine.Playback
 import com.scalaudio.core.types.AudioDuration
 
 /**
@@ -9,7 +10,6 @@ import com.scalaudio.core.types.AudioDuration
   */
 case class ScalaudioConfig(beatsPerMinute: Double = 120,
                            beatsPerMeasure: Double = 4,
-                           autoStartStop: Boolean = true,
                            framesPerBuffer: Int = 32,
                            nOutChannels: Int = 2, // ("Samples per frame")
                            nInChannels: Int = 1,
@@ -26,16 +26,18 @@ case class AudioContext(config: ScalaudioConfig = ScalaudioConfig()) {
   var audioOutput: AudioDeviceOutputStream = audioDevice.createOutputStream(audioDevice.getDefaultOutputDeviceID, config.samplingRate, config.nOutChannels)
   var audioInput: AudioDeviceInputStream = audioDevice.createInputStream(audioDevice.getDefaultInputDeviceID, config.samplingRate, config.nOutChannels)
 
-  def start() = {
+  def startAudioIO() = {
     // TODO : Should check if input & output are connected & only start if they are (overwrite var from LineIn & Playback)
     audioInput.start()
     audioOutput.start()
   }
 
-  def stop() = {
+  def stopAudioIO() = {
     audioInput.stop()
     audioOutput.stop()
   }
+
+  val defaultOutputEngines = List(Playback()(this))
 
   object State {
     var currentBuffer = 0
@@ -45,4 +47,6 @@ case class AudioContext(config: ScalaudioConfig = ScalaudioConfig()) {
   def currentTime : AudioDuration = AudioDuration(State.currentSample)(this) // For AMP
 
   def advanceByBuffer() = State.currentBuffer += 1
+
+  def advanceBySample() = State.currentSample += 1
 }

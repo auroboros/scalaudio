@@ -2,11 +2,14 @@ package com.scalaudio.buffer.io
 
 import com.jsyn.devices.javasound.JavaSoundAudioDevice
 import com.jsyn.devices.{AudioDeviceManager, AudioDeviceOutputStream}
+import com.scalaudio.buffer.BufferSyntax
 import com.scalaudio.buffer.unitgen.{NoiseGen, SineGen}
+import com.scalaudio.core.engine.{Bufferwise, Playback, Timeline}
+import com.scalaudio.core.engine.bufferwise.BufferOutputTerminal
 import com.scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 import org.scalatest.{FlatSpec, Matchers}
 
-class AudioOutputTest extends FlatSpec with Matchers with CoreSyntax {
+class AudioOutputTest extends FlatSpec with Matchers with BufferSyntax {
 
   "Audio Output" should "play buffers" in {
     System.out.println("Test mono output.")
@@ -35,14 +38,14 @@ class AudioOutputTest extends FlatSpec with Matchers with CoreSyntax {
     implicit val audioContext = AudioContext(ScalaudioConfig())
 
     val noiseGen = NoiseGen()
-    noiseGen.play(1000.buffers)
+    BufferOutputTerminal(noiseGen).play(1000 buffers)
   }
 
   "Sine Generator" should "create buffer of sine on every call" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
     val sineGen = SineGen(220 Hz)
-    sineGen.play(1000 buffers)
+    BufferOutputTerminal(sineGen).play(1000 buffers)
   }
 
 //  "Signal chain" should "play noise" in {

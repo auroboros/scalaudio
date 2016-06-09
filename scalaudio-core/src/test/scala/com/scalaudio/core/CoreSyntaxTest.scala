@@ -8,7 +8,7 @@ import org.scalatest.{FlatSpec, Matchers}
   */
 class CoreSyntaxTest extends FlatSpec with Matchers with CoreSyntax {
   implicit val audioContext = AudioContext()
-  override implicit def defaultOutputEngines(implicit audioContext : AudioContext) = List(Playback())
+//  override implicit def defaultOutputEngines(implicit audioContext : AudioContext) = List(Playback())
 
   "Implicit default output engines" should "be overridable yet remain implicit" in {
   }

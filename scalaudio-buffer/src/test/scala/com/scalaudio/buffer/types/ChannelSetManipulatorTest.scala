@@ -4,6 +4,8 @@ import com.scalaudio.buffer.BufferSyntax
 import com.scalaudio.buffer.filter.GainFilter
 import com.scalaudio.buffer.filter.mix.StereoPanner
 import com.scalaudio.buffer.unitgen.{FuncGen, NoiseGen, SineGen, UnitGen}
+import com.scalaudio.core.engine.{Bufferwise, Playback, Timeline}
+import com.scalaudio.core.engine.bufferwise.BufferOutputTerminal
 import com.scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 import org.scalatest.{FlatSpec, Matchers}
 
@@ -33,8 +35,8 @@ class ChannelSetManipulatorTest extends FlatSpec with Matchers with BufferSyntax
       noiseGen.outputBuffers() chain panner.processBuffers
     }
 
-    val playableUnitGen = new FuncGen(testFrameFunc)
-    playableUnitGen.play(1000 buffers)
+    val output = BufferOutputTerminal(testFrameFunc)
+    Timeline.happen(1000 buffers, List(output))
   }
 
   "Several sine gens" should "be able to be mixed & played" in {
@@ -48,7 +50,8 @@ class ChannelSetManipulatorTest extends FlatSpec with Matchers with BufferSyntax
 
     val playableUnitGen = new FuncGen({() => sg1.outputBuffers() mix sg2.outputBuffers() mix sg3.outputBuffers() mix sg4.outputBuffers() chain gain.processBuffers})
 
-    playableUnitGen.play(1000 buffers)
+    val output = BufferOutputTerminal(playableUnitGen)
+    Timeline.happen(1000 buffers, List(output))
   }
 
   "Several stereo-panned sine gens" should "be able to be mixed & played" in {
@@ -70,7 +73,8 @@ class ChannelSetManipulatorTest extends FlatSpec with Matchers with BufferSyntax
         (sg3.outputBuffers() chain pan3.processBuffers) mix
         (sg4.outputBuffers() chain pan4.processBuffers) chain gain.processBuffers
     }
-    playableUnitGen.play(1000 buffers)
+
+    BufferOutputTerminal(playableUnitGen).play(1000 buffers)
   }
 
 }

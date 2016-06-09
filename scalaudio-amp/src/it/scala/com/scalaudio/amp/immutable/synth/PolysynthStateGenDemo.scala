@@ -3,7 +3,8 @@ package com.scalaudio.amp.immutable.synth
 import com.scalaudio.amp.AmpSyntax
 import com.scalaudio.amp.immutable.control.AdsrEnvelope
 import com.scalaudio.amp.immutable.ugen.SineStateGen
-import com.scalaudio.core.engine.samplewise.FrameFuncAmpOutput
+import com.scalaudio.core.engine.samplewise.AmpOutput
+import com.scalaudio.core.engine.{Playback, Timeline}
 import com.scalaudio.core.types.{AudioDuration, Pitch}
 import com.scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 
@@ -47,6 +48,6 @@ class PolysynthStateGenDemo extends ScalaudioCoreTestHarness with AmpSyntax {
       Array(polysynthState.sample * .2)
     }
 
-    FrameFuncAmpOutput(frameFunc).play(11.seconds)
+    AmpOutput(frameFunc).play(11 seconds)
   }
 }

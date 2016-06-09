@@ -9,27 +9,21 @@ import com.scalaudio.core.types.{AudioSignal, MultichannelAudio}
 /**
   * Created by johnmcgill on 1/6/16.
   */
-case class Recording(filename : String)(implicit audioContext: AudioContext) extends OutputEngine {
+case class Recording(filename: String)(implicit audioContext: AudioContext) extends OutputEngine {
   val waveFile: File = new File(filename + ".wav")
   val writer = new WaveFileWriter(waveFile)
   writer.setFrameRate(audioContext.config.samplingRate)
   writer.setSamplesPerFrame(audioContext.config.nOutChannels)
   writer.setBitsPerSample(16)
 
-  override def handleBuffers(output : Either[AudioSignal, MultichannelAudio]) = record(output)
+  override def start(): Unit = println(s"Writing to WAV file ${waveFile.getAbsolutePath}")
 
-  def record(output : Either[AudioSignal, MultichannelAudio]) = {
-    // Default is stereo, 16 bits.
-//    val recorder = new WaveRecorder(synth, waveFile)
-    System.out.println("Writing to WAV file " + waveFile.getAbsolutePath)
+  override def stop(): Unit = writer.close()
 
-    output match {
-      case Left(audioSignal) => writer.write(audioSignal)
-      case Right(multichannelAudio) =>
-        if (multichannelAudio.length != audioContext.config.nOutChannels)
-          throw new Exception("Playback -- this device outputs incompatible number of channels. This recording system requires " + audioContext.config.nOutChannels)
+  override def handleBuffers(output: Either[AudioSignal, MultichannelAudio]) = record(output)
 
-        writer.write(Interleaver.interleave(multichannelAudio))
-    }
+  def record(output: Either[AudioSignal, MultichannelAudio]) = output match {
+    case Left(audioSignal) => writer.write(audioSignal)
+    case Right(multichannelAudio) => writer.write(Interleaver.interleave(multichannelAudio))
   }
 }
