@@ -9,7 +9,13 @@ lazy val root = project.in(file("."))
   .settings(Defaults.itSettings: _*)
   .settings(publish :=())
   .settings(publishLocal :=())
-  .aggregate(scalaudioCore, scalaudioBuffer, scalaudioAMP, scalaudioActor, scalaudioRPC, scalaudioBenchmark)
+  .aggregate(scalaudioCore,
+    scalaudioBuffer,
+    scalaudioAMP,
+    scalaudioActor,
+    scalaudioRPC,
+    scalaudioRPCFrontend,
+    scalaudioBenchmark)
 
 lazy val scalaudioCore = project.in(file("scalaudio-core"))
   .configs(IntegrationTest)
@@ -34,6 +40,12 @@ lazy val scalaudioRPC = project.in(file("scalaudio-rpc"))
   .configs(IntegrationTest)
   .settings(Defaults.itSettings: _*)
   .dependsOn(scalaudioCore % "test->test;compile->compile")
+
+lazy val scalaudioRPCFrontend = project.in(file("scalaudio-rpc-frontend"))
+  .configs(IntegrationTest)
+  .settings(Defaults.itSettings: _*)
+  .dependsOn(scalaudioCore % "test->test;compile->compile")
+  .enablePlugins(PlayScala)
 
 lazy val scalaudioBenchmark = project.in(file("scalaudio-benchmark"))
   .configs(IntegrationTest)
