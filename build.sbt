@@ -4,12 +4,19 @@ version in ThisBuild := "0.01"
 
 scalaVersion in ThisBuild := "2.11.7"
 
+fork in run := true
+
 lazy val root = project.in(file("."))
   .configs(IntegrationTest)
   .settings(Defaults.itSettings: _*)
   .settings(publish :=())
   .settings(publishLocal :=())
-  .aggregate(scalaudioCore, scalaudioBuffer, scalaudioAmp, scalaudioActor)
+  .aggregate(scalaudioCore,
+    scalaudioBuffer,
+    scalaudioAMP,
+    scalaudioActor,
+    scalaudioRPC,
+    scalaudioBenchmark)
 
 lazy val scalaudioCore = project.in(file("scalaudio-core"))
   .configs(IntegrationTest)
@@ -20,7 +27,7 @@ lazy val scalaudioBuffer = project.in(file("scalaudio-buffer"))
   .settings(Defaults.itSettings: _*)
   .dependsOn(scalaudioCore % "test->test;compile->compile")
 
-lazy val scalaudioAmp = project.in(file("scalaudio-amp"))
+lazy val scalaudioAMP = project.in(file("scalaudio-amp"))
   .configs(IntegrationTest)
   .settings(Defaults.itSettings: _*)
   .dependsOn(scalaudioCore % "test->test;compile->compile")
@@ -30,7 +37,12 @@ lazy val scalaudioActor = project.in(file("scalaudio-actor"))
   .settings(Defaults.itSettings: _*)
   .dependsOn(scalaudioCore % "test->test;compile->compile")
 
+lazy val scalaudioRPC = project.in(file("scalaudio-rpc"))
+  .configs(IntegrationTest)
+  .settings(Defaults.itSettings: _*)
+  .dependsOn(scalaudioCore % "test->test;compile->compile")
+
 lazy val scalaudioBenchmark = project.in(file("scalaudio-benchmark"))
   .configs(IntegrationTest)
   .settings(Defaults.itSettings: _*)
-  .dependsOn(scalaudioBuffer, scalaudioAmp, scalaudioActor, scalaudioCore % "test->test;compile->compile")
+  .dependsOn(scalaudioBuffer, scalaudioAMP, scalaudioActor, scalaudioCore % "test->test;compile->compile")
