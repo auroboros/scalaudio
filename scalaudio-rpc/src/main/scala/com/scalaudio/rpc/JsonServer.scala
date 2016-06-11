@@ -9,7 +9,7 @@ import org.eclipse.jetty.servlet.{ServletHandler, ServletHolder}
 object JsonServer extends App {
 
   val processor = new ScalaudioService.Processor[ScalaudioService.Iface](new ServiceHandler)
-  val server: Server = new Server(9093)
+  val server: Server = new Server(9091)
   val handler: ServletHandler = new ServletHandler
   server.setHandler(handler)
 
