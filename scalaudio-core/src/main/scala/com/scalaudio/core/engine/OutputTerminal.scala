@@ -7,6 +7,9 @@ import com.scalaudio.core.types.AudioDuration
   * Created by johnmcgill on 6/7/16.
   */
 trait OutputTerminal {
+
+  // TODO: declare unimplemented audioContext to use in implicits (so can be used in defaults, etc)
+
   val processingRate : TimeResolution
 
   val explicitOutputEngines: Option[List[OutputEngine]]

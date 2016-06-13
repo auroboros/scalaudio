@@ -54,3 +54,7 @@ case class AudioContext(config: ScalaudioConfig = ScalaudioConfig()) {
 
   def advanceBySample() = State.currentSample += 1
 }
+
+object Constants {
+  def maxDuration(implicit audioContext: AudioContext) = AudioDuration(Int.MaxValue)
+}
