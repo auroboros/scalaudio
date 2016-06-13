@@ -17,6 +17,8 @@ object MessageQueue {
     logger.debug(s"Updated doubles map: $doublesMap")
   }
 
+  def getDoubleValue(key: String): Option[Double] = doublesMap.get(key)
+
   //  doublesMap.-=()
   // what is parallel.mutable?
 }

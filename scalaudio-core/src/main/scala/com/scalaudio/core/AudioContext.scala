@@ -4,6 +4,7 @@ import com.jsyn.devices.javasound.JavaSoundAudioDevice
 import com.jsyn.devices.{AudioDeviceInputStream, AudioDeviceManager, AudioDeviceOutputStream}
 import com.scalaudio.core.engine.Playback
 import com.scalaudio.core.types.AudioDuration
+import com.scalaudio.rpc.JsonServer
 
 /**
   * Created by johnmcgill on 12/18/15.
@@ -15,6 +16,7 @@ case class ScalaudioConfig(beatsPerMinute: Double = 120,
                            nInChannels: Int = 1,
                            samplingRate: Int = 44100,
                            fftBufferSize: Int = 32,
+                           rpcEnabled: Boolean = false,
                            // Debug options
                            debugEnabled: Boolean = false,
                            reportClipping: Boolean = true)
@@ -25,6 +27,8 @@ case class AudioContext(config: ScalaudioConfig = ScalaudioConfig()) {
   // TODO: Make these private & have proxy methods for read/write (interleaving/de-interleaving can be here, actually)
   var audioOutput: AudioDeviceOutputStream = audioDevice.createOutputStream(audioDevice.getDefaultOutputDeviceID, config.samplingRate, config.nOutChannels)
   var audioInput: AudioDeviceInputStream = audioDevice.createInputStream(audioDevice.getDefaultInputDeviceID, config.samplingRate, config.nOutChannels)
+
+  if (config.rpcEnabled) JsonServer.serve()
 
   def startAudioIO() = {
     // TODO : Should check if input & output are connected & only start if they are (overwrite var from LineIn & Playback)

@@ -9,7 +9,7 @@ import org.apache.thrift.transport.{TFramedTransport, TServerSocket}
 /**
   * Created by johnmcgill on 6/8/16.
   */
-case class RpcServer() {
+object RpcServer {
   def serve() = {
     val processor = new ScalaudioService.Processor[ScalaudioService.Iface](new ServiceHandler)
     launchServer(9090, processor)
