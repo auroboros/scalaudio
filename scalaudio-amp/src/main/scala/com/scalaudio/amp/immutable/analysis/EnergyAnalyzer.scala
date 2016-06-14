@@ -16,7 +16,7 @@ case class EnergyAnalyzerState(sampleIn: Sample,
 object EnergyAnalyzerStateGen {
   def nextState(s: EnergyAnalyzerState)(implicit audioContext: AudioContext): EnergyAnalyzerState = {
     val offset: Int = (audioContext.currentTime.toSamples % s.analysisBuffer.length).toInt
-    s.analysisBuffer.update(offset, s.sampleIn) // will side effect on buffer with scope outside this...
+    s.analysisBuffer.update(offset, s.sampleIn) // will side effect on buffer with scope outside this...?
 
     val compute = (audioContext.currentTime.toSamples % s.computeInterval) == 0
 
