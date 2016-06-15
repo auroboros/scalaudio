@@ -12,11 +12,11 @@ import org.apache.commons.math3.transform.{DftNormalization, FastFourierTransfor
 object FFTMath {
   import window._
 
-  def window(implicit audioContext : AudioContext) : Array[Double] = new HannWindow(audioContext.config.fftBufferSize).window // TODO: Some nice case class thing for windows...?
+  def windowForConfig(implicit audioContext : AudioContext) : Array[Double] = new HannWindow(audioContext.config.fftBufferSize).window // TODO: Some nice case class thing for windows...?
 
   def performFFT(buffer : Array[Double])(implicit audioContext: AudioContext) : Array[Complex] =
   // For better design pattern this check should be in "pad", but dont want to force performance hit even when window sizes match...
-    ffter.transform(applyWindow(pad(buffer, audioContext.config.fftBufferSize), window), TransformType.FORWARD)
+    ffter.transform(applyWindow(pad(buffer, audioContext.config.fftBufferSize), windowForConfig), TransformType.FORWARD)
 
   def performIFFT(buffer : Array[Complex]) : Array[Double] =
     ffter.transform(buffer, TransformType.INVERSE) map (_.getReal)

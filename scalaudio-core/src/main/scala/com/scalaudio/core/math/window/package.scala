@@ -6,7 +6,7 @@ import com.scalaudio.core.AudioContext
   * Created by johnmcgill on 6/14/16.
   */
 package object window {
-  def applyWindow(buffer: Array[Double], window: Array[Double])(implicit audioContext: AudioContext): Array[Double] =
+  def applyWindow(buffer: Array[Double], window: Array[Double]): Array[Double] =
     buffer zip window map { case (bs: Double, ws: Double) => bs * ws }
 
   def pad(buffer: Array[Double], windowLength: Int): Array[Double] =
