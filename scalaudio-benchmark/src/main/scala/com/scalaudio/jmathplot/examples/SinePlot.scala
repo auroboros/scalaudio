@@ -1,10 +1,8 @@
-package com.scalaudio.jmathplot
-
-import javax.swing.JFrame
+package com.scalaudio.jmathplot.examples
 
 import com.scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
 import com.scalaudio.core.{AudioContext, CoreSyntax}
-import org.math.plot.Plot2DPanel
+import com.scalaudio.jmathplot.ConvenientPlot
 
 import scala.collection.mutable.ListBuffer
 
@@ -24,15 +22,5 @@ object SinePlot extends App with CoreSyntax {
 
   val x = (1 to yVals.length).map(_.toDouble).toArray
 
-  // create your PlotPanel (you can use it as a JPanel)
-  val plot = new Plot2DPanel()
-
-  // add a line plot to the PlotPanel
-  plot.addLinePlot("my plot", x, yVals.toArray)
-
-  // put the PlotPanel in a JFrame, as a JPanel
-  val frame = new JFrame("a plot panel")
-  frame.setContentPane(plot)
-  frame.setBounds(500,200,750,500)
-  frame.setVisible(true)
+  ConvenientPlot.plot2d(x, yVals.toArray)
 }
