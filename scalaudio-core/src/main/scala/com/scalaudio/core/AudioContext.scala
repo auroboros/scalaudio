@@ -15,7 +15,7 @@ case class ScalaudioConfig(beatsPerMinute: Double = 120,
                            nOutChannels: Int = 2, // ("Samples per frame")
                            nInChannels: Int = 1,
                            samplingRate: Int = 44100,
-                           fftBufferSize: Int = 256,
+                           fftSize: Int = 256,
                            rpcEnabled: Boolean = false,
                            // Debug options
                            debugEnabled: Boolean = false,
@@ -53,6 +53,10 @@ case class AudioContext(config: ScalaudioConfig = ScalaudioConfig()) {
   def advanceByBuffer() = State.currentBuffer += 1
 
   def advanceBySample() = State.currentSample += 1
+}
+
+trait DefaultAudioContext {
+  implicit val audioContext: AudioContext = AudioContext()
 }
 
 object Constants {

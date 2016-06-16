@@ -1,7 +1,7 @@
 package com.scalaudio.jmathplot.examples
 
 import com.scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
-import com.scalaudio.core.{AudioContext, CoreSyntax}
+import com.scalaudio.core.{AudioContext, CoreSyntax, DefaultAudioContext}
 import com.scalaudio.jmathplot.ConvenientPlot
 
 import scala.collection.mutable.ListBuffer
@@ -9,8 +9,7 @@ import scala.collection.mutable.ListBuffer
 /**
   * Created by johnmcgill on 6/15/16.
   */
-object SinePlot extends App with CoreSyntax {
-  implicit val audioContext : AudioContext = AudioContext()
+object SinePlot extends App with CoreSyntax with DefaultAudioContext {
 
   var oscState = OscState(0, 440.Hz, 0)
   val yVals = ListBuffer.empty[Double]
