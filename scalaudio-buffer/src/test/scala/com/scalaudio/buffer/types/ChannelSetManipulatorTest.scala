@@ -36,7 +36,7 @@ class ChannelSetManipulatorTest extends FlatSpec with Matchers with BufferSyntax
     }
 
     val output = BufferOutputTerminal(testFrameFunc)
-    Timeline.happen(1000 buffers, List(output))
+    Timeline.playFor(1000 buffers, List(output))
   }
 
   "Several sine gens" should "be able to be mixed & played" in {
@@ -51,7 +51,7 @@ class ChannelSetManipulatorTest extends FlatSpec with Matchers with BufferSyntax
     val playableUnitGen = new FuncGen({() => sg1.outputBuffers() mix sg2.outputBuffers() mix sg3.outputBuffers() mix sg4.outputBuffers() chain gain.processBuffers})
 
     val output = BufferOutputTerminal(playableUnitGen)
-    Timeline.happen(1000 buffers, List(output))
+    Timeline.playFor(1000 buffers, List(output))
   }
 
   "Several stereo-panned sine gens" should "be able to be mixed & played" in {

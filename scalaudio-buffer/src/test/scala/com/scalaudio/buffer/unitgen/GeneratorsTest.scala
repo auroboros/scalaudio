@@ -21,7 +21,7 @@ class GeneratorsTest extends FlatSpec with Matchers with BufferSyntax {
 
     val noiseGen = new NoiseGen
     val output = BufferOutputTerminal(noiseGen)
-    Timeline.happen(5 seconds, List(output))
+    Timeline.playFor(5 seconds, List(output))
   }
 
   "Sine Generator" should "create buffer of sine on every call" in {
@@ -29,7 +29,7 @@ class GeneratorsTest extends FlatSpec with Matchers with BufferSyntax {
 
     val sineGen = new SineGen(440.Hz)
     val output = BufferOutputTerminal(sineGen)
-    Timeline.happen(1000.buffers, List(output))
+    Timeline.playFor(1000.buffers, List(output))
   }
 
   "Square Generator" should "create buffer of squarewave on every call" in {

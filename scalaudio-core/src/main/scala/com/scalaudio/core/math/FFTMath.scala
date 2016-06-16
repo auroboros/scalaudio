@@ -23,5 +23,5 @@ object FFTMath {
 
   val ffter = new FastFourierTransformer(DftNormalization.STANDARD)
 
-  def powerSpectrumFromFft(fft: Array[Complex]) = fft.map(bucket => Math.log(bucket.abs))
+  def powerSpectrumFromFft(fft: Array[Complex]) = fft.map(bucket => Math.log(bucket.abs)).slice(0, fft.length / 2)
 }

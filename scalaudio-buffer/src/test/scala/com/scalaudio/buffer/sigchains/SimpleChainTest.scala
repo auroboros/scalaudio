@@ -20,7 +20,7 @@ class SimpleChainTest extends FlatSpec with Matchers with BufferSyntax {
     val sigChain = new SignalChain(new NoiseGen, Nil)
 
     val output = BufferOutputTerminal(sigChain)
-    Timeline.happen(1000 buffers, List(output))
+    Timeline.playFor(1000 buffers, List(output))
   }
 
   "SignalChain abstraction" should "playback stereo SignalChain only if signal is split" in {
@@ -29,7 +29,7 @@ class SimpleChainTest extends FlatSpec with Matchers with BufferSyntax {
     val sigChain = new SignalChain(new NoiseGen, List(Splitter(2)))
 
     val output = BufferOutputTerminal(sigChain)
-    Timeline.happen(1000 buffers, List(output))
+    Timeline.playFor(1000 buffers, List(output))
   }
 
   "SignalChain abstraction" should "report clip for MonoSignalChain that clips" in {

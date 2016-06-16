@@ -29,5 +29,7 @@ trait OutputTerminal {
   def processTick(currentTime: AudioDuration)(implicit audioContext: AudioContext)
 
   // convenience for when there's only 1 output (most cases?)
-  def play(duration: AudioDuration)(implicit audioContext: AudioContext) = Timeline.happen(duration, List(this))
+  def play(duration: AudioDuration)(implicit audioContext: AudioContext) = Timeline.playFor(duration, List(this))
+
+  def playWhile(loopCondition: () => Boolean)(implicit audioContext: AudioContext) = Timeline.playWhile(loopCondition, List(this))
 }

@@ -15,7 +15,7 @@ case class ScalaudioConfig(beatsPerMinute: Double = 120,
                            nOutChannels: Int = 2, // ("Samples per frame")
                            nInChannels: Int = 1,
                            samplingRate: Int = 44100,
-                           fftBufferSize: Int = 32,
+                           fftBufferSize: Int = 256,
                            rpcEnabled: Boolean = false,
                            // Debug options
                            debugEnabled: Boolean = false,
