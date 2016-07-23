@@ -1,5 +1,6 @@
 package com.scalaudio.amp.immutable.ugen
 
+import com.scalaudio.amp.immutable.AudioUnitState
 import com.scalaudio.core.types.{Pitch, _}
 
 /**
@@ -7,4 +8,6 @@ import com.scalaudio.core.types.{Pitch, _}
   */
 case class OscState(sample: Sample,
                        pitch: Pitch,
-                       phi: Double)
+                       phi: Double) extends AudioUnitState {
+  def overwriteSample(sample: Sample): OscState = this.copy(sample = sample)
+}
