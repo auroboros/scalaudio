@@ -21,7 +21,7 @@ class FilterDemo extends FlatSpec with Matchers with CoreSyntax {
     val frameFunc = () => {
       sineState = SineStateGen.nextState(sineState)
       splitterOut = SplitFilter.split(sineState.sample, 2)
-      GainFilter.applyGain(splitterOut, .05)
+      GainFilter.applyGainToFrame(splitterOut, .05)
     }
 
     AmpOutput(frameFunc).play(5 seconds)

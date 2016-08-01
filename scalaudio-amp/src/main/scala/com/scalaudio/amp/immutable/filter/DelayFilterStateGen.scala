@@ -10,7 +10,10 @@ import scala.collection.immutable.Queue
   * Created by johnmcgill on 7/23/16.
   */
 case class DelayFilterState(sample: Sample,
-                            buffer: Queue[Sample])
+                            buffer: Queue[Sample]) {
+
+  def overwriteSample(s: Sample) = this.copy(sample = s)
+}
 
 object DelayFilterStateGen extends StateProgressor[DelayFilterState]{
 

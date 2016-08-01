@@ -25,7 +25,7 @@ class LinearEnvelopeDemo extends FlatSpec with Matchers with CoreSyntax {
     val frameFunc = () => {
       sineState = SquareStateGen.nextState(sineState)
       envState = EnvelopeStateGen.nextState(envState)
-      GainFilter.applyGain(Array(sineState.sample), envState.value)
+      GainFilter.applyGainToFrame(Array(sineState.sample), envState.value)
     }
 
     AmpOutput(frameFunc).play(7 seconds)
@@ -44,7 +44,7 @@ class LinearEnvelopeDemo extends FlatSpec with Matchers with CoreSyntax {
     val frameFunc = () => {
       sineState = SquareStateGen.nextState(sineState)
       envState = EnvelopeStateGen.nextState(envState)
-      GainFilter.applyGain(Array(sineState.sample), envState.value)
+      GainFilter.applyGainToFrame(Array(sineState.sample), envState.value)
     }
 
     AmpOutput(frameFunc).play(15 seconds)

@@ -7,14 +7,14 @@ import com.scalaudio.core.types.Sample
 /**
   * Created by johnmcgill on 7/10/16.
   */
-case class MutableStateWrapper[T](stateProgressor: StateProgressor[T],
-                                  initialState: T,
-                                  preTransformer: T => T = identity[T] _, // identity?
-                                  postTransformer: T => T = identity[T] _)
-                                 (implicit val audioContext: AudioContext) {
+class MutableStateWrapper[T](val stateProgressor: StateProgressor[T],
+                             val initialState: T,
+                             val preTransformer: T => T = identity[T] _, // identity?
+                             val postTransformer: T => T = identity[T] _)
+                            (implicit val audioContext: AudioContext) {
   var state = initialState
 
-  def nextState() : T = {
+  def nextState(): T = {
     state = postTransformer(stateProgressor.nextState(preTransformer(state)))
     state
   }

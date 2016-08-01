@@ -7,4 +7,7 @@ import com.scalaudio.core.types.{Pitch, _}
   */
 case class OscState(sample: Sample,
                        pitch: Pitch,
-                       phi: Double)
+                       phi: Double) {
+
+  def overwriteSample(s: Sample) = this.copy(sample = s)
+}

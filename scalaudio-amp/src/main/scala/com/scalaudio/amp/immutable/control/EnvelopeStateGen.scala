@@ -1,5 +1,6 @@
 package com.scalaudio.amp.immutable.control
 
+import com.scalaudio.amp.immutable.StateProgressor
 import com.scalaudio.core.AudioContext
 import com.scalaudio.core.types.AudioDuration
 
@@ -11,7 +12,7 @@ import scala.collection.immutable.SortedMap
 case class EnvelopeState(value: Double,
                          remainingEvents: SortedMap[AudioDuration, EnvelopeSegment])
 
-object EnvelopeStateGen {
+object EnvelopeStateGen extends StateProgressor[EnvelopeState] {
   def nextState(s: EnvelopeState)(implicit audioContext: AudioContext): EnvelopeState = {
     val firstStartTimeOption = s.remainingEvents.headOption.map(_._1)
     val currentTime = AudioDuration(audioContext.State.currentSample)

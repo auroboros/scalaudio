@@ -14,7 +14,7 @@ class MutableStateWrapperDemo extends ScalaudioCoreTestHarness {
   "MutableStateWrapper" should "produce sine without var in outer scope" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
-    val wrappedSine = MutableStateWrapper[OscState](SineStateGen, OscState(0, 440.Hz, 0))
+    val wrappedSine = new MutableStateWrapper[OscState](SineStateGen, OscState(0, 440.Hz, 0))
 
     val frameFunc = () => {
       Array(wrappedSine.nextState().sample)
@@ -29,7 +29,7 @@ class MutableStateWrapperDemo extends ScalaudioCoreTestHarness {
     val preTransformer = (s : OscState) => s.copy(
       pitch = (s.pitch.toHz + .2).Hz
     )
-    val wrappedSine = MutableStateWrapper[OscState](SineStateGen,
+    val wrappedSine = new MutableStateWrapper[OscState](SineStateGen,
       OscState(0, 440.Hz, 0),
       preTransformer)
 
@@ -44,8 +44,8 @@ class MutableStateWrapperDemo extends ScalaudioCoreTestHarness {
   "MutableStateWrapper" should "be chainable with stateful filters" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
-    val wrappedSine = MutableStateWrapper[OscState](SineStateGen, OscState(0, 440.Hz, 0))
-    val wrappedDelay = MutableStateWrapper[DelayFilterState](DelayFilterStateGen,
+    val wrappedSine = new MutableStateWrapper[OscState](SineStateGen, OscState(0, 440.Hz, 0))
+    val wrappedDelay = new MutableStateWrapper[DelayFilterState](DelayFilterStateGen,
       DelayFilterStateGen.initialState(1.second),
       _.copy(sample = wrappedSine.state.sample)
     )
