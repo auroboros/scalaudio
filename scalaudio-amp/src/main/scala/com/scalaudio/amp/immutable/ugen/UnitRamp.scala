@@ -11,7 +11,7 @@ object UnitRamp extends OscStateGen {
 
     current.copy(
       sample = current.phi,
-      phi = current.phi + w
+      phi = current.phi + w // TODO: mod 1??
     )
   }
 }

@@ -21,4 +21,9 @@ case class MutableAudioStateWrapper[T <: {val sample: Sample; def overwriteSampl
     val newPreTransform = (inputState: U) => nextMasw.preTransformer(inputState).overwriteSample(this.nextState().sample)
     nextMasw.copy(preTransformer = newPreTransform)
   }
+
+//  def ~~[S <: {val sample: Sample; def overwritePitch(s: Sample): S}](nextMasw: MutableAudioStateWrapper[S]) : MutableAudioStateWrapper[S] = {
+//    val newPreTransform = (inputState: S) => nextMasw.preTransformer(inputState).overwritePitch(this.nextState().sample)
+//    nextMasw.copy(preTransformer = newPreTransform)
+//  }
 }
