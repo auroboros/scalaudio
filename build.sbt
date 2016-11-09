@@ -1,12 +1,12 @@
 name := "scalaudio"
 
 organization in ThisBuild := "org.auroboros"
-version in ThisBuild := "0.0.1"
+version in ThisBuild := "0.0.3-SNAPSHOT"
 
 scalaVersion in ThisBuild := "2.11.8"
 
 resolvers in ThisBuild += Resolver.mavenLocal
-resolvers in ThisBuild += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
+//resolvers in ThisBuild += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
 
 libraryDependencies in ThisBuild ++= Seq(
   "org.scalatest" %% "scalatest" % "2.2.4" % "test",
