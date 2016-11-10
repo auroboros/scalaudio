@@ -1,10 +1,10 @@
 name := "scalaudio-core"
 
-version := "0.01"
-
-scalaVersion := "2.11.7"
+unmanagedBase := baseDirectory.value / "../lib"
 
 libraryDependencies ++= Seq(
-  "com.softsynth" % "jsyn" % "16.7.3" from "http://www.softsynth.com/jsyn/developers/archives/jsyn_16_7_3.jar",
-  "org.apache.commons" % "commons-math3" % "3.6"
+  "com.softsynth" % "jsyn" % "16.7.3" % "provided",
+  "org.apache.commons" % "commons-math3" % "3.6",
+//  "org.auroboros" % "signalz" % "0.0.1",
+  "ch.qos.logback" % "logback-classic" % "1.1.7"
 )
