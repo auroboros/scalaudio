@@ -1,9 +1,8 @@
 package com.scalaudio.core.midi
 
-import javax.sound.midi.{MidiDevice, MidiMessage, Receiver}
+import javax.sound.midi.{MidiDevice, Receiver}
 
 import com.jsyn.devices.javasound.MidiDeviceTools
-import com.jsyn.midi.{MessageParser, MidiConstants}
 
 /**
   * Created by johnmcgill on 5/30/16.
