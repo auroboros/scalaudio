@@ -1,9 +1,33 @@
 name := "scalaudio"
-
 organization in ThisBuild := "org.auroboros"
 version in ThisBuild := "0.0.1-SNAPSHOT"
 
+homepage in ThisBuild := Some(url("https://github.com/auroboros/scalaudio"))
+licenses in ThisBuild := Seq("copyright" -> url("https://github.com/auroboros/scalaudio/blob/master/license.txt"))
+
+pomExtra in ThisBuild := <scm>
+    <url>git@github.com:auroboros/scalaudio.git</url>
+    <connection>scm:git:git@github.com:auroboros/scalaudio.git</connection>
+  </scm>
+    <developers>
+      <developer>
+        <id>fat0wl</id>
+        <name>John McGill</name>
+        <url>https://github.com/auroboros</url>
+      </developer>
+    </developers>
+
 scalaVersion in ThisBuild := "2.11.8"
+
+publishMavenStyle in ThisBuild := true
+
+publishTo in ThisBuild := {
+  val nexus = "https://oss.sonatype.org/"
+  if (isSnapshot.value)
+    Some("snapshots" at nexus + "content/repositories/snapshots")
+  else
+    Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+}
 
 resolvers in ThisBuild += Resolver.mavenLocal
 
