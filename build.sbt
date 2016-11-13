@@ -6,16 +6,16 @@ homepage in ThisBuild := Some(url("https://github.com/auroboros/scalaudio"))
 licenses in ThisBuild := Seq("copyright" -> url("https://github.com/auroboros/scalaudio/blob/master/license.txt"))
 
 pomExtra in ThisBuild := <scm>
-    <url>git@github.com:auroboros/scalaudio.git</url>
-    <connection>scm:git:git@github.com:auroboros/scalaudio.git</connection>
-  </scm>
-    <developers>
-      <developer>
-        <id>fat0wl</id>
-        <name>John McGill</name>
-        <url>https://github.com/auroboros</url>
-      </developer>
-    </developers>
+  <url>git@github.com:auroboros/scalaudio.git</url>
+  <connection>scm:git:git@github.com:auroboros/scalaudio.git</connection>
+</scm>
+  <developers>
+    <developer>
+      <id>fat0wl</id>
+      <name>John McGill</name>
+      <url>https://github.com/auroboros</url>
+    </developer>
+  </developers>
 
 scalaVersion in ThisBuild := "2.11.8"
 
@@ -26,7 +26,7 @@ publishTo in ThisBuild := {
   if (isSnapshot.value)
     Some("snapshots" at nexus + "content/repositories/snapshots")
   else
-    Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+    Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
 
 resolvers in ThisBuild += Resolver.mavenLocal
@@ -42,8 +42,7 @@ fork in run := true
 lazy val root = project.in(file("."))
   .configs(IntegrationTest)
   .settings(Defaults.itSettings: _*)
-  .settings(publish :=())
-  .settings(publishLocal :=())
+  .settings(publishArtifact := false)
   .aggregate(
     scalaudioCore,
     scalaudioBuffer,
