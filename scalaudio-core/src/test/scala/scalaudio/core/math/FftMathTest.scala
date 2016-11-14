@@ -1,6 +1,5 @@
 package scalaudio.core.math
 
-import com.scalaudio.core.math.window.HannWindow
 import org.scalatest.{FlatSpec, Matchers}
 
 import scalaudio.core.{AudioContext, ScalaudioConfig}

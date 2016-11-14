@@ -1,6 +1,5 @@
 package scalaudio.core.math
 
-import com.scalaudio.core.math.window.HannWindow
 import org.apache.commons.math3.complex.Complex
 import org.apache.commons.math3.transform.{DftNormalization, FastFourierTransformer, TransformType}
 

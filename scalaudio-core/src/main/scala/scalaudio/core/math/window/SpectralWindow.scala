@@ -1,4 +1,4 @@
-package com.scalaudio.core.math.window
+package scalaudio.core.math.window
 
 /**
   * Created by johnmcgill on 1/12/16.
