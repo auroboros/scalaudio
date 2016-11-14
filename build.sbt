@@ -54,7 +54,7 @@ lazy val root = project.in(file("."))
 lazy val scalaudioCore = project.in(file("scalaudio-core"))
   .configs(IntegrationTest)
   .settings(Defaults.itSettings: _*)
-  .dependsOn(scalaudioRPC)
+  .dependsOn(scalaudioRPC) // TODO: Reverse this (by extending context?)
 
 lazy val scalaudioBuffer = project.in(file("scalaudio-buffer"))
   .configs(IntegrationTest)
