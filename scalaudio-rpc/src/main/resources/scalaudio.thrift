@@ -1,4 +1,4 @@
-namespace java com.scalaudio.rpc.thrift.generated
+namespace java scalaudio.rpc.thrift.generated
 
 service ScalaudioService {
   string hello();
