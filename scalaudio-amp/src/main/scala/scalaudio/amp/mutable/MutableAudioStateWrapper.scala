@@ -1,8 +1,8 @@
 package scalaudio.amp.mutable
 
 import scalaudio.amp.immutable.StateProgressor
-import com.scalaudio.core.AudioContext
-import com.scalaudio.core.types.Sample
+import scalaudio.core.AudioContext
+import scalaudio.core.types.Sample
 
 /**
   * Created by johnmcgill on 7/10/16.

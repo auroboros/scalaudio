@@ -1,15 +1,13 @@
 package scalaudio.amp.immutable.synth
 
-import com.scalaudio.amp.AmpSyntax
+import scala.collection.immutable.{SortedMap, TreeMap}
+import scala.concurrent.duration._
+import scalaudio.amp.AmpSyntax
 import scalaudio.amp.immutable.control.AdsrEnvelope
 import scalaudio.amp.immutable.ugen.SineStateGen
 import scalaudio.core.engine.samplewise.AmpOutput
-import scalaudio.core.engine.{Playback, Timeline}
-import com.scalaudio.core.types.{AudioDuration, Pitch}
-import com.scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
-
-import scala.collection.immutable.{SortedMap, TreeMap}
-import scala.concurrent.duration._
+import scalaudio.core.types.{AudioDuration, Pitch}
+import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 
 /**
   * Created by johnmcgill on 5/30/16.

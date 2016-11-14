@@ -1,8 +1,8 @@
 package scalaudio.amp.immutable.analysis
 
-import com.scalaudio.core.AudioContext
-import com.scalaudio.core.math.{EnergyAlgorithm, EnergyLevel, RMS}
-import com.scalaudio.core.types.{AudioSignal, Sample}
+import scalaudio.core.AudioContext
+import scalaudio.core.math.{EnergyAlgorithm, EnergyLevel, RMS}
+import scalaudio.core.types.{AudioSignal, Sample}
 
 /**
   * Created by johnmcgill on 6/4/16.

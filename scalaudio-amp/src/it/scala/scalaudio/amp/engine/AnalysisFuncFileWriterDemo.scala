@@ -1,10 +1,9 @@
 package scalaudio.amp.engine
 
+import scala.concurrent.duration._
 import scalaudio.amp.immutable.analysis.{EnergyAnalyzerState, EnergyAnalyzerStateGen}
 import scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
-import com.scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
-
-import scala.concurrent.duration._
+import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 
 /**
   * Created by johnmcgill on 6/7/16.

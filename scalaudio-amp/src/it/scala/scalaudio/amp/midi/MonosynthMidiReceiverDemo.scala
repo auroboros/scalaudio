@@ -1,16 +1,15 @@
 package scalaudio.amp.midi
 
-import scalaudio.amp.immutable.control.AdsrEnvelope
-import scalaudio.amp.immutable.synth.MonosynthStateGen
-import scalaudio.amp.immutable.ugen.SineStateGen
-import scalaudio.core.engine.{Bufferwise, Playback, SpeedTestDummy, Timeline}
-import scalaudio.core.engine.samplewise.AmpOutput
 import com.scalaudio.core.midi.MidiConnector
-import com.scalaudio.core.types.{AudioDuration, Pitch}
-import com.scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 
 import scala.collection.immutable.TreeMap
 import scala.concurrent.duration._
+import scalaudio.amp.immutable.control.AdsrEnvelope
+import scalaudio.amp.immutable.synth.MonosynthStateGen
+import scalaudio.amp.immutable.ugen.SineStateGen
+import scalaudio.core.engine.samplewise.AmpOutput
+import scalaudio.core.types.{AudioDuration, Pitch}
+import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 
 /**
   * Created by johnmcgill on 6/2/16.

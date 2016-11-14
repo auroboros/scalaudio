@@ -1,12 +1,11 @@
 package scalaudio.jmathplot.examples
 
-import com.scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
-import com.scalaudio.core.math.FftMath
-import com.scalaudio.core.math.window._
-import com.scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
-import com.scalaudio.jmathplot.ConvenientPlot
+import com.scalaudio.core.math.window.HannWindow
 
+import scalaudio.core.math.window._
 import scala.collection.mutable.ListBuffer
+import scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
+import scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 import scalaudio.jmathplot.ConvenientPlot
 
 /**

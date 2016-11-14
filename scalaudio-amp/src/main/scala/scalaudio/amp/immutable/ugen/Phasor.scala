@@ -1,5 +1,6 @@
 package scalaudio.amp.immutable.ugen
-import com.scalaudio.core.AudioContext
+
+import scalaudio.core.AudioContext
 
 /**
   * Created by johnmcgill on 7/10/16.

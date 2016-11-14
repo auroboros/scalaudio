@@ -1,9 +1,10 @@
 package scalaudio.amp.immutable.analysis
 
-import com.scalaudio.core.AudioContext
-import com.scalaudio.core.math.FftMath
-import com.scalaudio.core.types._
 import org.apache.commons.math3.complex.Complex
+
+import scalaudio.core.AudioContext
+import scalaudio.core.math.FftMath
+import scalaudio.core.types.{AudioSignal, Sample}
 
 /**
   * Created by johnmcgill on 6/14/16.

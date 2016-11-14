@@ -1,11 +1,12 @@
 package scalaudio.rpc
 
-import com.scalaudio.rpc.thrift.generated.ScalaudioService
 import org.apache.thrift.protocol.TJSONProtocol
 import org.apache.thrift.server.TServlet
 import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.servlet.{FilterHolder, ServletHandler, ServletHolder}
 import org.eclipse.jetty.servlets.CrossOriginFilter
+
+import scalaudio.rpc.thrift.generated.ScalaudioService
 
 object JsonServer {
 

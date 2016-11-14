@@ -1,7 +1,7 @@
 package scalaudio.core.engine
 
-import com.scalaudio.core.AudioContext
-import com.scalaudio.core.types.{AudioSignal, MultichannelAudio}
+import scalaudio.core.AudioContext
+import scalaudio.core.types.{AudioSignal, MultichannelAudio}
 
 /**
   * Playback trait -- mix this in to a UnitGen to make it playable

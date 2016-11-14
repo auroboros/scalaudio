@@ -1,7 +1,7 @@
 package scalaudio.amp.immutable.control
 
-import com.scalaudio.core.AudioContext
-import com.scalaudio.core.types.AudioDuration
+import scalaudio.core.AudioContext
+import scalaudio.core.types.AudioDuration
 
 /**
   * Created by johnmcgill on 5/29/16.

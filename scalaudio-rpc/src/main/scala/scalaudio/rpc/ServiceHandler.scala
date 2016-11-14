@@ -1,6 +1,6 @@
 package scalaudio.rpc
 
-import com.scalaudio.rpc.thrift.generated.ScalaudioService
+import scalaudio.rpc.thrift.generated.ScalaudioService
 
 /**
   * Created by johnmcgill on 6/8/16.

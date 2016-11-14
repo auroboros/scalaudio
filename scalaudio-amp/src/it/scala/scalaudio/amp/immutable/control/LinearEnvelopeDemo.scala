@@ -1,15 +1,14 @@
 package scalaudio.amp.immutable.control
 
-import scalaudio.amp.immutable.filter.GainFilter
-import scalaudio.amp.immutable.ugen.{OscState, SquareStateGen}
-import scalaudio.core.engine.{Playback, Timeline}
-import scalaudio.core.engine.samplewise.AmpOutput
-import com.scalaudio.core.types.AudioDuration
-import com.scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.collection.immutable.TreeMap
 import scala.concurrent.duration._
+import scalaudio.amp.immutable.filter.GainFilter
+import scalaudio.amp.immutable.ugen.{OscState, SquareStateGen}
+import scalaudio.core.engine.samplewise.AmpOutput
+import scalaudio.core.types.AudioDuration
+import scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 /**
   * Created by johnmcgill on 5/29/16.
   */

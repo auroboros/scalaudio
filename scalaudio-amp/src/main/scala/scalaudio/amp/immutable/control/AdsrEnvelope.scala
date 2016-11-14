@@ -1,8 +1,7 @@
 package scalaudio.amp.immutable.control
 
-import com.scalaudio.core.types.AudioDuration
-
 import scala.collection.immutable.{SortedMap, TreeMap}
+import scalaudio.core.types.AudioDuration
 
 /**
   * Created by johnmcgill on 5/29/16.

@@ -1,13 +1,12 @@
 package scalaudio.amp.immutable.filter
 
-import scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
-import scalaudio.core.engine.samplewise.AmpOutput
-import scalaudio.core.engine.{Playback, Timeline}
-import com.scalaudio.core.types._
-import com.scalaudio.core.{AudioContext, CoreSyntax}
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.duration._
+import scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
+import scalaudio.core.engine.samplewise.AmpOutput
+import scalaudio.core.types.Frame
+import scalaudio.core.{AudioContext, CoreSyntax}
 /**
   * Created by johnmcgill on 5/29/16.
   */

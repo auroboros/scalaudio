@@ -1,7 +1,7 @@
 package scalaudio.amp.immutable.ugen
 
 import scalaudio.amp.immutable.StateProgressor
-import com.scalaudio.core.AudioContext
+import scalaudio.core.AudioContext
 
 /**
   * Created by johnmcgill on 5/29/16.

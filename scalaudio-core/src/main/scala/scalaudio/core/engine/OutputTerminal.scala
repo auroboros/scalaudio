@@ -1,7 +1,7 @@
 package scalaudio.core.engine
 
-import com.scalaudio.core.AudioContext
-import com.scalaudio.core.types.AudioDuration
+import scalaudio.core.AudioContext
+import scalaudio.core.types.AudioDuration
 
 /**
   * Created by johnmcgill on 6/7/16.

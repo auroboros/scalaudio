@@ -1,6 +1,6 @@
 package scalaudio.core.engine
 
-import com.scalaudio.core.types.{AudioSignal, MultichannelAudio}
+import scalaudio.core.types.{AudioSignal, MultichannelAudio}
 
 /**
   * Created by johnmcgill on 1/22/16.

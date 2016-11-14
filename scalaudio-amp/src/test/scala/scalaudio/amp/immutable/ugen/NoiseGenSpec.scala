@@ -1,6 +1,6 @@
 package scalaudio.amp.immutable.ugen
 
-import com.scalaudio.core.ScalaudioCoreTestHarness
+import scalaudio.core.ScalaudioCoreTestHarness
 
 /**
   * Created by johnmcgill on 6/16/16.

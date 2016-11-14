@@ -1,6 +1,6 @@
 package scalaudio.amp.immutable.ugen
 
-import com.scalaudio.core.types.{Pitch, _}
+import scalaudio.core.types.{Pitch, Sample}
 
 /**
   * Created by johnmcgill on 5/29/16.

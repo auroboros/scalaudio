@@ -1,6 +1,6 @@
 package scalaudio.rpc.receiver
 
-import com.scalaudio.rpc.MessageQueue
+import scalaudio.rpc.MessageQueue
 
 /**
   * Created by johnmcgill on 6/12/16.

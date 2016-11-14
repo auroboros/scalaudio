@@ -1,7 +1,5 @@
 package scalaudio.jmathplot.examples
 
-import com.scalaudio.jmathplot.ConvenientPlot
-
 import scalaudio.jmathplot.ConvenientPlot
 
 /**

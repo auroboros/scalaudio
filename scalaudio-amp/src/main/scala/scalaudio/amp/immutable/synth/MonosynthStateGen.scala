@@ -1,11 +1,10 @@
 package scalaudio.amp.immutable.synth
 
+import scala.collection.immutable.{SortedMap, TreeMap}
 import scalaudio.amp.immutable.control.{AdsrEnvelope, EnvelopeState, EnvelopeStateGen, PointEnvelope}
 import scalaudio.amp.immutable.ugen.{OscState, OscStateGen}
-import com.scalaudio.core.{AudioContext, CoreSyntax}
-import com.scalaudio.core.types.{AudioDuration, Pitch, Sample}
-
-import scala.collection.immutable.{SortedMap, TreeMap}
+import scalaudio.core.types.{AudioDuration, Pitch, Sample}
+import scalaudio.core.{AudioContext, CoreSyntax}
 
 /**
   * Created by johnmcgill on 5/29/16.

@@ -1,11 +1,10 @@
 package scalaudio.amp.immutable.ugen
 
-import scalaudio.core.engine.samplewise.AmpOutput
-import scalaudio.core.engine.{Playback, Timeline}
-import com.scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.duration._
+import scalaudio.core.engine.samplewise.AmpOutput
+import scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 /**
   * Created by johnmcgill on 5/29/16.
   */

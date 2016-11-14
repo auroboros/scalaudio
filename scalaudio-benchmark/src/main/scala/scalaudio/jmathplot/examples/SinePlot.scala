@@ -1,10 +1,8 @@
 package scalaudio.jmathplot.examples
 
-import com.scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
-import com.scalaudio.core.{AudioContext, CoreSyntax, DefaultAudioContext}
-import com.scalaudio.jmathplot.ConvenientPlot
-
 import scala.collection.mutable.ListBuffer
+import scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
+import scalaudio.core.{CoreSyntax, DefaultAudioContext}
 import scalaudio.jmathplot.ConvenientPlot
 
 /**

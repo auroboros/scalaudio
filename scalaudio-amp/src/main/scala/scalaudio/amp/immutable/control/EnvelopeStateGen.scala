@@ -1,10 +1,9 @@
 package scalaudio.amp.immutable.control
 
-import scalaudio.amp.immutable.StateProgressor
-import com.scalaudio.core.AudioContext
-import com.scalaudio.core.types.AudioDuration
-
 import scala.collection.immutable.SortedMap
+import scalaudio.amp.immutable.StateProgressor
+import scalaudio.core.AudioContext
+import scalaudio.core.types.AudioDuration
 
 /**
   * Created by johnmcgill on 5/29/16.

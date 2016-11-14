@@ -1,11 +1,10 @@
 package scalaudio.amp.mutable
 
+import scala.concurrent.duration._
 import scalaudio.amp.immutable.filter.{DelayFilterState, DelayFilterStateGen}
 import scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
 import scalaudio.core.engine.samplewise.AmpOutput
-import com.scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
-
-import scala.concurrent.duration._
+import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 
 /**
   * Created by johnmcgill on 7/11/16.

@@ -1,10 +1,11 @@
 package scalaudio.rpc
 
-import com.scalaudio.rpc.thrift.generated.ScalaudioService
 import org.apache.thrift.TProcessor
 import org.apache.thrift.protocol.TBinaryProtocol
 import org.apache.thrift.server.TThreadPoolServer
 import org.apache.thrift.transport.{TFramedTransport, TServerSocket}
+
+import scalaudio.rpc.thrift.generated.ScalaudioService
 
 /**
   * Created by johnmcgill on 6/8/16.

@@ -1,7 +1,8 @@
 package scalaudio.amp.immutable.ugen
 
-import com.scalaudio.core.{AudioContext, CoreSyntax}
 import org.scalatest.{FlatSpec, Matchers}
+
+import scalaudio.core.{AudioContext, CoreSyntax}
 
 /**
   * Created by johnmcgill on 5/27/16.

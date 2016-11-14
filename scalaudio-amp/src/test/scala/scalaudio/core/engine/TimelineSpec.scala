@@ -2,7 +2,7 @@ package scalaudio.core.engine
 
 import scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
 import scalaudio.core.engine.samplewise.AmpOutput
-import com.scalaudio.core.{AudioContext, ScalaudioCoreTestHarness}
+import scalaudio.core.{AudioContext, ScalaudioCoreTestHarness}
 
 /**
   * Created by johnmcgill on 6/15/16.

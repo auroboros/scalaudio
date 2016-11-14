@@ -1,11 +1,8 @@
 package scalaudio.core.engine.bufferwise
 
-import com.scalaudio.core.AudioContext
-import scalaudio.core.engine.{Bufferwise, OutputEngine, OutputTerminal, Samplewise}
-import com.scalaudio.core.types._
-
-import scala.concurrent
-import scala.concurrent.duration
+import scalaudio.core.AudioContext
+import scalaudio.core.engine.{Bufferwise, OutputEngine, OutputTerminal}
+import scalaudio.core.types.{AudioDuration, MultichannelAudio}
 
 /**
   * Created by johnmcgill on 5/22/16.

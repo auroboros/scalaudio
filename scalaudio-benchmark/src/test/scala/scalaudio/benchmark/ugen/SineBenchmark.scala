@@ -2,14 +2,13 @@ package scalaudio.benchmark.ugen
 
 import java.time.Instant
 
-import com.scalaudio.actor.mutable.filter.GainActor
-import com.scalaudio.actor.mutable.ugen.SineActor
-import com.scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
-import scalaudio.core.engine.samplewise.AmpOutput
-import scalaudio.core.engine.{SpeedTestDummy, Timeline}
-import com.scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
-
 import scala.concurrent.duration._
+import scalaudio.actor.mutable.filter.GainActor
+import scalaudio.actor.mutable.ugen.SineActor
+import scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
+import scalaudio.core.engine.SpeedTestDummy
+import scalaudio.core.engine.samplewise.AmpOutput
+import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 
 /**
   * Created by johnmcgill on 6/6/16.

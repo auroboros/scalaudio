@@ -1,12 +1,12 @@
 package scalaudio.amp.immutable.ugen
 
-import scalaudio.amp.immutable.filter.{RangeScaler, Rescaler}
-import scalaudio.amp.mutable.{MutableAudioStateWrapper, MutableStateWrapper}
-import scalaudio.core.engine.samplewise.AmpOutput
-import com.scalaudio.core.{AudioContext, CoreSyntax}
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.duration._
+import scalaudio.amp.immutable.filter.{RangeScaler, Rescaler}
+import scalaudio.amp.mutable.MutableAudioStateWrapper
+import scalaudio.core.engine.samplewise.AmpOutput
+import scalaudio.core.{AudioContext, CoreSyntax}
 /**
   * Created by johnmcgill on 8/1/16.
   */

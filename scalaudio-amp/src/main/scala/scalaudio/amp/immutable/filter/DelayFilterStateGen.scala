@@ -1,10 +1,9 @@
 package scalaudio.amp.immutable.filter
 
-import scalaudio.amp.immutable.StateProgressor
-import com.scalaudio.core.AudioContext
-import com.scalaudio.core.types.{AudioDuration, Sample}
-
 import scala.collection.immutable.Queue
+import scalaudio.amp.immutable.StateProgressor
+import scalaudio.core.AudioContext
+import scalaudio.core.types.{AudioDuration, Sample}
 
 /**
   * Created by johnmcgill on 7/23/16.

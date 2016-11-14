@@ -1,11 +1,10 @@
 package scalaudio.amp.immutable.control
 
-import com.scalaudio.core.types.AudioDuration
-import com.scalaudio.core.{AudioContext, CoreSyntax}
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.collection.immutable.TreeMap
-import scala.concurrent.duration._
+import scalaudio.core.types.AudioDuration
+import scalaudio.core.{AudioContext, CoreSyntax}
 /**
   * Created by johnmcgill on 7/31/16.
   */
