@@ -1,6 +1,6 @@
 name := "scalaudio"
 organization in ThisBuild := "org.auroboros"
-version in ThisBuild := "0.0.1-SNAPSHOT"
+version in ThisBuild := "0.0.2-SNAPSHOT"
 
 homepage in ThisBuild := Some(url("https://github.com/auroboros/scalaudio"))
 licenses in ThisBuild := Seq("copyright" -> url("https://github.com/auroboros/scalaudio/blob/master/license.txt"))
@@ -29,7 +29,7 @@ publishTo in ThisBuild := {
     Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
 
-resolvers in ThisBuild += Resolver.mavenLocal
+resolvers in ThisBuild += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 
 libraryDependencies in ThisBuild ++= Seq(
   "org.scalatest" %% "scalatest" % "2.2.4" % "test",
