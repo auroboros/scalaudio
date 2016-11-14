@@ -1,4 +1,4 @@
-package com.scalaudio.core.midi
+package scalaudio.core.midi
 
 /**
   * Created by johnmcgill on 6/1/16.

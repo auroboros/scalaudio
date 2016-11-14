@@ -1,6 +1,5 @@
 package scalaudio.core.midi
 
-import com.scalaudio.core.midi.{MidiConnector, PrintlnMidiParser, SimpleMidiReceiver}
 import org.scalatest.{FlatSpec, Matchers}
 
 import scalaudio.core.CoreSyntax

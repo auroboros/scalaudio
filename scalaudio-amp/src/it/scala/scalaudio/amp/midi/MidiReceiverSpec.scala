@@ -4,11 +4,10 @@ package scalaudio.amp.midi
   * Created by johnmcgill on 6/1/16.
   */
 
-import com.scalaudio.core.midi.{MidiCommand, MidiConnector, QueueingMidiReceiver}
-
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.duration._
 import scalaudio.core.engine.samplewise.AmpOutput
+import scalaudio.core.midi.{MidiCommand, MidiConnector, QueueingMidiReceiver}
 import scalaudio.core.types.Sample
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 /**

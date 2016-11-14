@@ -1,11 +1,11 @@
 package scalaudio.amp.midi
 
-import com.scalaudio.core.midi.NoteOn
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.duration._
 import scalaudio.amp.immutable.control.AdsrEnvelope
 import scalaudio.amp.immutable.synth.MonosynthStateGen
+import scalaudio.core.midi.NoteOn
 import scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 
 /**

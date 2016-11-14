@@ -1,4 +1,4 @@
-package com.scalaudio.core.midi
+package scalaudio.core.midi
 
 import com.jsyn.midi.{MessageParser, MidiConstants}
 
