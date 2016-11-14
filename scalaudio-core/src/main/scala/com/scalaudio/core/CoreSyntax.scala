@@ -1,6 +1,6 @@
 package com.scalaudio.core
 
-import com.scalaudio.core.engine.{OutputEngine, Playback}
+import scalaudio.core.engine.{OutputEngine, Playback}
 import com.scalaudio.core.types._
 
 import scala.concurrent.duration.FiniteDuration

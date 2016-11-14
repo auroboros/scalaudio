@@ -1,7 +1,7 @@
 package com.scalaudio.rpc.receiver
 
-import com.scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
-import com.scalaudio.core.engine.samplewise.AmpOutput
+import scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
+import scalaudio.core.engine.samplewise.AmpOutput
 import com.scalaudio.core.types.AudioDuration
 import com.scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 

@@ -1,8 +1,8 @@
 package com.scalaudio.buffer.unitgen.samplers
 
 import com.scalaudio.buffer.BufferSyntax
-import com.scalaudio.core.engine.{Bufferwise, Playback, Timeline}
-import com.scalaudio.core.engine.bufferwise.BufferOutputTerminal
+import scalaudio.core.engine.{Bufferwise, Playback, Timeline}
+import scalaudio.core.engine.bufferwise.BufferOutputTerminal
 import com.scalaudio.core.{AudioContext, CoreSyntax}
 import com.scalaudio.core.unitgen.samplers.{FileSample, TriggerSampler}
 import org.scalatest.{FlatSpec, Matchers}

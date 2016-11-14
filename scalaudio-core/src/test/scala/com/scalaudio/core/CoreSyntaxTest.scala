@@ -1,6 +1,6 @@
 package com.scalaudio.core
 
-import com.scalaudio.core.engine.Playback
+import scalaudio.core.engine.Playback
 import org.scalatest.{FlatSpec, Matchers}
 
 /**

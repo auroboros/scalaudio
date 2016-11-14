@@ -4,8 +4,8 @@ import com.scalaudio.buffer.BufferSyntax
 import com.scalaudio.buffer.filter.mix.Splitter
 import com.scalaudio.buffer.unitgen.FuncGen
 import com.scalaudio.core.AudioContext
-import com.scalaudio.core.engine.{Bufferwise, Playback, Timeline}
-import com.scalaudio.core.engine.bufferwise.BufferOutputTerminal
+import scalaudio.core.engine.{Bufferwise, Playback, Timeline}
+import scalaudio.core.engine.bufferwise.BufferOutputTerminal
 import com.scalaudio.core.unitgen.samplers._
 import org.scalatest.{FlatSpec, Matchers}
 

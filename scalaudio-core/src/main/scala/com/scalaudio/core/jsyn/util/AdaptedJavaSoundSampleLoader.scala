@@ -5,7 +5,7 @@ import java.net.URL
 import javax.sound.sampled.{AudioFormat, AudioInputStream, AudioSystem, UnsupportedAudioFileException}
 
 import com.jsyn.util.SampleLoader
-import com.scalaudio.core.engine.Interleaver
+import scalaudio.core.engine.Interleaver
 
 /**
   * Created by johnmcgill on 1/5/16.

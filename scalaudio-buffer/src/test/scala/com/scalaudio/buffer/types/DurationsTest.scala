@@ -3,8 +3,8 @@ package com.scalaudio.buffer.types
 import com.scalaudio.buffer.BufferSyntax
 import com.scalaudio.buffer.filter.mix.Splitter
 import com.scalaudio.buffer.unitgen.{NoiseGen, SignalChain}
-import com.scalaudio.core.engine.{Bufferwise, Playback, Timeline}
-import com.scalaudio.core.engine.bufferwise.BufferOutputTerminal
+import scalaudio.core.engine.{Bufferwise, Playback, Timeline}
+import scalaudio.core.engine.bufferwise.BufferOutputTerminal
 import com.scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 
 import scala.concurrent.duration._

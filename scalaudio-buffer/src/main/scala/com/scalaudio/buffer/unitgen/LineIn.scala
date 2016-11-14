@@ -1,7 +1,7 @@
 package com.scalaudio.buffer.unitgen
 
 import com.scalaudio.core.AudioContext
-import com.scalaudio.core.engine.Interleaver
+import scalaudio.core.engine.Interleaver
 
 /**
   * Created by johnmcgill on 12/20/15.

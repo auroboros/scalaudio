@@ -1,6 +1,6 @@
 package com.scalaudio.actor.mutable.ugen
 
-import com.scalaudio.core.engine.samplewise.AmpOutput
+import scalaudio.core.engine.samplewise.AmpOutput
 import com.scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 
 import scala.concurrent.duration._

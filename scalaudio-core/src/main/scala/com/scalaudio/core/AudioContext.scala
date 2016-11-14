@@ -2,7 +2,7 @@ package com.scalaudio.core
 
 import com.jsyn.devices.javasound.JavaSoundAudioDevice
 import com.jsyn.devices.{AudioDeviceInputStream, AudioDeviceManager, AudioDeviceOutputStream}
-import com.scalaudio.core.engine.Playback
+import scalaudio.core.engine.Playback
 import com.scalaudio.core.types.AudioDuration
 import com.scalaudio.rpc.JsonServer
 
