@@ -33,6 +33,7 @@ resolvers in ThisBuild += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/
 
 libraryDependencies in ThisBuild ++= Seq(
   "org.scalatest" %% "scalatest" % "2.2.4" % "test",
+  "org.scalaz" %% "scalaz-core" % "7.2.7" % "test",
   "com.novocode" % "junit-interface" % "0.11" % "test",
   "junit" % "junit" % "4.12" % "test"
 )
@@ -47,6 +48,7 @@ lazy val root = project.in(file("."))
     scalaudioCore,
     scalaudioBuffer,
     scalaudioAMP,
+    scalaudioRivulets,
     scalaudioActor,
     scalaudioRPC,
     scalaudioBenchmark)
@@ -62,6 +64,11 @@ lazy val scalaudioBuffer = project.in(file("scalaudio-buffer"))
   .dependsOn(scalaudioCore % "test->test;compile->compile")
 
 lazy val scalaudioAMP = project.in(file("scalaudio-amp"))
+  .configs(IntegrationTest)
+  .settings(Defaults.itSettings: _*)
+  .dependsOn(scalaudioCore % "test->test;compile->compile")
+
+lazy val scalaudioRivulets = project.in(file("scalaudio-rivulets"))
   .configs(IntegrationTest)
   .settings(Defaults.itSettings: _*)
   .dependsOn(scalaudioCore % "test->test;compile->compile")

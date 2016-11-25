@@ -1,12 +1,15 @@
 package scalaudio.amp.immutable.ugen
 
 import org.scalatest.{FlatSpec, Matchers}
+import signalz.StatefulProcessor
 
 import scala.concurrent.duration._
 import scalaudio.amp.immutable.filter.{RangeScaler, Rescaler}
-import scalaudio.amp.mutable.MutableAudioStateWrapper
 import scalaudio.core.engine.samplewise.AmpOutput
 import scalaudio.core.{AudioContext, CoreSyntax}
+import scalaz._
+import Scalaz._
+
 /**
   * Created by johnmcgill on 8/1/16.
   */
@@ -14,29 +17,26 @@ class FmSynthDemo extends FlatSpec with Matchers with CoreSyntax {
   "FM synth" should "be possible using 2 sine synths" in {
     implicit val audioContext = AudioContext()
 
-    val scale = RangeScaler.scale(Rescaler(-1, 1, 0, 300))(_)
     // try 0 -> 300, 0 -> 10000, 10000 -> 110000, 500 -> 600
 
-    val sin1 = MutableAudioStateWrapper[OscState](SineStateGen,
-      OscState(0, 66.Hz, 0), // 66 Hz
-      postTransformer = (oscState: OscState) => oscState.copy(
-        sample = scale(oscState.sample)
-      )
-    )
+//    var collector: Double = null
 
-    val sin2 = MutableAudioStateWrapper[OscState](SineStateGen,
+    var holder: Double = 0 // TODO: there MUST be a better way to solve this with currying, multiple param lists
+    val sinGen2 = StatefulProcessor(SineStateGen.nextState,
       OscState(0, 0.Hz, 0),
-      preTransformer = (oscState: OscState) => oscState.copy(
-        pitch = sin1.state.sample.Hz
+      Some(
+        (oscState: OscState) => oscState.copy(pitch = holder.Hz)
       )
     )
 
-    val frameFunc = () => {
-      sin1.nextState()
-      val outSample = sin2.nextState().sample
-      Array.fill(2)(outSample)
-    }
+    val ff: () => Array[Double] = StatefulProcessor(SineStateGen.nextState,
+      OscState(0, 66.Hz, 0)
+    ).nextState map (_.sample) map (RangeScaler.scale(Rescaler(-1, 1, 0, 300)) _)
+      .map { (scaledOutput) =>
+        holder = scaledOutput
+        sinGen2.nextState().sample
+      } map (s => Array.fill(2)(s))
 
-    AmpOutput(frameFunc).play(15.seconds)
+    AmpOutput(ff).play(15.seconds)
   }
 }
