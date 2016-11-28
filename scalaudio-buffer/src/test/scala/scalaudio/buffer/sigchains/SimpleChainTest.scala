@@ -6,8 +6,7 @@ import scalaudio.buffer.BufferSyntax
 import scalaudio.buffer.filter.mix.{Splitter, StereoPanner}
 import scalaudio.buffer.filter.{Filter, GainFilter}
 import scalaudio.buffer.unitgen.{NoiseGen, SignalChain, SineGen}
-import scalaudio.core.engine.Timeline
-import scalaudio.core.engine.bufferwise.BufferOutputTerminal
+import scalaudio.core.engine.{StreamCollector, Timeline}
 import scalaudio.core.{AudioContext, ScalaudioConfig}
 
 /**
@@ -20,8 +19,7 @@ class SimpleChainTest extends FlatSpec with Matchers with BufferSyntax {
 
     val sigChain = new SignalChain(new NoiseGen, Nil)
 
-    val output = BufferOutputTerminal(sigChain)
-    Timeline.playFor(1000 buffers, List(output))
+    StreamCollector(sigChain).play(1000 buffers)
   }
 
   "SignalChain abstraction" should "playback stereo SignalChain only if signal is split" in {
@@ -29,8 +27,7 @@ class SimpleChainTest extends FlatSpec with Matchers with BufferSyntax {
 
     val sigChain = new SignalChain(new NoiseGen, List(Splitter(2)))
 
-    val output = BufferOutputTerminal(sigChain)
-    Timeline.playFor(1000 buffers, List(output))
+    StreamCollector(sigChain).play(1000 buffers)
   }
 
   "SignalChain abstraction" should "report clip for MonoSignalChain that clips" in {
@@ -48,7 +45,7 @@ class SimpleChainTest extends FlatSpec with Matchers with BufferSyntax {
     val filterChain : List[Filter] = List(new GainFilter(.5), new GainFilter(.75))
     val sigChainList = new SignalChain(new NoiseGen, filterChain)
 
-    BufferOutputTerminal(sigChainList).play(1000 buffers)
+    StreamCollector(sigChainList).play(1000 buffers)
   }
 
   "Panner" should "pan some noise" in {
@@ -57,6 +54,6 @@ class SimpleChainTest extends FlatSpec with Matchers with BufferSyntax {
     val filterChain : List[Filter] = List(new StereoPanner(.5))
     val sigChainList = new SignalChain(new NoiseGen, filterChain)
 
-    BufferOutputTerminal(sigChainList).play(1000 buffers)
+    StreamCollector(sigChainList).play(1000 buffers)
   }
 }

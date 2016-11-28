@@ -3,7 +3,7 @@ package scalaudio.buffer
 import scalaudio.buffer.timing.{TimedCompositeEvent, TimedEvent, ValueChange}
 import scalaudio.buffer.types.ChannelSetManipulator
 import scalaudio.buffer.unitgen.UnitGen
-import scalaudio.core.types.MultichannelAudio
+import scalaudio.core.types.{Frame, MultichannelAudio}
 import scalaudio.core.{AudioContext, CoreSyntax}
 
 /**
@@ -22,4 +22,12 @@ trait BufferSyntax extends CoreSyntax {
 
   implicit def unitGen2MultichannelAudioFunction(uGen: UnitGen)(implicit audioContext: AudioContext) : () => MultichannelAudio =
     () => uGen.outputBuffers()
+
+  // TODO: Flattening like this is probably not super efficient, maybe should have resolution definable in "play" mode?
+  // But then will require that all sig processors involved don't need sample-resolution state caching (or use other mechanism to achieve this effect...)
+  implicit def bufferProducingFunc2FrameStream(bpf: () => List[Array[Double]]): Stream[Frame] =
+    Stream.continually(bpf()).flatten
+
+  implicit def unitGen2FrameStream(uGen: UnitGen)(implicit audioContext: AudioContext): Stream[Frame] =
+    bufferProducingFunc2FrameStream(unitGen2MultichannelAudioFunction(uGen))
 }

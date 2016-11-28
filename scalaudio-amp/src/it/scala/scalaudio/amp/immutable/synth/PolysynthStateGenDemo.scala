@@ -5,7 +5,7 @@ import scala.concurrent.duration._
 import scalaudio.amp.AmpSyntax
 import scalaudio.amp.immutable.control.AdsrEnvelope
 import scalaudio.amp.immutable.ugen.SineStateGen
-import scalaudio.core.engine.samplewise.AmpOutput
+import scalaudio.core.engine.StreamCollector
 import scalaudio.core.types.{AudioDuration, Pitch}
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 
@@ -46,6 +46,6 @@ class PolysynthStateGenDemo extends ScalaudioCoreTestHarness with AmpSyntax {
       Array(polysynthState.sample * .2)
     }
 
-    AmpOutput(frameFunc).play(11 seconds)
+    StreamCollector(frameFunc).play(11 seconds)
   }
 }

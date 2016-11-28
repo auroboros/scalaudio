@@ -1,7 +1,7 @@
 package scalaudio.actor.mutable.ugen
 
 import scala.concurrent.duration._
-import scalaudio.core.engine.samplewise.AmpOutput
+import scalaudio.core.engine.StreamCollector
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 /**
   * Created by johnmcgill on 6/6/16.
@@ -16,6 +16,6 @@ class SineActorDemo extends ScalaudioCoreTestHarness {
       Array(sineActor.nextSample())
     }
 
-    AmpOutput(frameFunc).play(5 seconds)
+    StreamCollector(frameFunc).play(5 seconds)
   }
 }

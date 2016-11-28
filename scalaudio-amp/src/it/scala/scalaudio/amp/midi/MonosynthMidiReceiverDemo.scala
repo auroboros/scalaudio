@@ -5,7 +5,7 @@ import scala.concurrent.duration._
 import scalaudio.amp.immutable.control.AdsrEnvelope
 import scalaudio.amp.immutable.synth.MonosynthStateGen
 import scalaudio.amp.immutable.ugen.SineStateGen
-import scalaudio.core.engine.samplewise.AmpOutput
+import scalaudio.core.engine.StreamCollector
 import scalaudio.core.midi.MidiConnector
 import scalaudio.core.types.{AudioDuration, Pitch}
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
@@ -37,6 +37,6 @@ class MonosynthMidiReceiverDemo extends ScalaudioCoreTestHarness {
       Array(monosynthState.sample)
     }
 
-    AmpOutput(frameFunc).play(5 hours)
+    StreamCollector(frameFunc).play(5 hours)
   }
 }

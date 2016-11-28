@@ -3,7 +3,7 @@ package scalaudio.amp.immutable.ugen
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.duration._
-import scalaudio.core.engine.samplewise.AmpOutput
+import scalaudio.core.engine.StreamCollector
 import scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 /**
   * Created by johnmcgill on 5/29/16.
@@ -19,6 +19,6 @@ class SineStateGenDemo extends FlatSpec with Matchers with CoreSyntax {
       Array(state.sample)
     }
 
-    AmpOutput(frameFunc).play(5 seconds)
+    StreamCollector(frameFunc).play(5 seconds)
   }
 }

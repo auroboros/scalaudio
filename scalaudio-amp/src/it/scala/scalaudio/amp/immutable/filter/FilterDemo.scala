@@ -4,7 +4,7 @@ import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.duration._
 import scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
-import scalaudio.core.engine.samplewise.AmpOutput
+import scalaudio.core.engine.StreamCollector
 import scalaudio.core.types.Frame
 import scalaudio.core.{AudioContext, CoreSyntax}
 /**
@@ -23,6 +23,6 @@ class FilterDemo extends FlatSpec with Matchers with CoreSyntax {
       GainFilter.applyGainToFrame(splitterOut, .05)
     }
 
-    AmpOutput(frameFunc).play(5 seconds)
+    StreamCollector(frameFunc).play(5 seconds)
   }
 }

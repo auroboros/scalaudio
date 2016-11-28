@@ -5,10 +5,9 @@ import signalz.StatefulProcessor
 import scala.concurrent.duration._
 import scalaudio.amp.immutable.filter.{DelayFilterState, DelayFilterStateGen}
 import scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
-import scalaudio.core.engine.samplewise.AmpOutput
+import scalaudio.core.engine.StreamCollector
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 import scalaz.Scalaz._
-import scalaz._
 
 /**
   * Created by johnmcgill on 7/11/16.
@@ -20,7 +19,7 @@ class StatefulProcessorDemo extends ScalaudioCoreTestHarness {
     val ff = StatefulProcessor(SineStateGen.nextState, OscState(0, 440.Hz, 0)).nextState
       .map(state => Array(state.sample))
 
-    AmpOutput(ff).play(5.seconds)
+    StreamCollector(ff).play(5.seconds)
   }
 
   "StatefulProcessor" should "use pre-transformer for automation" in {
@@ -34,7 +33,7 @@ class StatefulProcessorDemo extends ScalaudioCoreTestHarness {
       preTransformer
     ).nextState map (state => Array(state.sample))
 
-    AmpOutput(ff).play(5 seconds)
+    StreamCollector(ff).play(5 seconds)
   }
 
   "StatefulProcessors" should "be chainable" in {
@@ -52,6 +51,6 @@ class StatefulProcessorDemo extends ScalaudioCoreTestHarness {
       .map(_.sample)
       .map(Array(_))
 
-    AmpOutput(ff).play(5.seconds)
+    StreamCollector(ff).play(5.seconds)
   }
 }

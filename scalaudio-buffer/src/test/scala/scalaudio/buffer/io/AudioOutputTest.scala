@@ -6,7 +6,7 @@ import org.scalatest.{FlatSpec, Matchers}
 
 import scalaudio.buffer.BufferSyntax
 import scalaudio.buffer.unitgen.{NoiseGen, SineGen}
-import scalaudio.core.engine.bufferwise.BufferOutputTerminal
+import scalaudio.core.engine.StreamCollector
 import scalaudio.core.{AudioContext, ScalaudioConfig}
 
 class AudioOutputTest extends FlatSpec with Matchers with BufferSyntax {
@@ -38,14 +38,14 @@ class AudioOutputTest extends FlatSpec with Matchers with BufferSyntax {
     implicit val audioContext = AudioContext(ScalaudioConfig())
 
     val noiseGen = NoiseGen()
-    BufferOutputTerminal(noiseGen).play(1000 buffers)
+    StreamCollector(noiseGen).play(1000 buffers)
   }
 
   "Sine Generator" should "create buffer of sine on every call" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
     val sineGen = SineGen(220 Hz)
-    BufferOutputTerminal(sineGen).play(1000 buffers)
+    StreamCollector(sineGen).play(1000 buffers)
   }
 
 //  "Signal chain" should "play noise" in {

@@ -6,7 +6,7 @@ import scala.collection.immutable.TreeMap
 import scala.concurrent.duration._
 import scalaudio.amp.immutable.filter.GainFilter
 import scalaudio.amp.immutable.ugen.{OscState, SquareStateGen}
-import scalaudio.core.engine.samplewise.AmpOutput
+import scalaudio.core.engine.StreamCollector
 import scalaudio.core.types.AudioDuration
 import scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 /**
@@ -27,7 +27,7 @@ class LinearEnvelopeDemo extends FlatSpec with Matchers with CoreSyntax {
       GainFilter.applyGainToFrame(Array(sineState.sample), envState.value)
     }
 
-    AmpOutput(frameFunc).play(7 seconds)
+    StreamCollector(frameFunc).play(7 seconds)
   }
 
   "Square wave with multiple ramps/points" should "fluctuate accordingly" in {
@@ -46,6 +46,6 @@ class LinearEnvelopeDemo extends FlatSpec with Matchers with CoreSyntax {
       GainFilter.applyGainToFrame(Array(sineState.sample), envState.value)
     }
 
-    AmpOutput(frameFunc).play(15 seconds)
+    StreamCollector(frameFunc).play(15 seconds)
   }
 }

@@ -1,7 +1,6 @@
 package scalaudio.core.engine
 
 import scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
-import scalaudio.core.engine.samplewise.AmpOutput
 import scalaudio.core.{AudioContext, ScalaudioCoreTestHarness}
 
 /**
@@ -20,7 +19,7 @@ class TimelineSpec extends ScalaudioCoreTestHarness {
       Array(oscState.sample)
     }
 
-    AmpOutput(frameFunc).playWhile(() => counter < 100)
+    StreamCollector(frameFunc).playWhile(() => counter < 100)
 
     audioContext.currentTime.toSamples shouldEqual 100
   }

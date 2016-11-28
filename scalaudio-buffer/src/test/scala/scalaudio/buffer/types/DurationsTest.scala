@@ -4,7 +4,7 @@ import scala.concurrent.duration._
 import scalaudio.buffer.BufferSyntax
 import scalaudio.buffer.filter.mix.Splitter
 import scalaudio.buffer.unitgen.{NoiseGen, SignalChain}
-import scalaudio.core.engine.bufferwise.BufferOutputTerminal
+import scalaudio.core.engine.StreamCollector
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 
 /**
@@ -16,6 +16,6 @@ class DurationsTest extends ScalaudioCoreTestHarness with BufferSyntax {
 
     val sigChain = new SignalChain(new NoiseGen, List(Splitter(2)))
 
-    BufferOutputTerminal(sigChain).play(5 seconds)
+    StreamCollector(sigChain).play(5 seconds)
   }
 }

@@ -6,7 +6,7 @@ import scalaudio.buffer.BufferSyntax
 import scalaudio.buffer.filter.mix.Splitter
 import scalaudio.buffer.unitgen.FuncGen
 import scalaudio.core.AudioContext
-import scalaudio.core.engine.bufferwise.BufferOutputTerminal
+import scalaudio.core.engine.StreamCollector
 
 /**
   * Created by johnmcgill on 1/25/16.
@@ -18,7 +18,7 @@ class WavetableGenTest extends FlatSpec with Matchers with BufferSyntax {
     val wtGen = new WavetableGen(FileSample("/Users/johnmcgill/nocode/samples/Yamaha-TG100-Whistle-C5.wav"))
 
     //    val firstBuffer = wtGen.outputBuffers()
-    BufferOutputTerminal(wtGen).play(2000 buffers)
+    StreamCollector(wtGen).play(2000 buffers)
   }
 
   "Wavetable" should "play sample at double speed" in {
@@ -27,7 +27,7 @@ class WavetableGenTest extends FlatSpec with Matchers with BufferSyntax {
     val wtGen = new WavetableGen(FileSample("/Users/johnmcgill/nocode/samples/Yamaha-TG100-Whistle-C5.wav"), 2)
 
     //    val firstBuffer = wtGen.outputBuffers()
-    BufferOutputTerminal(wtGen).play(2000 buffers)
+    StreamCollector(wtGen).play(2000 buffers)
   }
 
   "Wavetable" should "play sample at half speed" in {
@@ -36,7 +36,7 @@ class WavetableGenTest extends FlatSpec with Matchers with BufferSyntax {
     val wtGen = new WavetableGen(FileSample("/Users/johnmcgill/nocode/samples/Yamaha-TG100-Whistle-C5.wav"), .5)
 
     //    val firstBuffer = wtGen.outputBuffers()
-    BufferOutputTerminal(wtGen).play(2000 buffers)
+    StreamCollector(wtGen).play(2000 buffers)
   }
 
   "Wavetable" should "play a sawtooth" in {
@@ -49,7 +49,7 @@ class WavetableGenTest extends FlatSpec with Matchers with BufferSyntax {
     })
 
     //    val firstBuffer = wtGen.outputBuffers()
-    BufferOutputTerminal(wtGen).play(2000 buffers)
+    StreamCollector(wtGen).play(2000 buffers)
   }
 
   "Wavetable" should "play a sine" in {
@@ -62,7 +62,7 @@ class WavetableGenTest extends FlatSpec with Matchers with BufferSyntax {
     })
 
     //    val firstBuffer = wtGen.outputBuffers()
-    BufferOutputTerminal(wtGen).play(2000 buffers)
+    StreamCollector(wtGen).play(2000 buffers)
   }
 
   "Wavetable" should "play a square" in {
@@ -75,6 +75,6 @@ class WavetableGenTest extends FlatSpec with Matchers with BufferSyntax {
     })
 
     //    val firstBuffer = wtGen.outputBuffers()
-    BufferOutputTerminal(wtGen).play(2000 buffers)
+    StreamCollector(wtGen).play(2000 buffers)
   }
 }

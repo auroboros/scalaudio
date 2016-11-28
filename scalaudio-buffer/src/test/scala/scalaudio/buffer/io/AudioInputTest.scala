@@ -4,7 +4,7 @@ import org.scalatest.{FlatSpec, Matchers}
 
 import scalaudio.buffer.BufferSyntax
 import scalaudio.buffer.unitgen.LineIn
-import scalaudio.core.engine.bufferwise.BufferOutputTerminal
+import scalaudio.core.engine.StreamCollector
 import scalaudio.core.{AudioContext, ScalaudioConfig}
 
 /**
@@ -16,6 +16,6 @@ class AudioInputTest extends FlatSpec with Matchers with BufferSyntax {
 
     val passthrough = LineIn()
 
-    BufferOutputTerminal(passthrough).play(100000 buffers)
+    StreamCollector(passthrough).play(100000 buffers)
   }
 }
