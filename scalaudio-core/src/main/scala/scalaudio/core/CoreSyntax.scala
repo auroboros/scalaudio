@@ -22,4 +22,8 @@ trait CoreSyntax {
   // "Pitch" syntax
   implicit def int2PitchRichInt(i : Int) : PitchRichInt = PitchRichInt(i)
   implicit def double2PitchRichDouble(d : Double) : PitchRichDouble = PitchRichDouble(d)
+
+  // Unit functions // TODO: Relocate? to signalz or companions of functions where this actually matters?
+  implicit def unit2EmptyParens(orig: Unit => Frame): () => Frame = () => orig()
+
 }

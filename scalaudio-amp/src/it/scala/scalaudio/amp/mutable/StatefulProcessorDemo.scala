@@ -7,9 +7,8 @@ import scalaudio.amp.immutable.filter.{DelayFilterState, DelayFilterStateGen}
 import scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
 import scalaudio.core.engine.samplewise.AmpOutput
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
-
+import scalaz.Scalaz._
 import scalaz._
-import Scalaz._
 
 /**
   * Created by johnmcgill on 7/11/16.
@@ -27,12 +26,12 @@ class StatefulProcessorDemo extends ScalaudioCoreTestHarness {
   "StatefulProcessor" should "use pre-transformer for automation" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
-    val preTransformer = (s : OscState) => s.copy(
+    val preTransformer = (s: OscState, u: Unit) => s.copy(
       pitch = (s.pitch.toHz + .2).Hz
     )
-    val ff = StatefulProcessor(SineStateGen.nextState,
+    val ff = StatefulProcessor.withModifier(SineStateGen.nextState,
       OscState(0, 440.Hz, 0),
-      Some(preTransformer)
+      preTransformer
     ).nextState map (state => Array(state.sample))
 
     AmpOutput(ff).play(5 seconds)
@@ -42,20 +41,16 @@ class StatefulProcessorDemo extends ScalaudioCoreTestHarness {
 
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
-    var holder: Double = 0
-    val delayFilter = StatefulProcessor(DelayFilterStateGen.nextState,
-      DelayFilterStateGen.initialState(1.second),
-      Some(
-        (delayFilterState: DelayFilterState) => delayFilterState.copy(sample = holder)
-      )
+    val delayFilter = StatefulProcessor.withModifier(DelayFilterStateGen.nextState,
+      DelayFilterStateGen.initialState(3.seconds),
+      (delayFilterState: DelayFilterState, newSample: Double) => delayFilterState.copy(sample = newSample)
     )
 
     val ff = StatefulProcessor(SineStateGen.nextState, OscState(0, 440.Hz, 0)).nextState
       .map(_.sample)
-      .map { sample =>
-        holder = sample
-        delayFilter.nextState().sample
-      } map (Array(_))
+      .map(delayFilter.nextState)
+      .map(_.sample)
+      .map(Array(_))
 
     AmpOutput(ff).play(5.seconds)
   }
