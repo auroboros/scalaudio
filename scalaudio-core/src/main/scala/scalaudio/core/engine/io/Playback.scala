@@ -1,7 +1,8 @@
-package scalaudio.core.engine
+package scalaudio.core.engine.io
 
 import scalaudio.core.AudioContext
-import scalaudio.core.types.{AudioSignal, MultichannelAudio}
+import scalaudio.core.engine.Interleaver
+import scalaudio.core.types._
 
 /**
   * Playback trait -- mix this in to a UnitGen to make it playable

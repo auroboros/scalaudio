@@ -4,7 +4,7 @@ import scalaudio.buffer.filter.GainFilter
 import scalaudio.buffer.filter.mix.Splitter
 import scalaudio.buffer.unitgen.{FuncGen, SineGen}
 
-import scalaudio.core.engine.{Bufferwise, Playback, Timeline}
+import scalaudio.core.engine.{Bufferwise, Timeline}
 import scalaudio.core.engine.bufferwise.BufferOutputTerminal
 import org.scalatest.{FlatSpec, Matchers}
 

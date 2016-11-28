@@ -1,11 +1,12 @@
-package scalaudio.core.engine
+package scalaudio.core.engine.io
 
 import java.io.File
 
 import com.jsyn.util.WaveFileWriter
 
 import scalaudio.core.AudioContext
-import scalaudio.core.types.{AudioSignal, MultichannelAudio}
+import scalaudio.core.engine.Interleaver
+import scalaudio.core.types._
 
 /**
   * Created by johnmcgill on 1/6/16.

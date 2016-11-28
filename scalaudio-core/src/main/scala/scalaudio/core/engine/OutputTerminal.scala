@@ -1,6 +1,7 @@
 package scalaudio.core.engine
 
 import scalaudio.core.AudioContext
+import scalaudio.core.engine.io.OutputEngine
 import scalaudio.core.types.AudioDuration
 
 /**

@@ -6,7 +6,7 @@ import scala.concurrent.duration._
 import scalaudio.actor.mutable.filter.GainActor
 import scalaudio.actor.mutable.ugen.SineActor
 import scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
-import scalaudio.core.engine.SpeedTestDummy
+import scalaudio.core.engine.io.SpeedTestDummy
 import scalaudio.core.engine.samplewise.AmpOutput
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 

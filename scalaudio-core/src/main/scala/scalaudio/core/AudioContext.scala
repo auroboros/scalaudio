@@ -3,7 +3,7 @@ package scalaudio.core
 import com.jsyn.devices.javasound.JavaSoundAudioDevice
 import com.jsyn.devices.{AudioDeviceInputStream, AudioDeviceManager, AudioDeviceOutputStream}
 
-import scalaudio.core.engine.Playback
+import scalaudio.core.engine.io.Playback
 import scalaudio.core.types.AudioDuration
 import scalaudio.rpc.JsonServer
 
