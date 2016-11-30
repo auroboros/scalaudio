@@ -29,7 +29,7 @@ class ClipFilterTest extends FlatSpec with Matchers with BufferSyntax {
     val splitter: Splitter = Splitter(2)
     val testFrameFunc: () => List[Array[Double]] = () => sineGen.outputBuffers() chain clipper.processBuffers chain splitter.processBuffers
 
-    val stream = Stream.continually(testFrameFunc()).flatten
+    val stream = () => Stream.continually(testFrameFunc()).flatten
 
     StreamCollector(stream).play(5 seconds)
   }

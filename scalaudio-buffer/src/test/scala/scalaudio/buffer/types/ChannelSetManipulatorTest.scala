@@ -6,7 +6,7 @@ import scalaudio.buffer.BufferSyntax
 import scalaudio.buffer.filter.GainFilter
 import scalaudio.buffer.filter.mix.StereoPanner
 import scalaudio.buffer.unitgen.{FuncGen, NoiseGen, SineGen, UnitGen}
-import scalaudio.core.engine.{StreamCollector, Timeline}
+import scalaudio.core.engine.StreamCollector
 import scalaudio.core.{AudioContext, ScalaudioConfig}
 
 /**

@@ -7,9 +7,11 @@ import scalaudio.core.types.{AudioDuration, Frame}
 /**
   * Created by johnmcgill on 5/27/16.
   */
-case class StreamCollector(frameStream: Iterator[Frame],
+case class StreamCollector(frameStreamProducer: () => Stream[Frame],
                            explicitOutputEngines: Option[List[OutputEngine]] = None)
                           (implicit audioContext: AudioContext) {
+
+  def materializedStream: Stream[Frame] = frameStreamProducer()
 
   val c = audioContext.config
   val outBufferSize = c.framesPerBuffer * c.nOutChannels
@@ -22,19 +24,23 @@ case class StreamCollector(frameStream: Iterator[Frame],
 
   def stop()(implicit audioContext: AudioContext) = outputEngines.foreach(_.stop())
 
-
   def processFor(duration: AudioDuration)(implicit audioContext: AudioContext) =
-    frameStream.take(duration.toSamples.toInt).foreach { frame =>
-      frame.foreach{sample =>
-        bufferedOutput(currentIndex) = sample
-        currentIndex = (currentIndex + 1) % outBufferSize
-      }
-      audioContext.advanceBySample()
+    materializedStream.take(duration.toSamples.toInt).foreach(processFrame)
 
-      if (audioContext.currentTime.toSamples % audioContext.config.framesPerBuffer == 0) {
-        outputEngines foreach (_.handleBuffers(Left(bufferedOutput)))
-      }
+  def processWhile(loopCondition: (Frame) => Boolean) =
+    materializedStream.takeWhile(loopCondition)
+
+  private def processFrame(frame: Frame) = {
+    frame.foreach{sample =>
+      bufferedOutput(currentIndex) = sample
+      currentIndex = (currentIndex + 1) % outBufferSize
     }
+    audioContext.advanceBySample()
+
+    if (audioContext.currentTime.toSamples % audioContext.config.framesPerBuffer == 0) {
+      outputEngines foreach (_.handleBuffers(Left(bufferedOutput)))
+    }
+  }
 
   // convenience functions to start timeline from collector
   def play(duration: AudioDuration)(implicit audioContext: AudioContext) = {
@@ -45,7 +51,7 @@ case class StreamCollector(frameStream: Iterator[Frame],
 
   def playWhile(loopCondition: () => Boolean)(implicit audioContext: AudioContext) = {
     start()
-    //    processWhile(loopCondition)
+    processWhile((f: Frame) => loopCondition())
     stop()
   }
 }

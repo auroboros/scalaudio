@@ -9,7 +9,7 @@ import org.scalatest.{FlatSpec, Matchers}
 import scala.concurrent.duration._
 import scalaudio.buffer.BufferSyntax
 import scalaudio.buffer.filter.mix.Splitter
-import scalaudio.core.engine.{StreamCollector, Timeline}
+import scalaudio.core.engine.StreamCollector
 import scalaudio.core.{AudioContext, ScalaudioConfig}
 
 class GeneratorsTest extends FlatSpec with Matchers with BufferSyntax {
