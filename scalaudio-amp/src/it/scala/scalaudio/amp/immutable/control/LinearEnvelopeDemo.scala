@@ -27,7 +27,7 @@ class LinearEnvelopeDemo extends FlatSpec with Matchers with CoreSyntax {
       GainFilter.applyGainToFrame(Array(sineState.sample), envState.value)
     }
 
-    StreamCollector(frameFunc).play(7 seconds)
+    StreamCollector(frameFunc()).play(7 seconds)
   }
 
   "Square wave with multiple ramps/points" should "fluctuate accordingly" in {
@@ -46,6 +46,6 @@ class LinearEnvelopeDemo extends FlatSpec with Matchers with CoreSyntax {
       GainFilter.applyGainToFrame(Array(sineState.sample), envState.value)
     }
 
-    StreamCollector(frameFunc).play(15 seconds)
+    StreamCollector(frameFunc()).play(15 seconds)
   }
 }

@@ -37,6 +37,6 @@ class MonosynthMidiReceiverDemo extends ScalaudioCoreTestHarness {
       Array(monosynthState.sample)
     }
 
-    StreamCollector(frameFunc).play(5 hours)
+    StreamCollector(frameFunc()).play(5 hours)
   }
 }

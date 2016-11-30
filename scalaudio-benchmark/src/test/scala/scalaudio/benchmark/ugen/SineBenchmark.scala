@@ -26,7 +26,7 @@ class SineBenchmark extends ScalaudioCoreTestHarness {
     }
 
     val start = Instant.now.toEpochMilli
-    StreamCollector(frameFunc, Some(List(SpeedTestDummy()))).play(5 hours)
+    StreamCollector(frameFunc(), Some(List(SpeedTestDummy()))).play(5 hours)
     val end = Instant.now.toEpochMilli
 
     println((end - start).millis)
@@ -49,7 +49,7 @@ class SineBenchmark extends ScalaudioCoreTestHarness {
     }
 
     val start = Instant.now.toEpochMilli
-    StreamCollector(frameFunc, Some(List(SpeedTestDummy()))).play(5 hours)
+    StreamCollector(frameFunc(), Some(List(SpeedTestDummy()))).play(5 hours)
     val end = Instant.now.toEpochMilli
 
     println((end - start).millis)

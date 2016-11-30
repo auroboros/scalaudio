@@ -26,7 +26,7 @@ class MidiReceiverSpec extends ScalaudioCoreTestHarness {
       Array(0.0 : Sample)
     }
 
-    StreamCollector(frameFunc).play(15 seconds)
+    StreamCollector(frameFunc()).play(15 seconds)
   }
 
 }

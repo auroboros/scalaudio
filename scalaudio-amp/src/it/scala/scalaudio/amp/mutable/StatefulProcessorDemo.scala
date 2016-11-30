@@ -19,7 +19,7 @@ class StatefulProcessorDemo extends ScalaudioCoreTestHarness {
     val ff = StatefulProcessor(SineStateGen.nextState, OscState(0, 440.Hz, 0)).nextState
       .map(state => Array(state.sample))
 
-    StreamCollector(ff).play(5.seconds)
+    StreamCollector(ff()).play(5.seconds)
   }
 
   "StatefulProcessor" should "use pre-transformer for automation" in {
@@ -33,7 +33,7 @@ class StatefulProcessorDemo extends ScalaudioCoreTestHarness {
       preTransformer
     ).nextState map (state => Array(state.sample))
 
-    StreamCollector(ff).play(5 seconds)
+    StreamCollector(ff()).play(5 seconds)
   }
 
   "StatefulProcessors" should "be chainable" in {
@@ -51,6 +51,6 @@ class StatefulProcessorDemo extends ScalaudioCoreTestHarness {
       .map(_.sample)
       .map(Array(_))
 
-    StreamCollector(ff).play(5.seconds)
+    StreamCollector(ff()).play(5.seconds)
   }
 }

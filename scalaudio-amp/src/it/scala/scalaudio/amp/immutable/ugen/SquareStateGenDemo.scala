@@ -19,6 +19,6 @@ class SquareStateGenDemo extends FlatSpec with Matchers with CoreSyntax {
       Array(state.sample)
     }
 
-    StreamCollector(frameFunc).play(2 seconds)
+    StreamCollector(frameFunc()).play(2 seconds)
   }
 }

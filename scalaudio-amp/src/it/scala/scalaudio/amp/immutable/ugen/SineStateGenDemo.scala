@@ -19,6 +19,6 @@ class SineStateGenDemo extends FlatSpec with Matchers with CoreSyntax {
       Array(state.sample)
     }
 
-    StreamCollector(frameFunc).play(5 seconds)
+    StreamCollector(frameFunc()).play(5 seconds)
   }
 }

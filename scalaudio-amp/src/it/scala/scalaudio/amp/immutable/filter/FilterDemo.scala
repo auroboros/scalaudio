@@ -23,6 +23,6 @@ class FilterDemo extends FlatSpec with Matchers with CoreSyntax {
       GainFilter.applyGainToFrame(splitterOut, .05)
     }
 
-    StreamCollector(frameFunc).play(5 seconds)
+    StreamCollector(frameFunc()).play(5 seconds)
   }
 }

@@ -35,6 +35,6 @@ class FmSynthDemo extends FlatSpec with Matchers with CoreSyntax {
       .map(_.sample)
       .map(s => Array.fill(2)(s))
 
-    StreamCollector(ff).play(15.seconds)
+    StreamCollector(ff()).play(15.seconds)
   }
 }

@@ -12,10 +12,6 @@ class SineActorDemo extends ScalaudioCoreTestHarness {
 
     val sineActor = new SineActor(440.Hz)
 
-    val frameFunc = () => {
-      Array(sineActor.nextSample())
-    }
-
-    StreamCollector(frameFunc).play(5 seconds)
+    StreamCollector(Array(sineActor.nextSample())).play(5 seconds)
   }
 }

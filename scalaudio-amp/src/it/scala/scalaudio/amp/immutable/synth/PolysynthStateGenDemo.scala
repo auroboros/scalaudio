@@ -46,6 +46,6 @@ class PolysynthStateGenDemo extends ScalaudioCoreTestHarness with AmpSyntax {
       Array(polysynthState.sample * .2)
     }
 
-    StreamCollector(frameFunc).play(11 seconds)
+    StreamCollector(frameFunc()).play(11 seconds)
   }
 }
