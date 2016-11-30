@@ -25,6 +25,6 @@ trait CoreSyntax {
 
 
   // Func to stream
-  implicit def unitFrameFunc2FrameStreamProducer(ff: Unit => Frame): () => Stream[Frame] = () => Stream.continually(ff())
-  implicit def emptyParenFrameFunc2FrameStreamProducer(ff: () => Frame):() => Stream[Frame] = () => Stream.continually(ff())
+  implicit def unitFrameFunc2FrameStreamProducer(ff: Unit => Frame): Stream[Frame] = Stream.continually(ff())
+  implicit def emptyParenFrameFunc2FrameStreamProducer(ff: () => Frame): Stream[Frame] = Stream.continually(ff())
 }

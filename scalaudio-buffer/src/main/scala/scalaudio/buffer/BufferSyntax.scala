@@ -25,8 +25,8 @@ trait BufferSyntax extends CoreSyntax {
 
   // TODO: Flattening like this is probably not super efficient, maybe should have resolution definable in "play" mode?
   // But then will require that all sig processors involved don't need sample-resolution state caching (or use other mechanism to achieve this effect...)
-  implicit def bufferProducingFunc2FrameStream(bpf: () => List[Array[Double]]): () => Stream[Frame] = () => Stream.continually(bpf()).flatten
+  implicit def bufferProducingFunc2FrameStream(bpf: () => List[Array[Double]]): Stream[Frame] = Stream.continually(bpf()).flatten
 
-  implicit def unitGen2FrameStreamProducer(uGen: UnitGen)(implicit audioContext: AudioContext): () => Stream[Frame] =
+  implicit def unitGen2FrameStreamProducer(uGen: UnitGen)(implicit audioContext: AudioContext): Stream[Frame] =
     bufferProducingFunc2FrameStream(unitGen2MultichannelAudioFunction(uGen))
 }
