@@ -23,8 +23,8 @@ class FilterDemo extends FlatSpec with Matchers with CoreSyntax {
 
     val frameFunc = () => {
       sineState = SineStateGen.nextState(sineState)
-      splitterOut = SplitFilter.split(sineState.sample, 2)
-      GainFilter.applyGainToFrame(splitterOut, .05)
+      splitterOut = SplitFilter.split(2)(sineState.sample)
+      GainFilter.applyGainToFrame(.05)(splitterOut)
     }
 
     StreamCollector(frameFunc).play(5 seconds)
@@ -35,8 +35,8 @@ class FilterDemo extends FlatSpec with Matchers with CoreSyntax {
 
     val frameFunc = StatefulProcessor(SineStateGen.nextState, OscState(0, 440.Hz, 0)).nextState
       .map(_.sample)
-      .map(SplitFilter.curriedSplit(2))
-      .map(GainFilter.curriedApplyGainToFrame(.05))
+      .map(SplitFilter.split(2))
+      .map(GainFilter.applyGainToFrame(.05))
 
     StreamCollector(frameFunc).play(5 seconds)
   }
@@ -46,8 +46,8 @@ class FilterDemo extends FlatSpec with Matchers with CoreSyntax {
 
     def stream = StreamingProcessor(SineStateGen.nextState, OscState(0, 440.Hz, 0)).outStream
       .map(_.sample)
-      .map(SplitFilter.curriedSplit(2))
-      .map(GainFilter.curriedApplyGainToFrame(.05))
+      .map(SplitFilter.split(2))
+      .map(GainFilter.applyGainToFrame(.05))
 
     StreamCollector(stream).play(5 seconds)
   }
