@@ -7,4 +7,7 @@ import scalaudio.core.types.{Frame, Sample}
   */
 object SplitFilter {
   def split(sample: Sample, nChannels: Int) : Frame = Array.fill(nChannels)(sample)
+
+  // TODO: Just replace above method...
+  def curriedSplit(nChannels: Int): Sample => Frame = (s: Sample) => Array.fill(nChannels)(s)
 }

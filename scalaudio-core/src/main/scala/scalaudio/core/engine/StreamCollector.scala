@@ -7,11 +7,9 @@ import scalaudio.core.types.{AudioDuration, Frame}
 /**
   * Created by johnmcgill on 5/27/16.
   */
-case class StreamCollector(frameStreamProducer: () => Stream[Frame],
-                           explicitOutputEngines: Option[List[OutputEngine]] = None)
-                          (implicit audioContext: AudioContext) {
-
-  def materializedStream: Stream[Frame] = frameStreamProducer()
+class StreamCollector(frameStream: => Stream[Frame],
+                      explicitOutputEngines: Option[List[OutputEngine]] = None)
+                     (implicit audioContext: AudioContext) {
 
   val c = audioContext.config
   val outBufferSize = c.framesPerBuffer * c.nOutChannels
@@ -24,14 +22,16 @@ case class StreamCollector(frameStreamProducer: () => Stream[Frame],
 
   def stop()(implicit audioContext: AudioContext) = outputEngines.foreach(_.stop())
 
-  def processFor(duration: AudioDuration)(implicit audioContext: AudioContext) =
-    materializedStream.take(duration.toSamples.toInt).foreach(processFrame)
+  // Stream consumer
+  def consumeFor(duration: AudioDuration)(implicit audioContext: AudioContext) =
+    frameStream.take(duration.toSamples.toInt).foreach(processFrame)
 
-  def processWhile(loopCondition: (Frame) => Boolean) =
-    materializedStream.takeWhile(loopCondition)
+  // Stream consumer
+  def consumeWhile(loopCondition: (Frame) => Boolean) =
+    frameStream.takeWhile(loopCondition).foreach(processFrame)
 
   private def processFrame(frame: Frame) = {
-    frame.foreach{sample =>
+    frame.foreach { sample =>
       bufferedOutput(currentIndex) = sample
       currentIndex = (currentIndex + 1) % outBufferSize
     }
@@ -45,13 +45,19 @@ case class StreamCollector(frameStreamProducer: () => Stream[Frame],
   // convenience functions to start timeline from collector
   def play(duration: AudioDuration)(implicit audioContext: AudioContext) = {
     start()
-    processFor(duration)
+    consumeFor(duration)
     stop()
   }
 
   def playWhile(loopCondition: () => Boolean)(implicit audioContext: AudioContext) = {
     start()
-    processWhile((f: Frame) => loopCondition())
+    consumeWhile((f: Frame) => loopCondition())
     stop()
   }
+}
+
+object StreamCollector {
+  def apply(frameStream: => Stream[Frame],
+            explicitOutputEngines: Option[List[OutputEngine]] = None)
+           (implicit audioContext: AudioContext) : StreamCollector = new StreamCollector(frameStream, explicitOutputEngines)
 }

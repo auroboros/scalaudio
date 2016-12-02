@@ -29,6 +29,8 @@ class MonosynthStateGenDemo extends ScalaudioCoreTestHarness {
         (4.second: AudioDuration) ->(880.Hz, adsrTemplate)
       )
 
+    // TODO: Express this in streaming or stateful processor form
+
     var monosynthState = MonosynthStateGen.decodeInitialState(notes)
 
     val frameFunc = () => {
