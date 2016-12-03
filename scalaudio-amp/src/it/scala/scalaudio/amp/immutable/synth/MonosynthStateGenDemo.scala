@@ -3,7 +3,7 @@ package scalaudio.amp.immutable.synth
 import scala.collection.immutable.{SortedMap, TreeMap}
 import scala.concurrent.duration._
 import scalaudio.amp.immutable.control.AdsrEnvelope
-import scalaudio.amp.immutable.ugen.SineStateGen
+import scalaudio.amp.immutable.ugen.Sine
 import scalaudio.core.engine.StreamCollector
 import scalaudio.core.types.{AudioDuration, Pitch}
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
@@ -34,7 +34,7 @@ class MonosynthStateGenDemo extends ScalaudioCoreTestHarness {
     var monosynthState = MonosynthStateGen.decodeInitialState(notes)
 
     val frameFunc = () => {
-      monosynthState = MonosynthStateGen.nextState(monosynthState, SineStateGen)
+      monosynthState = MonosynthStateGen.nextState(monosynthState, Sine)
       Array(monosynthState.sample)
     }
 

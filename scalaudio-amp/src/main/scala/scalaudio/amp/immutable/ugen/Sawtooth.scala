@@ -5,7 +5,7 @@ import scalaudio.core.AudioContext
 /**
   * Created by johnmcgill on 7/10/16.
   */
-object SawtoothStateGen extends OscStateGen {
+object Sawtooth extends Osc {
   def nextState(current: OscState)(implicit audioContext: AudioContext) : OscState = {
     val w = 2 * Math.PI * current.pitch.toHz / audioContext.config.samplingRate
 

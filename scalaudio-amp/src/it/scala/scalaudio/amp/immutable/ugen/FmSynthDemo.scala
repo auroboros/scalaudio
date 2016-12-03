@@ -22,12 +22,12 @@ class FmSynthDemo extends FlatSpec with Matchers with CoreSyntax {
 
     //    var collector: Double = null
 
-    val sinGen2 = StatefulProcessor.withModifier[OscState, Pitch](SineStateGen.nextState,
+    val sinGen2 = StatefulProcessor.withModifier[OscState, Pitch](Sine.nextState,
       OscState(0, 0.Hz, 0),
       (oscState, pitch) => oscState.copy(pitch = pitch)
     )
 
-    val ff: () => Array[Double] = StatefulProcessor[OscState](SineStateGen.nextState,
+    val ff: () => Array[Double] = StatefulProcessor[OscState](Sine.nextState,
       OscState(0, 66.Hz, 0)
     ).nextState map (_.sample) map (RangeScaler.scale(Rescaler(-1, 1, 0, 300)) _)
       .map(_.Hz)

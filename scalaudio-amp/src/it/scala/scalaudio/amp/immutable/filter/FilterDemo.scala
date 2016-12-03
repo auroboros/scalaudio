@@ -4,7 +4,7 @@ import org.scalatest.{FlatSpec, Matchers}
 import signalz.{StatefulProcessor, StreamingProcessor}
 
 import scala.concurrent.duration._
-import scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
+import scalaudio.amp.immutable.ugen.{OscState, Sine}
 import scalaudio.core.engine.StreamCollector
 import scalaudio.core.types.Frame
 import scalaudio.core.{AudioContext, CoreSyntax}
@@ -22,7 +22,7 @@ class FilterDemo extends FlatSpec with Matchers with CoreSyntax {
     var splitterOut: Frame = Array.empty[Double]
 
     val frameFunc = () => {
-      sineState = SineStateGen.nextState(sineState)
+      sineState = Sine.nextState(sineState)
       splitterOut = SplitFilter.split(2)(sineState.sample)
       GainFilter.applyGainToFrame(.05)(splitterOut)
     }
@@ -33,7 +33,7 @@ class FilterDemo extends FlatSpec with Matchers with CoreSyntax {
   "Gain & splitter" should "be chainable on sine with StatefulProcessor" in {
     implicit val audioContext = AudioContext()
 
-    val frameFunc = StatefulProcessor(SineStateGen.nextState, OscState(0, 440.Hz, 0)).nextState
+    val frameFunc = StatefulProcessor(Sine.nextState, OscState(0, 440.Hz, 0)).nextState
       .map(_.sample)
       .map(SplitFilter.split(2))
       .map(GainFilter.applyGainToFrame(.05))
@@ -44,7 +44,7 @@ class FilterDemo extends FlatSpec with Matchers with CoreSyntax {
   "Gain & splitter" should "be chainable on sine with StreamingProcessor" in {
     implicit val audioContext = AudioContext()
 
-    def stream = StreamingProcessor(SineStateGen.nextState, OscState(0, 440.Hz, 0)).outStream
+    def stream = StreamingProcessor(Sine.nextState, OscState(0, 440.Hz, 0)).outStream
       .map(_.sample)
       .map(SplitFilter.split(2))
       .map(GainFilter.applyGainToFrame(.05))

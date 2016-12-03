@@ -16,7 +16,7 @@ class SawtoothStateGenDemo extends FlatSpec with Matchers with CoreSyntax {
     var state : OscState = OscState(0, 440.Hz, 0)
 
     val frameFunc = () => {
-      state = SawtoothStateGen.nextState(state)
+      state = Sawtooth.nextState(state)
       println(state.sample)
       Array(state.sample)
     }

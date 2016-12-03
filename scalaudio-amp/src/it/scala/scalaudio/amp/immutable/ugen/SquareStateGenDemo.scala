@@ -15,7 +15,7 @@ class SquareStateGenDemo extends FlatSpec with Matchers with CoreSyntax {
     var state : OscState = OscState(0, 440.Hz, 0)
 
     val frameFunc = () => {
-      state = SquareStateGen.nextState(state)
+      state = Square.nextState(state)
       Array(state.sample)
     }
 

@@ -4,7 +4,7 @@ import scala.collection.immutable.TreeMap
 import scala.concurrent.duration._
 import scalaudio.amp.immutable.control.AdsrEnvelope
 import scalaudio.amp.immutable.synth.MonosynthStateGen
-import scalaudio.amp.immutable.ugen.SineStateGen
+import scalaudio.amp.immutable.ugen.Sine
 import scalaudio.core.engine.StreamCollector
 import scalaudio.core.midi.MidiConnector
 import scalaudio.core.types.{AudioDuration, Pitch}
@@ -32,7 +32,7 @@ class MonosynthMidiReceiverDemo extends ScalaudioCoreTestHarness {
     val frameFunc = () => {
       monosynthState = MonosynthStateGen.nextState(
         midiReceiver.processMidiCommandsIntoState(monosynthState),
-        SineStateGen
+        Sine
       )
       Array(monosynthState.sample)
     }
