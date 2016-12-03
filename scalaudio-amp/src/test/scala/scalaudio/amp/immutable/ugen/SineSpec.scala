@@ -7,7 +7,7 @@ import scalaudio.core.{AudioContext, CoreSyntax}
 /**
   * Created by johnmcgill on 5/27/16.
   */
-class SineStateGenSpec extends FlatSpec with Matchers with CoreSyntax{
+class SineSpec extends FlatSpec with Matchers with CoreSyntax{
   "Sine state gen" should "be scriptable as a ugen" in {
     implicit val audioContext = AudioContext()
 
