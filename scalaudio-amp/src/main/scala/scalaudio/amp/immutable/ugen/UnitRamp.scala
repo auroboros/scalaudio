@@ -5,7 +5,7 @@ import scalaudio.core.AudioContext
 /**
   * Created by johnmcgill on 7/10/16.
   */
-object UnitRamp extends OscStateGen {
+object UnitRamp extends Osc {
   override def nextState(current: OscState)(implicit audioContext: AudioContext): OscState = {
     val w = current.pitch.toHz / audioContext.config.samplingRate
 

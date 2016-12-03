@@ -1,15 +1,13 @@
 package scalaudio.buffer.timing
 
-import scalaudio.buffer.filter.GainFilter
-import scalaudio.buffer.filter.mix.Splitter
-import scalaudio.buffer.unitgen.{FuncGen, SineGen}
-
-import scalaudio.core.engine.{Bufferwise, Playback, Timeline}
-import scalaudio.core.engine.bufferwise.BufferOutputTerminal
 import org.scalatest.{FlatSpec, Matchers}
 
 import scalaudio.buffer.BufferSyntax
+import scalaudio.buffer.filter.GainFilter
+import scalaudio.buffer.filter.mix.Splitter
+import scalaudio.buffer.unitgen.SineGen
 import scalaudio.core.AudioContext
+import scalaudio.core.engine.StreamCollector
 
 /**
   * Created by johnmcgill on 12/29/15.
@@ -65,6 +63,6 @@ class TimeReleaseCapsuleTest extends FlatSpec with Matchers with BufferSyntax {
     val gainController = GainFilter()
     val frameFunc = {() => gainController.processBuffersWithControl(sineGen.outputBuffers(), capsule.outputControlValue) chain splitter.processBuffers}
 
-    BufferOutputTerminal(frameFunc).play(10000 buffers)
+    StreamCollector(frameFunc).play(10000 buffers)
   }
 }

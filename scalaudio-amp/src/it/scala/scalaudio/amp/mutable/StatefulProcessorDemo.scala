@@ -4,11 +4,10 @@ import signalz.StatefulProcessor
 
 import scala.concurrent.duration._
 import scalaudio.amp.immutable.filter.{DelayFilterState, DelayFilterStateGen}
-import scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
-import scalaudio.core.engine.samplewise.AmpOutput
+import scalaudio.amp.immutable.ugen.{OscState, Sine}
+import scalaudio.core.engine.StreamCollector
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 import scalaz.Scalaz._
-import scalaz._
 
 /**
   * Created by johnmcgill on 7/11/16.
@@ -17,10 +16,10 @@ class StatefulProcessorDemo extends ScalaudioCoreTestHarness {
   "StatefulProcessor" should "produce sine without var in outer scope" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
-    val ff = StatefulProcessor(SineStateGen.nextState, OscState(0, 440.Hz, 0)).nextState
+    val ff = StatefulProcessor(Sine.nextState, OscState(0, 440.Hz, 0)).nextState
       .map(state => Array(state.sample))
 
-    AmpOutput(ff).play(5.seconds)
+    StreamCollector(ff).play(5.seconds)
   }
 
   "StatefulProcessor" should "use pre-transformer for automation" in {
@@ -29,12 +28,12 @@ class StatefulProcessorDemo extends ScalaudioCoreTestHarness {
     val preTransformer = (s: OscState, u: Unit) => s.copy(
       pitch = (s.pitch.toHz + .2).Hz
     )
-    val ff = StatefulProcessor.withModifier(SineStateGen.nextState,
+    val ff = StatefulProcessor.withModifier(Sine.nextState,
       OscState(0, 440.Hz, 0),
       preTransformer
     ).nextState map (state => Array(state.sample))
 
-    AmpOutput(ff).play(5 seconds)
+    StreamCollector(ff).play(5 seconds)
   }
 
   "StatefulProcessors" should "be chainable" in {
@@ -46,12 +45,12 @@ class StatefulProcessorDemo extends ScalaudioCoreTestHarness {
       (delayFilterState: DelayFilterState, newSample: Double) => delayFilterState.copy(sample = newSample)
     )
 
-    val ff = StatefulProcessor(SineStateGen.nextState, OscState(0, 440.Hz, 0)).nextState
+    val ff = StatefulProcessor(Sine.nextState, OscState(0, 440.Hz, 0)).nextState
       .map(_.sample)
       .map(delayFilter.nextState)
       .map(_.sample)
       .map(Array(_))
 
-    AmpOutput(ff).play(5.seconds)
+    StreamCollector(ff).play(5.seconds)
   }
 }

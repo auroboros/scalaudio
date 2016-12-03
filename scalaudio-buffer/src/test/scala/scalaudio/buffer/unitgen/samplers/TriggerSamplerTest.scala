@@ -5,7 +5,7 @@ import org.scalatest.{FlatSpec, Matchers}
 import scala.concurrent.duration._
 import scalaudio.buffer.BufferSyntax
 import scalaudio.core.AudioContext
-import scalaudio.core.engine.bufferwise.BufferOutputTerminal
+import scalaudio.core.engine.StreamCollector
 
 /**
   * Created by johnmcgill on 2/3/16.
@@ -18,7 +18,7 @@ class TriggerSamplerTest extends FlatSpec with Matchers with BufferSyntax {
 
     sampler.activateSoundSample()
 
-    BufferOutputTerminal(sampler).play(5 seconds)
+    StreamCollector(sampler).play(5 seconds)
   }
 
   "Sampler" should "play on given beats" in {
@@ -27,6 +27,6 @@ class TriggerSamplerTest extends FlatSpec with Matchers with BufferSyntax {
     val sampler = new TriggerSampler(FileSample("/Users/johnmcgill/nocode/samples/Yamaha-TG100-Whistle-C5.wav"),
       List(1 beats, 2 beats, 4 beats, 7 beats, 10 beats))
 
-    BufferOutputTerminal(sampler).play(4 measures)
+    StreamCollector(sampler).play(4 measures)
   }
 }

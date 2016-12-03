@@ -1,7 +1,7 @@
 package scalaudio.rpc.receiver
 
-import scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
-import scalaudio.core.engine.samplewise.AmpOutput
+import scalaudio.amp.immutable.ugen.{OscState, Sine}
+import scalaudio.core.engine.StreamCollector
 import scalaudio.core.types.AudioDuration
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 
@@ -18,10 +18,10 @@ class RpcDoubleReceiverDemo extends ScalaudioCoreTestHarness {
     val doubleReceiver = RpcDoubleReceiver("receiver_demo", 1)
 
     val frameFunc = () => {
-      state = SineStateGen.nextState(state)
+      state = Sine.nextState(state)
       Array(state.sample * doubleReceiver.currentValue)
     }
 
-    AmpOutput(frameFunc).play(AudioDuration(Int.MaxValue))
+    StreamCollector(frameFunc).play(AudioDuration(Int.MaxValue))
   }
 }

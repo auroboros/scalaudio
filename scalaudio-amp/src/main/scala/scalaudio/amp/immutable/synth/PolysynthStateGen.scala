@@ -2,7 +2,7 @@ package scalaudio.amp.immutable.synth
 
 import scala.collection.immutable.SortedMap
 import scalaudio.amp.immutable.control.{AdsrEnvelope, EnvelopeState, EnvelopeStateGen}
-import scalaudio.amp.immutable.ugen.{OscState, OscStateGen}
+import scalaudio.amp.immutable.ugen.{OscState, Osc}
 import scalaudio.core.AudioContext
 import scalaudio.core.types.{AudioDuration, Pitch, Sample}
 
@@ -14,14 +14,14 @@ case class PolysynthState(sample: Sample,
                           voicesPlaying: List[PolysynthVoiceState])
 
 case class PolysynthVoiceState(sample: Sample,
-                          osc: OscStateGen,
-                          oscState: OscState,
-                          envState: EnvelopeState) {
+                               osc: Osc,
+                               oscState: OscState,
+                               envState: EnvelopeState) {
   def finished : Boolean = envState.remainingEvents.isEmpty
 }
 
 object PolysynthStateGen {
-  def nextState(s: PolysynthState, o: OscStateGen)(implicit audioContext: AudioContext): PolysynthState = {
+  def nextState(s: PolysynthState, o: Osc)(implicit audioContext: AudioContext): PolysynthState = {
     // add new voices
     val newVoices : List[PolysynthVoiceState] = s.remainingNotes.takeWhile(_._1 <= audioContext.currentTime)
       .flatMap{noteList => noteList._2.map(note => newVoice(o, note._1, note._2))}.toList
@@ -37,7 +37,7 @@ object PolysynthStateGen {
     )
   }
 
-  def newVoice(osc: OscStateGen, pitch: Pitch, adsrEnvelope: AdsrEnvelope)(implicit audioContext: AudioContext) =
+  def newVoice(osc: Osc, pitch: Pitch, adsrEnvelope: AdsrEnvelope)(implicit audioContext: AudioContext) =
     PolysynthVoiceState(0,
       osc,
       OscState(0, pitch, 0),

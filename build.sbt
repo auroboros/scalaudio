@@ -48,7 +48,6 @@ lazy val root = project.in(file("."))
     scalaudioCore,
     scalaudioBuffer,
     scalaudioAMP,
-    scalaudioRivulets,
     scalaudioActor,
     scalaudioRPC,
     scalaudioBenchmark)
@@ -64,11 +63,6 @@ lazy val scalaudioBuffer = project.in(file("scalaudio-buffer"))
   .dependsOn(scalaudioCore % "test->test;compile->compile")
 
 lazy val scalaudioAMP = project.in(file("scalaudio-amp"))
-  .configs(IntegrationTest)
-  .settings(Defaults.itSettings: _*)
-  .dependsOn(scalaudioCore % "test->test;compile->compile")
-
-lazy val scalaudioRivulets = project.in(file("scalaudio-rivulets"))
   .configs(IntegrationTest)
   .settings(Defaults.itSettings: _*)
   .dependsOn(scalaudioCore % "test->test;compile->compile")

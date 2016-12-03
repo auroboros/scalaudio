@@ -3,7 +3,7 @@ package scalaudio.amp.immutable.ugen
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.duration._
-import scalaudio.core.engine.samplewise.AmpOutput
+import scalaudio.core.engine.StreamCollector
 import scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 
 /**
@@ -16,11 +16,11 @@ class SawtoothStateGenDemo extends FlatSpec with Matchers with CoreSyntax {
     var state : OscState = OscState(0, 440.Hz, 0)
 
     val frameFunc = () => {
-      state = SawtoothStateGen.nextState(state)
+      state = Sawtooth.nextState(state)
       println(state.sample)
       Array(state.sample)
     }
 
-    AmpOutput(frameFunc).play(5 seconds)
+    StreamCollector(frameFunc).play(5 seconds)
   }
 }

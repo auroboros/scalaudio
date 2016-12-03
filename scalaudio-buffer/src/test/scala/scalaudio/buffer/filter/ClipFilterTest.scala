@@ -6,7 +6,7 @@ import scala.concurrent.duration._
 import scalaudio.buffer.BufferSyntax
 import scalaudio.buffer.filter.mix.Splitter
 import scalaudio.buffer.unitgen.SineGen
-import scalaudio.core.engine.bufferwise.BufferOutputTerminal
+import scalaudio.core.engine.StreamCollector
 import scalaudio.core.{AudioContext, ScalaudioConfig}
 
 /**
@@ -29,6 +29,8 @@ class ClipFilterTest extends FlatSpec with Matchers with BufferSyntax {
     val splitter: Splitter = Splitter(2)
     val testFrameFunc: () => List[Array[Double]] = () => sineGen.outputBuffers() chain clipper.processBuffers chain splitter.processBuffers
 
-    BufferOutputTerminal(testFrameFunc).play(5 seconds)
+    def stream = Stream.continually(testFrameFunc()).flatten
+
+    StreamCollector(stream).play(5 seconds)
   }
 }

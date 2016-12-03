@@ -1,11 +1,12 @@
 package scalaudio.amp.immutable.ugen
 
-import scalaudio.amp.immutable.StateProgressor
+import signalz.SequentialState
+
 import scalaudio.core.AudioContext
 
 /**
   * Created by johnmcgill on 5/29/16.
   */
-trait OscStateGen extends StateProgressor[OscState] {
+trait Osc extends SequentialState[OscState, AudioContext]{
   def nextState(current: OscState)(implicit audioContext: AudioContext) : OscState
 }

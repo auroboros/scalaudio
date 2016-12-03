@@ -1,7 +1,7 @@
 package scalaudio.jmathplot.examples
 
 import scala.collection.mutable.ListBuffer
-import scalaudio.amp.immutable.ugen.{OscState, SineStateGen}
+import scalaudio.amp.immutable.ugen.{OscState, Sine}
 import scalaudio.core.{CoreSyntax, DefaultAudioContext}
 import scalaudio.jmathplot.ConvenientPlot
 
@@ -15,7 +15,7 @@ object SinePlot extends App with CoreSyntax with DefaultAudioContext {
 
   1 to 300 foreach {_ =>
     yVals += oscState.sample
-    oscState = SineStateGen.nextState(oscState)
+    oscState = Sine.nextState(oscState)
   }
 
   val x = (1 to yVals.length).map(_.toDouble).toArray

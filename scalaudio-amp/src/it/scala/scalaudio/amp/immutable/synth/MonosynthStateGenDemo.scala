@@ -3,8 +3,8 @@ package scalaudio.amp.immutable.synth
 import scala.collection.immutable.{SortedMap, TreeMap}
 import scala.concurrent.duration._
 import scalaudio.amp.immutable.control.AdsrEnvelope
-import scalaudio.amp.immutable.ugen.SineStateGen
-import scalaudio.core.engine.samplewise.AmpOutput
+import scalaudio.amp.immutable.ugen.Sine
+import scalaudio.core.engine.StreamCollector
 import scalaudio.core.types.{AudioDuration, Pitch}
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 
@@ -29,13 +29,15 @@ class MonosynthStateGenDemo extends ScalaudioCoreTestHarness {
         (4.second: AudioDuration) ->(880.Hz, adsrTemplate)
       )
 
+    // TODO: Express this in streaming or stateful processor form
+
     var monosynthState = MonosynthStateGen.decodeInitialState(notes)
 
     val frameFunc = () => {
-      monosynthState = MonosynthStateGen.nextState(monosynthState, SineStateGen)
+      monosynthState = MonosynthStateGen.nextState(monosynthState, Sine)
       Array(monosynthState.sample)
     }
 
-    AmpOutput(frameFunc).play(5 seconds)
+    StreamCollector(frameFunc).play(5 seconds)
   }
 }
