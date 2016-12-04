@@ -1,8 +1,8 @@
 package scalaudio.jmathplot.examples
 
-import scalaudio.amp.immutable.ugen.{OscState, Sine}
 import scalaudio.core.{CoreSyntax, DefaultAudioContext}
 import scalaudio.jmathplot.ConvenientPlot
+import scalaudio.units.ugen.{OscState, Sine}
 
 /**
   * Created by johnmcgill on 6/15/16.

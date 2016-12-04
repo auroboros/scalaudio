@@ -1,6 +1,6 @@
 package scalaudio.rpc.receiver
 
-import scalaudio.amp.immutable.ugen.{OscState, Sine}
+import scalaudio.units.ugen.{OscState, Sine}
 import scalaudio.core.engine.StreamCollector
 import scalaudio.core.types.AudioDuration
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}

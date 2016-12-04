@@ -3,8 +3,8 @@ package scalaudio.amp.mutable
 import signalz.StatefulProcessor
 
 import scala.concurrent.duration._
-import scalaudio.amp.immutable.filter.{DelayFilterState, SimpleDelay}
-import scalaudio.amp.immutable.ugen.{OscState, Sine}
+import scalaudio.units.filter.{DelayFilterState, SimpleDelay}
+import scalaudio.units.ugen.{OscState, Sine}
 import scalaudio.core.engine.StreamCollector
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 import scalaz.Scalaz._

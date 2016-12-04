@@ -3,10 +3,10 @@ package scalaudio.benchmark.ugen
 import java.time.Instant
 
 import scala.concurrent.duration._
-import scalaudio.amp.immutable.ugen.{OscState, Sine}
 import scalaudio.core.engine.StreamCollector
 import scalaudio.core.engine.io.SpeedTestDummy
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
+import scalaudio.units.ugen.{OscState, Sine}
 
 /**
   * Created by johnmcgill on 6/6/16.

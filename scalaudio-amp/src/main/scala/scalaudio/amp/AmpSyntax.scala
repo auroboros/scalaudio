@@ -1,6 +1,6 @@
 package scalaudio.amp
 
-import scalaudio.amp.immutable.control.AdsrEnvelope
+import scalaudio.units.control.AdsrEnvelope
 import scalaudio.core.types.Pitch
 
 /**
