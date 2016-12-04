@@ -1,6 +1,7 @@
 package scalaudio.amp.immutable.analysis
 
 import org.apache.commons.math3.complex.Complex
+import signalz.SequentialState
 
 import scalaudio.core.AudioContext
 import scalaudio.core.math.FftMath
@@ -14,7 +15,7 @@ case class FftAnalyzerState(sampleIn: Sample,
                             analysisBuffer: AudioSignal, // TODO: This should be queue?
                             computeInterval: Int)
 
-object FftAnalyzerStateGen {
+object FftAnalyzerStateGen extends SequentialState[FftAnalyzerState, AudioContext] {
   def decodeInitialState(implicit audioContext: AudioContext) =
     FftAnalyzerState(0.0,
       None,

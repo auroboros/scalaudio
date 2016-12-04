@@ -23,7 +23,7 @@ class AnyTriggerStateGenSpec extends FlatSpec with Matchers with CoreSyntax {
     while (anyTriggerState.remainingTriggers.nonEmpty) {
       audioContext.advanceBySample()
 
-      anyTriggerState = AnyTriggerStateGen.nextState(anyTriggerState)
+      anyTriggerState = AnyTrigger.nextState(anyTriggerState)
 
       if (anyTriggerState.releasedTriggers.nonEmpty)
         println(anyTriggerState.releasedTriggers)

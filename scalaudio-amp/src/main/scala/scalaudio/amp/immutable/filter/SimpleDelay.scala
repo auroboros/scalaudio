@@ -1,5 +1,7 @@
 package scalaudio.amp.immutable.filter
 
+import signalz.SequentialState
+
 import scala.collection.immutable.Queue
 import scalaudio.core.AudioContext
 import scalaudio.core.types.{AudioDuration, Sample}
@@ -13,7 +15,7 @@ case class DelayFilterState(sample: Sample,
   def overwriteSample(s: Sample) = this.copy(sample = s)
 }
 
-object DelayFilterStateGen {
+object SimpleDelay extends SequentialState[DelayFilterState, AudioContext]{
 
   def initialState(delayDuration: AudioDuration)(implicit audioContext: AudioContext) =
     DelayFilterState(0, Queue.fill[Sample](delayDuration.toSamples.toInt)(0))

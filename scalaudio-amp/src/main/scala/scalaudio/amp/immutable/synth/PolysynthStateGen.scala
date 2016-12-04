@@ -1,7 +1,7 @@
 package scalaudio.amp.immutable.synth
 
 import scala.collection.immutable.SortedMap
-import scalaudio.amp.immutable.control.{AdsrEnvelope, EnvelopeState, EnvelopeStateGen}
+import scalaudio.amp.immutable.control.{AdsrEnvelope, EnvelopeState, Envelope}
 import scalaudio.amp.immutable.ugen.{OscState, Osc}
 import scalaudio.core.AudioContext
 import scalaudio.core.types.{AudioDuration, Pitch, Sample}
@@ -45,7 +45,7 @@ object PolysynthStateGen {
 
   def nextVoiceState(s: PolysynthVoiceState)(implicit audioContext: AudioContext): PolysynthVoiceState = {
     val newOscState = s.osc.nextState(s.oscState)
-    val newEnvState = EnvelopeStateGen.nextState(s.envState)
+    val newEnvState = Envelope.nextState(s.envState)
 
     s.copy(
       sample = newOscState.sample * newEnvState.value,

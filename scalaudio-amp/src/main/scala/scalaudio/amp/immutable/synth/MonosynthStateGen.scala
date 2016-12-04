@@ -1,7 +1,7 @@
 package scalaudio.amp.immutable.synth
 
 import scala.collection.immutable.{SortedMap, TreeMap}
-import scalaudio.amp.immutable.control.{AdsrEnvelope, EnvelopeState, EnvelopeStateGen, PointEnvelope}
+import scalaudio.amp.immutable.control.{AdsrEnvelope, EnvelopeState, Envelope, PointEnvelope}
 import scalaudio.amp.immutable.ugen.{OscState, Osc}
 import scalaudio.core.types.{AudioDuration, Pitch, Sample}
 import scalaudio.core.{AudioContext, CoreSyntax}
@@ -13,6 +13,9 @@ case class MonosynthState(sample: Sample,
                           oscState: OscState,
                           pitchEnvState: EnvelopeState,
                           adsrEnvState: EnvelopeState)
+
+
+// TODO: How to parameterize (curry) so that next state can match standard form
 
 // TODO: Make realtime by having state have a copy method that accepts a note-on?
 
@@ -36,8 +39,8 @@ object MonosynthStateGen extends CoreSyntax {
   }
 
   def nextState(s: MonosynthState, o: Osc)(implicit audioContext: AudioContext): MonosynthState = {
-    val newPitchState = EnvelopeStateGen.nextState(s.pitchEnvState)
-    val newAdsrState = EnvelopeStateGen.nextState(s.adsrEnvState)
+    val newPitchState = Envelope.nextState(s.pitchEnvState)
+    val newAdsrState = Envelope.nextState(s.adsrEnvState)
     val newOscState = o.nextState(s.oscState.copy(pitch = newPitchState.value.Hz))
 
     s.copy(

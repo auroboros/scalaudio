@@ -10,10 +10,14 @@ package scalaudio.amp.immutable.util
 case class OptionHolderState[T](valueOption: Option[T],
                                 lastFulfilledValue: T)
 
-object OptionHolderStateGen {
-  def nextState[T](s: OptionHolderState[T]) : OptionHolderState[T] =
+class OptionHolder[T] {
+  def nextState(s: OptionHolderState[T]) : OptionHolderState[T] =
     s.valueOption match {
       case Some(x) => s.copy(lastFulfilledValue = x)
       case None => s
     }
+}
+
+object OptionHolder {
+  def apply[T] = new OptionHolder[T]
 }
