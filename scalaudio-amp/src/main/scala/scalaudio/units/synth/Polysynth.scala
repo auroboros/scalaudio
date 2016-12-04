@@ -20,11 +20,13 @@ case class PolysynthVoiceState(sample: Sample,
   def finished : Boolean = envState.remainingEvents.isEmpty
 }
 
-object PolysynthStateGen {
-  def nextState(s: PolysynthState, o: Osc)(implicit audioContext: AudioContext): PolysynthState = {
+class Polysynth(val osc: Osc) {
+  import Polysynth._
+
+  def nextState(s: PolysynthState)(implicit audioContext: AudioContext): PolysynthState = {
     // add new voices
     val newVoices : List[PolysynthVoiceState] = s.remainingNotes.takeWhile(_._1 <= audioContext.currentTime)
-      .flatMap{noteList => noteList._2.map(note => newVoice(o, note._1, note._2))}.toList
+      .flatMap{noteList => noteList._2.map(note => newVoice(osc, note._1, note._2))}.toList
     // remove finished voices
     val liveVoices = (newVoices ::: s.voicesPlaying).filterNot(_.finished)
     // update live voice states
@@ -36,14 +38,19 @@ object PolysynthStateGen {
       updatedLiveVoices
     )
   }
+}
 
-  def newVoice(osc: Osc, pitch: Pitch, adsrEnvelope: AdsrEnvelope)(implicit audioContext: AudioContext) =
-    PolysynthVoiceState(0,
-      osc,
-      OscState(0, pitch, 0),
-      EnvelopeState(0, adsrEnvelope.asLinearEnvelopes(AudioDuration(audioContext.State.currentSample))))
+object Polysynth {
+  def apply(osc: Osc) = new Polysynth(osc)
 
-  def nextVoiceState(s: PolysynthVoiceState)(implicit audioContext: AudioContext): PolysynthVoiceState = {
+  // "private" (conceptually, even if not actually designated)
+  private def newVoice(osc: Osc, pitch: Pitch, adsrEnvelope: AdsrEnvelope)(implicit audioContext: AudioContext) =
+  PolysynthVoiceState(0,
+    osc,
+    OscState(0, pitch, 0),
+    EnvelopeState(0, adsrEnvelope.asLinearEnvelopes(AudioDuration(audioContext.State.currentSample))))
+
+  private def nextVoiceState(s: PolysynthVoiceState)(implicit audioContext: AudioContext): PolysynthVoiceState = {
     val newOscState = s.osc.nextState(s.oscState)
     val newEnvState = Envelope.nextState(s.envState)
 

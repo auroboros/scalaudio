@@ -4,7 +4,7 @@ import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.duration._
 import scalaudio.units.control.AdsrEnvelope
-import scalaudio.units.synth.MonosynthStateGen
+import scalaudio.units.synth.Monosynth
 import scalaudio.core.midi.NoteOn
 import scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 
@@ -27,7 +27,7 @@ class MonosynthMidiReceiverSpec extends FlatSpec with Matchers with CoreSyntax {
 
     val midiReceiver = MonosynthMidiReceiver(adsrTemplate, 30.millis)
 
-    val newState = midiReceiver.addCommandToState(MonosynthStateGen.decodeInitialState(), NoteOn(1, 22, 100))
+    val newState = midiReceiver.addCommandToState(Monosynth.decodeInitialState(), NoteOn(1, 22, 100))
 
     println(newState)
   }

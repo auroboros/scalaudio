@@ -12,7 +12,7 @@ import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 /**
   * Created by johnmcgill on 5/30/16.
   */
-class PolysynthStateGenDemo extends ScalaudioCoreTestHarness with AmpSyntax {
+class PolysynthDemo extends ScalaudioCoreTestHarness with AmpSyntax {
 
   "Polysynth" should "jam concurrent beefy sinewaves" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
@@ -42,7 +42,7 @@ class PolysynthStateGenDemo extends ScalaudioCoreTestHarness with AmpSyntax {
     var polysynthState = PolysynthState(0, notes, Nil)
 
     val frameFunc = () => {
-      polysynthState = PolysynthStateGen.nextState(polysynthState, Sine)
+      polysynthState = Polysynth(Sine).nextState(polysynthState)
       Array(polysynthState.sample * .2)
     }
 

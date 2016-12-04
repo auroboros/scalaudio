@@ -11,7 +11,7 @@ import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 /**
   * Created by johnmcgill on 5/30/16.
   */
-class MonosynthStateGenDemo extends ScalaudioCoreTestHarness {
+class MonosynthDemo extends ScalaudioCoreTestHarness {
   "Monosynth" should "jam some beefy sinewaves" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
     val adsrTemplate = AdsrEnvelope(30.millis,
@@ -31,10 +31,10 @@ class MonosynthStateGenDemo extends ScalaudioCoreTestHarness {
 
     // TODO: Express this in streaming or stateful processor form
 
-    var monosynthState = MonosynthStateGen.decodeInitialState(notes)
+    var monosynthState = Monosynth.decodeInitialState(notes)
 
     val frameFunc = () => {
-      monosynthState = MonosynthStateGen.nextState(monosynthState, Sine)
+      monosynthState = Monosynth(Sine).nextState(monosynthState)
       Array(monosynthState.sample)
     }
 
