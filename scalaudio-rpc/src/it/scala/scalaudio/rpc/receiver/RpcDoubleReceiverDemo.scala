@@ -1,16 +1,17 @@
 package scalaudio.rpc.receiver
 
-import scalaudio.units.ugen.{OscState, Sine}
 import scalaudio.core.engine.StreamCollector
 import scalaudio.core.types.AudioDuration
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
+import scalaudio.rpc.RpcEnhancedAudioContext
+import scalaudio.units.ugen.{OscState, Sine}
 
 /**
   * Created by johnmcgill on 6/13/16.
   */
 class RpcDoubleReceiverDemo extends ScalaudioCoreTestHarness {
   "Blah" should "blah" in {
-    implicit val audioContext: AudioContext = AudioContext(ScalaudioConfig(
+    implicit val audioContext: AudioContext = RpcEnhancedAudioContext(ScalaudioConfig(
       nOutChannels = 1,
       rpcEnabled = true))
 
