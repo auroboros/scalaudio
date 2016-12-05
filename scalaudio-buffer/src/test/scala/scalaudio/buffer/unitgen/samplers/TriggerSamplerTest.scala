@@ -3,6 +3,7 @@ package scalaudio.buffer.unitgen.samplers
 import org.scalatest.{FlatSpec, Matchers}
 
 import scalaudio.core.{AudioContext, CoreSyntax}
+import scalaudio.units.sampler.FileSample
 
 /**
   * Created by johnmcgill on 2/3/16.

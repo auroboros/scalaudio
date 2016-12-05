@@ -5,6 +5,7 @@ import scalaudio.buffer.unitgen.UnitGen
 import scalaudio.core.types.AudioDuration
 import scalaudio.core.{AudioContext, CoreSyntax}
 import scalaudio.core.math._
+import scalaudio.units.sampler.{SoundSample, WavetableType}
 
 /**
   * Created by johnmcgill on 1/24/16.
@@ -12,7 +13,7 @@ import scalaudio.core.math._
 case class WavetableGen(initMode : WavetableType, playbackRate : Double = 1)(implicit audioContext : AudioContext) extends UnitGen with CoreSyntax {
   // TODO: Playback rate vs osc frequency (can be given in case class signatures...). Or maybe use wavetable osc to match in compute block...
 
-  import SamplerUtils._ // TODO: Make these util objects into traits so they can just be mixed in? More obvious or less?
+  import scalaudio.units.sampler.SamplerUtils._ // TODO: Make these util objects into traits so they can just be mixed in? More obvious or less?
 
   // Determines resolution, essentially (lower = more interpolation, higher = bigger buffer)
   val periodLength : AudioDuration = 10.seconds

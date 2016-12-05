@@ -58,7 +58,7 @@ lazy val scalaudioCore = project.in(file("scalaudio-core"))
 lazy val scalaudioBuffer = project.in(file("scalaudio-buffer"))
   .configs(IntegrationTest)
   .settings(Defaults.itSettings: _*)
-  .dependsOn(scalaudioCore % "test->test;compile->compile")
+  .dependsOn(scalaudioCore % "test->test;compile->compile", scalaudioAMP % "test->test;compile->compile")
 
 lazy val scalaudioAMP = project.in(file("scalaudio-amp"))
   .configs(IntegrationTest)

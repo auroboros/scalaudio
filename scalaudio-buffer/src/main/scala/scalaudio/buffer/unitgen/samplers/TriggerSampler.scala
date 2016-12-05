@@ -5,11 +5,12 @@ import scalaudio.buffer.unitgen.UnitGen
 import scalaudio.core.types.AudioDuration
 import scalaudio.core.{AudioContext, CoreSyntax}
 import scalaudio.core.math._
+import scalaudio.units.sampler.{SoundSample, WavetableType}
 /**
   * Created by johnmcgill on 1/5/16.
   */
 case class TriggerSampler(wtType : WavetableType, triggerTimes : List[AudioDuration] = Nil)(implicit audioContext: AudioContext) extends UnitGen with CoreSyntax {
-  import scalaudio.buffer.unitgen.samplers.SamplerUtils._
+  import scalaudio.units.sampler.SamplerUtils._
 
   val sampleTape : SamplerTape = SamplerTape(wavetableMode2Sample(wtType, 10.seconds), new SampleState(), triggerTimes)
 
