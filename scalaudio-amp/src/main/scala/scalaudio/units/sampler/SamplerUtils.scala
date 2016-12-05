@@ -1,4 +1,4 @@
-package scalaudio.buffer.unitgen.samplers
+package scalaudio.units.sampler
 
 import java.io.File
 
@@ -22,12 +22,6 @@ object SamplerUtils {
   def fileSample2Sample(filesample : FileSample) : SoundSample = {
     val doubleSample = AdaptedJavaSoundSampleLoader.loadDoubleSample(new File(filesample.filename))
     SoundSample(doubleSample.audioBuffers, doubleSample.frameRate)
-  }
-
-  // TODO: Remove method (its just for testing access from Clojure)
-  def generateSingleSinePeriodFromLong(duration : Long): Array[Double] = {
-    val w = 2 * Math.PI / duration
-    (0 until duration.toInt map { i => Math.sin(w * i)}).toArray
   }
 
   def generateSingleSinePeriod(duration : AudioDuration) = {
