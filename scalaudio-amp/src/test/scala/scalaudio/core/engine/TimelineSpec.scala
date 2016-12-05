@@ -1,6 +1,6 @@
 package scalaudio.core.engine
 
-import scalaudio.amp.immutable.ugen.{OscState, Sine}
+import scalaudio.units.ugen.{OscState, Sine}
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 
 /**

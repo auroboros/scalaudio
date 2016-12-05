@@ -1,10 +1,10 @@
 package scalaudio.jmathplot.examples
 
 import scala.collection.mutable.ListBuffer
-import scalaudio.amp.immutable.ugen.{OscState, Sine}
+import scalaudio.core.math.FftMath._
 import scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 import scalaudio.jmathplot.ConvenientPlot
-import scalaudio.core.math.FftMath._
+import scalaudio.units.ugen.{OscState, Sine}
 /**
   * Created by johnmcgill on 6/15/16.
   */

@@ -2,9 +2,9 @@ package scalaudio.amp.midi
 
 import scala.collection.immutable.TreeMap
 import scala.concurrent.duration._
-import scalaudio.amp.immutable.control.AdsrEnvelope
-import scalaudio.amp.immutable.synth.MonosynthStateGen
-import scalaudio.amp.immutable.ugen.Sine
+import scalaudio.units.control.AdsrEnvelope
+import scalaudio.units.synth.{Monosynth, MonosynthMidiReceiver}
+import scalaudio.units.ugen.Sine
 import scalaudio.core.engine.StreamCollector
 import scalaudio.core.midi.MidiConnector
 import scalaudio.core.types.{AudioDuration, Pitch}
@@ -24,15 +24,14 @@ class MonosynthMidiReceiverDemo extends ScalaudioCoreTestHarness {
       60.millis,
       115.millis)
 
-    var monosynthState = MonosynthStateGen.decodeInitialState(TreeMap.empty[AudioDuration, (Pitch, AdsrEnvelope)])
+    var monosynthState = Monosynth.decodeInitialState(TreeMap.empty[AudioDuration, (Pitch, AdsrEnvelope)])
 
     val midiReceiver = MonosynthMidiReceiver(adsrTemplate, 150.millis)
     MidiConnector.connectKeyboard(midiReceiver)
 
     val frameFunc = () => {
-      monosynthState = MonosynthStateGen.nextState(
-        midiReceiver.processMidiCommandsIntoState(monosynthState),
-        Sine
+      monosynthState = Monosynth(Sine).nextState(
+        midiReceiver.processMidiCommandsIntoState(monosynthState)
       )
       Array(monosynthState.sample)
     }
