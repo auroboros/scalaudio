@@ -4,7 +4,7 @@ import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.duration._
 import scalaudio.units.control.AdsrEnvelope
-import scalaudio.units.synth.Monosynth
+import scalaudio.units.synth.{Monosynth, MonosynthMidiReceiver}
 import scalaudio.core.midi.NoteOn
 import scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 

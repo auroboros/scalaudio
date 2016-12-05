@@ -1,4 +1,4 @@
-package scalaudio.amp.engine
+package scalaudio.core.engine.io
 
 /**
   * Created by johnmcgill on 6/7/16.

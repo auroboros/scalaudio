@@ -3,7 +3,7 @@ package scalaudio.amp.midi
 import scala.collection.immutable.TreeMap
 import scala.concurrent.duration._
 import scalaudio.units.control.AdsrEnvelope
-import scalaudio.units.synth.Monosynth
+import scalaudio.units.synth.{Monosynth, MonosynthMidiReceiver}
 import scalaudio.units.ugen.Sine
 import scalaudio.core.engine.StreamCollector
 import scalaudio.core.midi.MidiConnector

@@ -1,15 +1,14 @@
-package scalaudio.amp.midi
+package scalaudio.units.synth
 
 import javax.sound.midi.{MidiMessage, Receiver}
 
 import scala.collection.immutable.TreeMap
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
-import scalaudio.units.control.{AdsrEnvelope, EnvelopeSegment, LinearEnvelope}
-import scalaudio.units.synth.MonosynthState
 import scalaudio.core.midi._
 import scalaudio.core.types.AudioDuration
 import scalaudio.core.{AudioContext, CoreSyntax}
+import scalaudio.units.control.{AdsrEnvelope, EnvelopeSegment, LinearEnvelope}
 
 /**
   * Created by johnmcgill on 6/2/16.
