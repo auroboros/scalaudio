@@ -2,7 +2,6 @@ package scalaudio.units.synth
 
 import scala.collection.immutable.{SortedMap, TreeMap}
 import scala.concurrent.duration._
-import scalaudio.amp.AmpSyntax
 import scalaudio.units.control.AdsrEnvelope
 import scalaudio.units.ugen.Sine
 import scalaudio.core.engine.StreamCollector
@@ -12,7 +11,10 @@ import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 /**
   * Created by johnmcgill on 5/30/16.
   */
-class PolysynthDemo extends ScalaudioCoreTestHarness with AmpSyntax {
+class PolysynthDemo extends ScalaudioCoreTestHarness {
+
+  //TODO: Type alias or something? ("Synth note"?)
+  implicit def note2NoteList(note: (Pitch, AdsrEnvelope)): List[(Pitch, AdsrEnvelope)] = List(note)
 
   "Polysynth" should "jam concurrent beefy sinewaves" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
