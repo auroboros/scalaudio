@@ -14,7 +14,7 @@ class StreamCollector(frameStream: => Stream[Frame],
   val c = audioContext.config
   val outBufferSize = c.framesPerBuffer * c.nOutChannels
   var bufferedOutput = Array.fill(outBufferSize)(0.0)
-  var currentIndex = 0
+  var currentFrameIndex = 0
 
   val outputEngines: List[OutputEngine] = explicitOutputEngines.getOrElse(audioContext.defaultOutputEngines)
 
@@ -24,20 +24,23 @@ class StreamCollector(frameStream: => Stream[Frame],
 
   // Stream consumer
   def consumeFor(duration: AudioDuration)(implicit audioContext: AudioContext) =
-    frameStream.take(duration.toSamples.toInt).foreach(processFrame)
+  frameStream.take(duration.toSamples.toInt).foreach(processFrame)
 
   // Stream consumer
   def consumeWhile(loopCondition: (Frame) => Boolean) =
-    frameStream.takeWhile(loopCondition).foreach(processFrame)
+  frameStream.takeWhile(loopCondition).foreach(processFrame)
 
+  // Mutable var part...
   private def processFrame(frame: Frame) = {
+    var channelIndex = 0
     frame.foreach { sample =>
-      bufferedOutput(currentIndex) = sample
-      currentIndex = (currentIndex + 1) % outBufferSize
+      bufferedOutput(currentFrameIndex + channelIndex) = sample
+      channelIndex += 1
     }
-    audioContext.advanceBySample()
 
-    if (audioContext.currentTime.toSamples % audioContext.config.framesPerBuffer == 0) {
+    currentFrameIndex = (currentFrameIndex + 1) % c.framesPerBuffer
+
+    if (currentFrameIndex == 0) {
       outputEngines foreach (_.handleBuffers(Left(bufferedOutput)))
     }
   }
@@ -59,5 +62,5 @@ class StreamCollector(frameStream: => Stream[Frame],
 object StreamCollector {
   def apply(frameStream: => Stream[Frame],
             explicitOutputEngines: Option[List[OutputEngine]] = None)
-           (implicit audioContext: AudioContext) : StreamCollector = new StreamCollector(frameStream, explicitOutputEngines)
+           (implicit audioContext: AudioContext): StreamCollector = new StreamCollector(frameStream, explicitOutputEngines)
 }

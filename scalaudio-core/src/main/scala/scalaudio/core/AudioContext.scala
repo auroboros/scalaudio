@@ -22,13 +22,6 @@ case class AudioContext(config: ScalaudioConfig = ScalaudioConfig()) {
 
   val defaultOutputEngines = List(Playback()(this))
 
-  // ~~~ MUTABLE STATE CORE ~~~
-
-  object State {
-    var currentBuffer = 0
-    var currentSample = 0 // For AMP //TODO: Just change this to currentTime using AudioDuration?
-  }
-
   // ~~~ LIFECYCLE EVENTS ~~~
 
   def preStart() = {}
@@ -43,10 +36,4 @@ case class AudioContext(config: ScalaudioConfig = ScalaudioConfig()) {
     audioInput.stop()
     audioOutput.stop()
   }
-
-  def currentTime : AudioDuration = AudioDuration(State.currentSample)(this) // For AMP
-
-  def advanceByBuffer() = State.currentBuffer += 1
-
-  def advanceBySample() = State.currentSample += 1
 }

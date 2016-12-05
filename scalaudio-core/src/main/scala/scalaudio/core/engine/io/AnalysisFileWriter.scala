@@ -17,7 +17,6 @@ trait AnalysisFileWriter {
   def write(filename: String, duration: AudioDuration)(implicit audioContext: AudioContext) = {
     val fw = new FileWriter(s"$filename.$analysisTypeExtension.txt", true)
     1 to duration.toSamples.toInt foreach { absoluteSample =>
-      audioContext.State.currentSample = absoluteSample
       optionallyWriteDataFrame(fw, dataFrameOut)
     }
     fw.close()
