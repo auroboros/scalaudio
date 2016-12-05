@@ -46,26 +46,26 @@ lazy val root = project.in(file("."))
   .settings(publishArtifact := false)
   .aggregate(
     scalaudioCore,
-    scalaudioAMP,
-    scalaudioRPC,
+    scalaudioAmp,
+    scalaudioRpc,
     scalaudioBenchmark)
 
 lazy val scalaudioCore = project.in(file("scalaudio-core"))
   .configs(IntegrationTest)
   .settings(Defaults.itSettings: _*)
 
-lazy val scalaudioAMP = project.in(file("scalaudio-amp"))
+lazy val scalaudioAmp = project.in(file("scalaudio-amp"))
   .configs(IntegrationTest)
   .settings(Defaults.itSettings: _*)
   .dependsOn(scalaudioCore % "test->test;compile->compile")
 
-lazy val scalaudioRPC = project.in(file("scalaudio-rpc"))
+lazy val scalaudioRpc = project.in(file("scalaudio-rpc"))
   .configs(IntegrationTest)
   .settings(Defaults.itSettings: _*)
-  .dependsOn(scalaudioCore % "test->test;compile->compile", scalaudioAMP % "test->test")
+  .dependsOn(scalaudioCore % "test->test;compile->compile", scalaudioAmp % "test->test")
 
 lazy val scalaudioBenchmark = project.in(file("scalaudio-benchmark"))
   .configs(IntegrationTest)
   .settings(Defaults.itSettings: _*)
-  .dependsOn(scalaudioAMP, scalaudioCore % "test->test;compile->compile")
+  .dependsOn(scalaudioAmp, scalaudioCore % "test->test;compile->compile")
   .enablePlugins(JmhPlugin)
