@@ -1,9 +1,9 @@
 package scalaudio.core
 
 import scalaudio.core.types.{PitchRichDouble, PitchRichInt}
-
 import scalaudio.core.types._
 import scala.concurrent.duration.FiniteDuration
+import scalaudio.core.engine.{FunctionGraphTimeline, GraphTimeline, StreamGraphTimeline, Timeline}
 import scalaudio.core.types.AudioDuration
 
 /**
@@ -26,4 +26,11 @@ trait CoreSyntax {
 
   // Unit func vs. func0
   implicit def unitFuncToFunction0[T](unitFunc: Unit => T): () => T = () => unitFunc()
+
+  // Timeline
+  implicit def emptyParensFunc2FunctionTimeline(func: () => _): FunctionGraphTimeline = Timeline.functionGraph(func)
+  implicit def emptyParensFunc2StreamTimeline(stream: Stream[_]): StreamGraphTimeline = Timeline.streamGraph(stream)
+
+  // TODO: Is this syntax better? "Safer looking" func vs implicit conversion OO style
+  def play(graphTimeline: GraphTimeline, duration: AudioDuration) = graphTimeline.play(duration)
 }

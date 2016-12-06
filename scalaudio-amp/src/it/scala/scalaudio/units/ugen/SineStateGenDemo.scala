@@ -3,7 +3,7 @@ package scalaudio.units.ugen
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.duration._
-import scalaudio.core.engine.{StreamGraphTimeline, FunctionGraphTimeline}
+import scalaudio.core.engine.{FunctionGraphTimeline, StreamGraphTimeline}
 import scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 import scalaz.Scalaz._
 /**

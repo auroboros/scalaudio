@@ -9,7 +9,7 @@ import scalaudio.core.types.Frame
   * Created by johnmcgill on 12/5/16.
   */
 
-class Playback(implicit audioContext: AudioContext)
+case class Playback(implicit audioContext: AudioContext)
   extends SequentialState[Frame, AudioContext] {
 
   val c = audioContext.config
