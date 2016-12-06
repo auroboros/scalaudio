@@ -3,7 +3,7 @@ package scalaudio.units.ugen
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.duration._
-import scalaudio.core.engine.FunctionGraphTimeline
+import scalaudio.core.engine.FunctionGraph
 import scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 /**
   * Created by johnmcgill on 5/29/16.
@@ -19,6 +19,6 @@ class SquareStateGenDemo extends FlatSpec with Matchers with CoreSyntax {
       Array(state.sample)
     }
 
-    FunctionGraphTimeline(frameFunc).play(2 seconds)
+    FunctionGraph(frameFunc).play(2 seconds)
   }
 }

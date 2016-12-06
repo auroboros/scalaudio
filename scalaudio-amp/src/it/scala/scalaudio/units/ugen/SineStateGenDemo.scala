@@ -3,7 +3,7 @@ package scalaudio.units.ugen
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.duration._
-import scalaudio.core.engine.{FunctionGraphTimeline, StreamGraphTimeline}
+import scalaudio.core.engine.{FunctionGraph, StreamGraph}
 import scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 import scalaz.Scalaz._
 /**
@@ -20,7 +20,7 @@ class SineStateGenDemo extends FlatSpec with Matchers with CoreSyntax {
       Array(state.sample)
     }
 
-    FunctionGraphTimeline(frameFunc).play(5 seconds)
+    FunctionGraph(frameFunc).play(5 seconds)
   }
 
   "Sine state gen" should "produce sine audio output through StatefulProcessor" in {
@@ -29,7 +29,7 @@ class SineStateGenDemo extends FlatSpec with Matchers with CoreSyntax {
     val frameFunc = Sine.statefulProcessor(OscState(0, 440.Hz, 0)).nextState
       .map(oscState => Array(oscState.sample))
 
-    FunctionGraphTimeline(frameFunc).play(5 seconds)
+    FunctionGraph(frameFunc).play(5 seconds)
   }
 
   "Sine state gen" should "produce sine audio output through StatefulProcessor with asFunction convenience syntax" in {
@@ -38,7 +38,7 @@ class SineStateGenDemo extends FlatSpec with Matchers with CoreSyntax {
     val frameFunc = Sine.asFunction(OscState(0, 440.Hz, 0))
       .map(oscState => Array(oscState.sample))
 
-    FunctionGraphTimeline(frameFunc).play(5 seconds)
+    FunctionGraph(frameFunc).play(5 seconds)
   }
 
   "Sine state gen" should "produce sine audio output through StreamingProcessor" in {
@@ -48,7 +48,7 @@ class SineStateGenDemo extends FlatSpec with Matchers with CoreSyntax {
     def stream = Sine.streamingProcessor(OscState(0, 440.Hz, 0)).outStream
       .map(oscState => Array(oscState.sample))
 
-    StreamGraphTimeline(stream).play(5 seconds)
+    StreamGraph(stream).play(5 seconds)
   }
 
   "Sine state gen" should "produce sine audio output through StreamingProcessor with asStream convenience syntax" in {
@@ -58,6 +58,6 @@ class SineStateGenDemo extends FlatSpec with Matchers with CoreSyntax {
     def stream = Sine.asStream(OscState(0, 440.Hz, 0))
       .map(oscState => Array(oscState.sample))
 
-    StreamGraphTimeline(stream).play(5 seconds)
+    StreamGraph(stream).play(5 seconds)
   }
 }

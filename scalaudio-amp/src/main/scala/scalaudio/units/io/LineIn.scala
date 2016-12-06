@@ -1,4 +1,4 @@
-package scalaudio.units
+package scalaudio.units.io
 
 import signalz.SequentialState
 

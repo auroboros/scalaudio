@@ -2,7 +2,7 @@ package scalaudio.units.synth
 
 import scala.collection.immutable.{SortedMap, TreeMap}
 import scala.concurrent.duration._
-import scalaudio.core.engine.FunctionGraphTimeline
+import scalaudio.core.engine.FunctionGraph
 import scalaudio.core.types.{AudioDuration, Pitch}
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 import scalaudio.units.control.AdsrEnvelope
@@ -38,6 +38,6 @@ class MonosynthDemo extends ScalaudioCoreTestHarness {
       Array(monosynthState.sample)
     }
 
-    FunctionGraphTimeline(frameFunc).play(5 seconds)
+    FunctionGraph(frameFunc).play(5 seconds)
   }
 }
