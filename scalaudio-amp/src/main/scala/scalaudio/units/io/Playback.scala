@@ -28,9 +28,7 @@ case class Playback(implicit audioContext: AudioContext)
       currentIndex = (currentIndex + 1) % outBufferSize
     }
 
-    if (audioContext.currentTime.toSamples % context.config.framesPerBuffer == 0) {
-      audioContext.audioOutput.write(bufferedOutput)
-    }
+    if (currentIndex == 0) audioContext.audioOutput.write(bufferedOutput)
 
     frame
   }

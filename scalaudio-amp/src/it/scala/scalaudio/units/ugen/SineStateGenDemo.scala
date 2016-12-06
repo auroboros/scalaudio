@@ -5,11 +5,12 @@ import org.scalatest.{FlatSpec, Matchers}
 import scala.concurrent.duration._
 import scalaudio.core.engine.{FunctionGraph, StreamGraph}
 import scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
+import scalaudio.units.AmpSyntax
 import scalaz.Scalaz._
 /**
   * Created by johnmcgill on 5/29/16.
   */
-class SineStateGenDemo extends FlatSpec with Matchers with CoreSyntax {
+class SineStateGenDemo extends FlatSpec with Matchers with AmpSyntax {
   "Sine state gen" should "produce sine audio output through outer var" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
@@ -20,7 +21,7 @@ class SineStateGenDemo extends FlatSpec with Matchers with CoreSyntax {
       Array(state.sample)
     }
 
-    FunctionGraph(frameFunc).play(5 seconds)
+    playback(frameFunc, 5 seconds)
   }
 
   "Sine state gen" should "produce sine audio output through StatefulProcessor" in {

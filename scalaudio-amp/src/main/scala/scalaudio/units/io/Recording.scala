@@ -38,9 +38,7 @@ case class Recording(filename: String)(implicit audioContext: AudioContext)
       currentIndex = (currentIndex + 1) % outBufferSize
     }
 
-    if (audioContext.currentTime.toSamples % context.config.framesPerBuffer == 0) {
-      record(bufferedOutput)
-    }
+    if (currentIndex == 0) record(bufferedOutput)
 
     frame
   }

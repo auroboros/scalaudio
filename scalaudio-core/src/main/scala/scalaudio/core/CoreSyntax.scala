@@ -26,6 +26,7 @@ trait CoreSyntax {
 
   // Unit func vs. func0
   implicit def unitFuncToFunction0[T](unitFunc: Unit => T): () => T = () => unitFunc()
+  implicit def function0ToUnitFunc[T](func0: () => T): Unit => T = (u: Unit) => func0()
 
   // Timeline
   implicit def emptyParensFunc2FunctionTimeline(func: () => _): FunctionGraph = Timeline.functionGraph(func)

@@ -11,6 +11,7 @@ trait SignalProcessingGraph {
 }
 
 // TODO: Just use current time from AudioContext since thats already available to functions?
+// TODO: IF THIS IS NOT ADDRESSED, MAY BE MANY REGRESSIONS... but interesting to leave unaddressed & see where ties to global timeline are really unnecessary & can be easily cut...
 case class FunctionGraph(signalGraph: () => _) extends SignalProcessingGraph {
   var currentTime: Long = 0 // Current time in samples
 
