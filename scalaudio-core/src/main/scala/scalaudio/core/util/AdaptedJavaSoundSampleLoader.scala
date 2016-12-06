@@ -6,12 +6,13 @@ import javax.sound.sampled.{AudioFormat, AudioInputStream, AudioSystem, Unsuppor
 
 import com.jsyn.util.SampleLoader
 
-import scalaudio.core.engine.Interleaver
+import scalaudio.core.math.Interleaver
 
 /**
   * Created by johnmcgill on 1/5/16.
   *
   * Adapted/modified from "JavaSoundSampleLoader" of JSyn
+ *
   * @author Phil Burk (C) 2011 Mobileer Inc
   */
 object AdaptedJavaSoundSampleLoader {

@@ -1,4 +1,4 @@
-package scalaudio.core.engine
+package scalaudio.core.math
 
 /**
   * Created by johnmcgill on 1/5/16.
