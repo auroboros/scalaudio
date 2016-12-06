@@ -3,10 +3,9 @@ package scalaudio.units.ugen
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.duration._
-import scalaudio.core.engine.StreamCollector
+import scalaudio.core.engine.{StreamGraphTimeline, FunctionGraphTimeline}
 import scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 import scalaz.Scalaz._
-import scalaz._
 /**
   * Created by johnmcgill on 5/29/16.
   */
@@ -21,7 +20,7 @@ class SineStateGenDemo extends FlatSpec with Matchers with CoreSyntax {
       Array(state.sample)
     }
 
-    StreamCollector(frameFunc).play(5 seconds)
+    FunctionGraphTimeline(frameFunc).play(5 seconds)
   }
 
   "Sine state gen" should "produce sine audio output through StatefulProcessor" in {
@@ -30,7 +29,7 @@ class SineStateGenDemo extends FlatSpec with Matchers with CoreSyntax {
     val frameFunc = Sine.statefulProcessor(OscState(0, 440.Hz, 0)).nextState
       .map(oscState => Array(oscState.sample))
 
-    StreamCollector(frameFunc).play(5 seconds)
+    FunctionGraphTimeline(frameFunc).play(5 seconds)
   }
 
   "Sine state gen" should "produce sine audio output through StatefulProcessor with asFunction convenience syntax" in {
@@ -39,7 +38,7 @@ class SineStateGenDemo extends FlatSpec with Matchers with CoreSyntax {
     val frameFunc = Sine.asFunction(OscState(0, 440.Hz, 0))
       .map(oscState => Array(oscState.sample))
 
-    StreamCollector(frameFunc).play(5 seconds)
+    FunctionGraphTimeline(frameFunc).play(5 seconds)
   }
 
   "Sine state gen" should "produce sine audio output through StreamingProcessor" in {
@@ -49,7 +48,7 @@ class SineStateGenDemo extends FlatSpec with Matchers with CoreSyntax {
     def stream = Sine.streamingProcessor(OscState(0, 440.Hz, 0)).outStream
       .map(oscState => Array(oscState.sample))
 
-    StreamCollector(stream).play(5 seconds)
+    StreamGraphTimeline(stream).play(5 seconds)
   }
 
   "Sine state gen" should "produce sine audio output through StreamingProcessor with asStream convenience syntax" in {
@@ -59,6 +58,6 @@ class SineStateGenDemo extends FlatSpec with Matchers with CoreSyntax {
     def stream = Sine.asStream(OscState(0, 440.Hz, 0))
       .map(oscState => Array(oscState.sample))
 
-    StreamCollector(stream).play(5 seconds)
+    StreamGraphTimeline(stream).play(5 seconds)
   }
 }

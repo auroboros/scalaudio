@@ -4,12 +4,11 @@ import org.scalatest.{FlatSpec, Matchers}
 import signalz.StatefulProcessor
 
 import scala.concurrent.duration._
-import scalaudio.units.filter.{RangeScaler, Rescaler}
-import scalaudio.core.engine.StreamCollector
+import scalaudio.core.engine.FunctionGraphTimeline
 import scalaudio.core.types.Pitch
 import scalaudio.core.{AudioContext, CoreSyntax}
+import scalaudio.units.filter.{RangeScaler, Rescaler}
 import scalaz.Scalaz._
-import scalaz._
 
 /**
   * Created by johnmcgill on 8/1/16.
@@ -35,6 +34,6 @@ class FmSynthDemo extends FlatSpec with Matchers with CoreSyntax {
       .map(_.sample)
       .map(s => Array.fill(2)(s))
 
-    StreamCollector(ff).play(15.seconds)
+    FunctionGraphTimeline(ff).play(15.seconds)
   }
 }

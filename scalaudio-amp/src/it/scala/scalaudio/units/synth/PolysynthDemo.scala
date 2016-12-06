@@ -2,11 +2,11 @@ package scalaudio.units.synth
 
 import scala.collection.immutable.{SortedMap, TreeMap}
 import scala.concurrent.duration._
-import scalaudio.units.control.AdsrEnvelope
-import scalaudio.units.ugen.Sine
-import scalaudio.core.engine.StreamCollector
+import scalaudio.core.engine.FunctionGraphTimeline
 import scalaudio.core.types.{AudioDuration, Pitch}
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
+import scalaudio.units.control.AdsrEnvelope
+import scalaudio.units.ugen.Sine
 
 /**
   * Created by johnmcgill on 5/30/16.
@@ -48,6 +48,6 @@ class PolysynthDemo extends ScalaudioCoreTestHarness {
       Array(polysynthState.sample * .2)
     }
 
-    StreamCollector(frameFunc).play(11 seconds)
+    FunctionGraphTimeline(frameFunc).play(11 seconds)
   }
 }

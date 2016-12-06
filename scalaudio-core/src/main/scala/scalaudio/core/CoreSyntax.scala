@@ -24,7 +24,6 @@ trait CoreSyntax {
   implicit def double2PitchRichDouble(d : Double) : PitchRichDouble = PitchRichDouble(d)
 
 
-  // Func to stream
-  implicit def unitFrameFunc2FrameStream(ff: Unit => Frame): Stream[Frame] = Stream.continually(ff())
-  implicit def emptyParenFrameFunc2FrameStream(ff: () => Frame): Stream[Frame] = Stream.continually(ff())
+  // Unit func vs. func0
+  implicit def unitFuncToFunction0[T](unitFunc: Unit => T): () => T = () => unitFunc()
 }

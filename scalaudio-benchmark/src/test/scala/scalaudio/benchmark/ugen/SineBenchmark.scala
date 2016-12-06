@@ -3,7 +3,6 @@ package scalaudio.benchmark.ugen
 import java.time.Instant
 
 import scala.concurrent.duration._
-import scalaudio.core.engine.StreamCollector
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 import scalaudio.units.ugen.{OscState, Sine}
 

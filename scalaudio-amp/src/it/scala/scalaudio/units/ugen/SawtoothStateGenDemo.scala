@@ -3,7 +3,7 @@ package scalaudio.units.ugen
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.duration._
-import scalaudio.core.engine.StreamCollector
+import scalaudio.core.engine.FunctionGraphTimeline
 import scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 
 /**
@@ -21,6 +21,6 @@ class SawtoothStateGenDemo extends FlatSpec with Matchers with CoreSyntax {
       Array(state.sample)
     }
 
-    StreamCollector(frameFunc).play(5 seconds)
+    FunctionGraphTimeline(frameFunc).play(5 seconds)
   }
 }

@@ -4,12 +4,12 @@ import org.scalatest.{FlatSpec, Matchers}
 import signalz.{StatefulProcessor, StreamingProcessor}
 
 import scala.concurrent.duration._
-import scalaudio.units.ugen.{OscState, Sine}
-import scalaudio.core.engine.StreamCollector
+import scalaudio.core.engine.{StreamGraphTimeline, FunctionGraphTimeline}
 import scalaudio.core.types.Frame
-import scalaudio.core.{AudioContext, CoreSyntax}
+import scalaudio.core.{AudioContext, CoreSyntax, types}
+import scalaudio.units.ugen.{OscState, Sine}
+import scalaz.Scalaz._
 import scalaz._
-import Scalaz._
 
 /**
   * Created by johnmcgill on 5/29/16.
@@ -27,7 +27,7 @@ class FilterDemo extends FlatSpec with Matchers with CoreSyntax {
       GainFilter.applyGainToFrame(.05)(splitterOut)
     }
 
-    StreamCollector(frameFunc).play(5 seconds)
+    FunctionGraphTimeline(frameFunc).play(5 seconds)
   }
 
   "Gain & splitter" should "be chainable on sine with StatefulProcessor" in {
@@ -38,7 +38,7 @@ class FilterDemo extends FlatSpec with Matchers with CoreSyntax {
       .map(SplitFilter.split(2))
       .map(GainFilter.applyGainToFrame(.05))
 
-    StreamCollector(frameFunc).play(5 seconds)
+    FunctionGraphTimeline(frameFunc).play(5 seconds)
   }
 
   "Gain & splitter" should "be chainable on sine with StreamingProcessor" in {
@@ -49,6 +49,6 @@ class FilterDemo extends FlatSpec with Matchers with CoreSyntax {
       .map(SplitFilter.split(2))
       .map(GainFilter.applyGainToFrame(.05))
 
-    StreamCollector(stream).play(5 seconds)
+    StreamGraphTimeline(stream).play(5 seconds)
   }
 }
