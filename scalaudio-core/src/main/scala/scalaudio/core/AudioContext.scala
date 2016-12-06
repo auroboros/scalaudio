@@ -3,7 +3,6 @@ package scalaudio.core
 import com.jsyn.devices.javasound.JavaSoundAudioDevice
 import com.jsyn.devices.{AudioDeviceInputStream, AudioDeviceManager, AudioDeviceOutputStream}
 
-import scalaudio.core.engine.io.Playback
 import scalaudio.core.types.AudioDuration
 
 /**
@@ -19,8 +18,6 @@ case class AudioContext(config: ScalaudioConfig = ScalaudioConfig()) {
   // TODO: Make these private & have proxy methods for read/write (interleaving/de-interleaving can be here, actually)
   var audioOutput: AudioDeviceOutputStream = audioDevice.createOutputStream(audioDevice.getDefaultOutputDeviceID, config.samplingRate, config.nOutChannels)
   var audioInput: AudioDeviceInputStream = audioDevice.createInputStream(audioDevice.getDefaultInputDeviceID, config.samplingRate, config.nOutChannels)
-
-  val defaultOutputEngines = List(Playback()(this))
 
   // ~~~ MUTABLE STATE CORE ~~~
 
