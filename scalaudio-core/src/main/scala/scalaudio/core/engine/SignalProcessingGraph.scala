@@ -2,6 +2,7 @@ package scalaudio.core.engine
 
 import signalz.{FunctionGraph, SignalProcessingGraph, StreamGraph}
 
+import scalaudio.core.AudioContext
 import scalaudio.core.types.AudioDuration
 
 /**
@@ -13,16 +14,17 @@ trait AudioSignalProcessingGraph extends SignalProcessingGraph {
   def playWhile(loopCondition: Unit => Boolean) = runWhile(loopCondition)
 }
 
-// TODO: Just use current time from AudioContext since thats already available to functions?
-// TODO: IF THIS IS NOT ADDRESSED, MAY BE MANY REGRESSIONS... but interesting to leave unaddressed & see where ties to global timeline are really unnecessary & can be easily cut...
-case class AudioFunctionGraph(audioSignalGraph: () => _)
-  extends FunctionGraph(audioSignalGraph)
-    with AudioSignalProcessingGraph
+// Context temporal state advancement built into graph type. good? bad?
+case class AudioFunctionGraph(audioFunctionGraph: () => _)(implicit audioContext: AudioContext)
+  extends FunctionGraph(() => {
+    audioFunctionGraph()
+    audioContext.advanceBySample()
+  }) with AudioSignalProcessingGraph
 
-class AudioStreamGraph(stream: => Stream[_])
-  extends StreamGraph(stream)
+class AudioStreamGraph(stream: => Stream[_])(implicit audioContext: AudioContext)
+  extends StreamGraph(stream.map(_ => audioContext.advanceBySample()))
     with AudioSignalProcessingGraph
 
 object AudioStreamGraph {
-  def apply(stream: => Stream[_]) = new AudioStreamGraph(stream)
+  def apply(stream: => Stream[_])(implicit audioContext: AudioContext) = new AudioStreamGraph(stream)
 }

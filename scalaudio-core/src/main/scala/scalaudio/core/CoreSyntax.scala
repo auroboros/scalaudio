@@ -13,9 +13,9 @@ import scalaudio.core.types.{AudioDuration, PitchRichDouble, PitchRichInt, _}
   */
 trait CoreSyntax {
   // "Durations" syntax
-  implicit def finiteDuration2AudioDuration(duration : FiniteDuration)(implicit audioContext: AudioContext) : AudioDuration = AudioDuration(DurationConverter.finiteDuration2Samples(duration))
+  implicit def finiteDuration2AudioDuration(duration: FiniteDuration)(implicit audioContext: AudioContext): AudioDuration = AudioDuration(DurationConverter.finiteDuration2Samples(duration))
 
-  implicit def int2AudioDurationRichInt(n : Int)(implicit audioContext: AudioContext) : AudioDurationRichInt = AudioDurationRichInt(n)
+  implicit def int2AudioDurationRichInt(n: Int)(implicit audioContext: AudioContext): AudioDurationRichInt = AudioDurationRichInt(n)
 
   // "Pitch" syntax
   implicit def int2PitchRichInt(i : Int) : PitchRichInt = PitchRichInt(i)
@@ -26,11 +26,14 @@ trait CoreSyntax {
   implicit def unitFuncToFunction0[T](unitFunc: Unit => T): () => T = () => unitFunc()
   implicit def function0ToUnitFunc[T](func0: () => T): Unit => T = (u: Unit) => func0()
 
-  // Timeline
-  implicit def emptyParensFunc2FunctionTimeline(func: () => _): AudioFunctionGraph = AudioFunctionGraph(func)
-  implicit def unitFunc2FunctionTimeline(func: Unit => _): AudioFunctionGraph = AudioFunctionGraph(func)
-  implicit def stream2StreamTimeline(stream: => Stream[_]): AudioStreamGraph = AudioStreamGraph(stream)
+  // Functions & streams to their "completed Graph" counterparts
+  implicit def emptyParensFunc2AudioGraph(func: () => _)
+                                         (implicit audioContext: AudioContext): AudioFunctionGraph = AudioFunctionGraph(func)
 
-  // TODO: Is this syntax better? "Safer looking" func vs implicit conversion OO style
-  def play(graphTimeline: AudioSignalProcessingGraph, duration: AudioDuration) = graphTimeline.play(duration)
+  implicit def unitFunc2AudioGraph(func: Unit => _)
+                                  (implicit audioContext: AudioContext): AudioFunctionGraph = AudioFunctionGraph(func)
+
+  implicit def stream2AudioGraph(stream: => Stream[_])
+                                (implicit audioContext: AudioContext): AudioStreamGraph = AudioStreamGraph(stream)
+
 }
