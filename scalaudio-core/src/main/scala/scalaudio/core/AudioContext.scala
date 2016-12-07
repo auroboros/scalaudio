@@ -12,18 +12,17 @@ case class AudioContext(config: ScalaudioConfig = ScalaudioConfig()) {
 
   preStart()
 
-  // ~~~ FIELD INITIALIZATION ~~~
+  // ~~~ AUDIO IO INITIALIZATION ~~~
 
   private val audioDevice: AudioDeviceManager = new JavaSoundAudioDevice
-  // TODO: Make these private & have proxy methods for read/write (interleaving/de-interleaving can be here, actually)
-  var audioOutput: AudioDeviceOutputStream = audioDevice.createOutputStream(audioDevice.getDefaultOutputDeviceID, config.samplingRate, config.nOutChannels)
-  var audioInput: AudioDeviceInputStream = audioDevice.createInputStream(audioDevice.getDefaultInputDeviceID, config.samplingRate, config.nOutChannels)
+
+  val audioOutput: AudioDeviceOutputStream = audioDevice.createOutputStream(audioDevice.getDefaultOutputDeviceID, config.samplingRate, config.nOutChannels)
+  val audioInput: AudioDeviceInputStream = audioDevice.createInputStream(audioDevice.getDefaultInputDeviceID, config.samplingRate, config.nOutChannels)
 
   // ~~~ MUTABLE STATE CORE ~~~
 
   object State {
-    var currentBuffer = 0
-    var currentSample = 0 // For AMP //TODO: Just change this to currentTime using AudioDuration?
+    var currentSample = 0
   }
 
   // ~~~ LIFECYCLE EVENTS ~~~
@@ -41,9 +40,8 @@ case class AudioContext(config: ScalaudioConfig = ScalaudioConfig()) {
     audioOutput.stop()
   }
 
+  // TODO: Find usages & see if this duration wrap is necessary (or can samples just be assumed from context)
   def currentTime : AudioDuration = AudioDuration(State.currentSample)(this) // For AMP
-
-  def advanceByBuffer() = State.currentBuffer += 1
 
   def advanceBySample() = State.currentSample += 1
 }
