@@ -3,8 +3,6 @@ package scalaudio.benchmark.ugen
 import java.time.Instant
 
 import scala.concurrent.duration._
-import scalaudio.core.engine.StreamCollector
-import scalaudio.core.engine.io.SpeedTestDummy
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 import scalaudio.units.ugen.{OscState, Sine}
 
@@ -24,7 +22,8 @@ class SineBenchmark extends ScalaudioCoreTestHarness {
     }
 
     val start = Instant.now.toEpochMilli
-    StreamCollector(frameFunc, Some(List(SpeedTestDummy()))).play(5 hours)
+    // TODO: Refactor to use NEW Timeline
+//    StreamCollector(frameFunc, Some(List(SpeedTestDummy()))).play(5 hours)
     val end = Instant.now.toEpochMilli
 
     println((end - start).millis)

@@ -2,11 +2,10 @@ package scalaudio.units.synth
 
 import scala.collection.immutable.{SortedMap, TreeMap}
 import scala.concurrent.duration._
-import scalaudio.units.control.AdsrEnvelope
-import scalaudio.units.ugen.Sine
-import scalaudio.core.engine.StreamCollector
 import scalaudio.core.types.{AudioDuration, Pitch}
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
+import scalaudio.units.control.AdsrEnvelope
+import scalaudio.units.ugen.Sine
 
 /**
   * Created by johnmcgill on 5/30/16.
@@ -38,6 +37,6 @@ class MonosynthDemo extends ScalaudioCoreTestHarness {
       Array(monosynthState.sample)
     }
 
-    StreamCollector(frameFunc).play(5 seconds)
+    frameFunc.play(5 seconds)
   }
 }

@@ -10,7 +10,7 @@ object Sawtooth extends Osc {
     val w = 2 * Math.PI * current.pitch.toHz / audioContext.config.samplingRate
 
     current.copy(
-      sample = Math.sin(current.phi).signum,
+      sample = Math.sin(current.phi).signum, // TODO: This is wrong...
       phi = ((current.phi + w) % 1.0) * 2 - 1
     )
   }

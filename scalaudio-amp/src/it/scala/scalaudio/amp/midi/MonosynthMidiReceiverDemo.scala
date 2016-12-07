@@ -2,13 +2,13 @@ package scalaudio.amp.midi
 
 import scala.collection.immutable.TreeMap
 import scala.concurrent.duration._
-import scalaudio.units.control.AdsrEnvelope
-import scalaudio.units.synth.{Monosynth, MonosynthMidiReceiver}
-import scalaudio.units.ugen.Sine
-import scalaudio.core.engine.StreamCollector
+import scalaudio.core.engine.AudioFunctionGraph
 import scalaudio.core.midi.MidiConnector
 import scalaudio.core.types.{AudioDuration, Pitch}
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
+import scalaudio.units.control.AdsrEnvelope
+import scalaudio.units.synth.{Monosynth, MonosynthMidiReceiver}
+import scalaudio.units.ugen.Sine
 
 /**
   * Created by johnmcgill on 6/2/16.
@@ -36,6 +36,6 @@ class MonosynthMidiReceiverDemo extends ScalaudioCoreTestHarness {
       Array(monosynthState.sample)
     }
 
-    StreamCollector(frameFunc).play(5 hours)
+    AudioFunctionGraph(frameFunc).play(5 hours)
   }
 }

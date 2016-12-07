@@ -6,7 +6,7 @@ package scalaudio.amp.midi
 
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.duration._
-import scalaudio.core.engine.StreamCollector
+import scalaudio.core.engine.AudioFunctionGraph
 import scalaudio.core.midi.{MidiCommand, MidiConnector, QueueingMidiReceiver}
 import scalaudio.core.types.Sample
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
@@ -26,7 +26,7 @@ class MidiReceiverSpec extends ScalaudioCoreTestHarness {
       Array(0.0 : Sample)
     }
 
-    StreamCollector(frameFunc).play(15 seconds)
+    AudioFunctionGraph(frameFunc).play(15 seconds)
   }
 
 }

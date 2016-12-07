@@ -1,10 +1,8 @@
 package scalaudio.core
 
-import scalaudio.core.types.{PitchRichDouble, PitchRichInt}
-
-import scalaudio.core.types._
 import scala.concurrent.duration.FiniteDuration
-import scalaudio.core.types.AudioDuration
+import scalaudio.core.engine.{AudioFunctionGraph, AudioSignalProcessingGraph, AudioStreamGraph}
+import scalaudio.core.types.{AudioDuration, PitchRichDouble, PitchRichInt, _}
 
 /**
   * This is a bag-of-junk file to magically make all syntax work. Maybe there is a better pattern to split this up by function?
@@ -15,16 +13,27 @@ import scalaudio.core.types.AudioDuration
   */
 trait CoreSyntax {
   // "Durations" syntax
-  implicit def finiteDuration2AudioDuration(duration : FiniteDuration)(implicit audioContext: AudioContext) : AudioDuration = AudioDuration(DurationConverter.finiteDuration2Samples(duration))
+  implicit def finiteDuration2AudioDuration(duration: FiniteDuration)(implicit audioContext: AudioContext): AudioDuration = AudioDuration(DurationConverter.finiteDuration2Samples(duration))
 
-  implicit def int2AudioDurationRichInt(n : Int)(implicit audioContext: AudioContext) : AudioDurationRichInt = AudioDurationRichInt(n)
+  implicit def int2AudioDurationRichInt(n: Int)(implicit audioContext: AudioContext): AudioDurationRichInt = AudioDurationRichInt(n)
 
   // "Pitch" syntax
   implicit def int2PitchRichInt(i : Int) : PitchRichInt = PitchRichInt(i)
   implicit def double2PitchRichDouble(d : Double) : PitchRichDouble = PitchRichDouble(d)
 
 
-  // Func to stream
-  implicit def unitFrameFunc2FrameStream(ff: Unit => Frame): Stream[Frame] = Stream.continually(ff())
-  implicit def emptyParenFrameFunc2FrameStream(ff: () => Frame): Stream[Frame] = Stream.continually(ff())
+  // Unit func vs. func0
+  implicit def unitFuncToFunction0[T](unitFunc: Unit => T): () => T = () => unitFunc()
+  implicit def function0ToUnitFunc[T](func0: () => T): Unit => T = (u: Unit) => func0()
+
+  // Functions & streams to their "completed Graph" counterparts
+  implicit def emptyParensFunc2AudioGraph(func: () => _)
+                                         (implicit audioContext: AudioContext): AudioFunctionGraph = AudioFunctionGraph(func)
+
+  implicit def unitFunc2AudioGraph(func: Unit => _)
+                                  (implicit audioContext: AudioContext): AudioFunctionGraph = AudioFunctionGraph(func)
+
+  implicit def stream2AudioGraph(stream: => Stream[_])
+                                (implicit audioContext: AudioContext): AudioStreamGraph = AudioStreamGraph(stream)
+
 }

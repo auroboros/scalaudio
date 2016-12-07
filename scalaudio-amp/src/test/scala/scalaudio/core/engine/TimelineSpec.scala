@@ -19,7 +19,7 @@ class TimelineSpec extends ScalaudioCoreTestHarness {
       Array(oscState.sample)
     }
 
-    StreamCollector(frameFunc).playWhile(() => counter <= 3000)
+    frameFunc.playWhile((u: Unit) => counter <= 3000)
 
     audioContext.currentTime.toSamples shouldEqual 3000
   }
