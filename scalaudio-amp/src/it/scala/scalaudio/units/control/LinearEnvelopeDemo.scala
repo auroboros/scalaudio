@@ -4,7 +4,6 @@ import org.scalatest.{FlatSpec, Matchers}
 
 import scala.collection.immutable.TreeMap
 import scala.concurrent.duration._
-import scalaudio.core.engine.FunctionGraph
 import scalaudio.core.types.AudioDuration
 import scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 import scalaudio.units.filter.GainFilter
@@ -27,7 +26,7 @@ class LinearEnvelopeDemo extends FlatSpec with Matchers with CoreSyntax {
       GainFilter.applyGainToFrame(envState.value)(Array(sineState.sample))
     }
 
-    FunctionGraph(frameFunc).play(7 seconds)
+    frameFunc.play(7 seconds)
   }
 
   "Square wave with multiple ramps/points" should "fluctuate accordingly" in {
@@ -46,6 +45,6 @@ class LinearEnvelopeDemo extends FlatSpec with Matchers with CoreSyntax {
       GainFilter.applyGainToFrame(envState.value)(Array(sineState.sample))
     }
 
-    FunctionGraph(frameFunc).play(15 seconds)
+    frameFunc.play(15 seconds)
   }
 }

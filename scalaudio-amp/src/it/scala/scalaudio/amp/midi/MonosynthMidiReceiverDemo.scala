@@ -2,7 +2,7 @@ package scalaudio.amp.midi
 
 import scala.collection.immutable.TreeMap
 import scala.concurrent.duration._
-import scalaudio.core.engine.FunctionGraph
+import scalaudio.core.engine.AudioFunctionGraph
 import scalaudio.core.midi.MidiConnector
 import scalaudio.core.types.{AudioDuration, Pitch}
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
@@ -36,6 +36,6 @@ class MonosynthMidiReceiverDemo extends ScalaudioCoreTestHarness {
       Array(monosynthState.sample)
     }
 
-    FunctionGraph(frameFunc).play(5 hours)
+    AudioFunctionGraph(frameFunc).play(5 hours)
   }
 }

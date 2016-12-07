@@ -3,7 +3,7 @@ package scalaudio.units.ugen
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.duration._
-import scalaudio.core.engine.{FunctionGraph, StreamGraph}
+import scalaudio.core.engine.AudioStreamGraph
 import scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 import scalaudio.units.AmpSyntax
 import scalaz.Scalaz._
@@ -30,7 +30,7 @@ class SineStateGenDemo extends FlatSpec with Matchers with AmpSyntax {
     val frameFunc = Sine.statefulProcessor(OscState(0, 440.Hz, 0)).nextState
       .map(oscState => Array(oscState.sample))
 
-    FunctionGraph(frameFunc).play(5 seconds)
+    frameFunc.play(5 seconds)
   }
 
   "Sine state gen" should "produce sine audio output through StatefulProcessor with asFunction convenience syntax" in {
@@ -39,7 +39,7 @@ class SineStateGenDemo extends FlatSpec with Matchers with AmpSyntax {
     val frameFunc = Sine.asFunction(OscState(0, 440.Hz, 0))
       .map(oscState => Array(oscState.sample))
 
-    FunctionGraph(frameFunc).play(5 seconds)
+    frameFunc.play(5 seconds)
   }
 
   "Sine state gen" should "produce sine audio output through StreamingProcessor" in {
@@ -49,7 +49,7 @@ class SineStateGenDemo extends FlatSpec with Matchers with AmpSyntax {
     def stream = Sine.streamingProcessor(OscState(0, 440.Hz, 0)).outStream
       .map(oscState => Array(oscState.sample))
 
-    StreamGraph(stream).play(5 seconds)
+    AudioStreamGraph(stream).play(5 seconds)
   }
 
   "Sine state gen" should "produce sine audio output through StreamingProcessor with asStream convenience syntax" in {
@@ -59,6 +59,6 @@ class SineStateGenDemo extends FlatSpec with Matchers with AmpSyntax {
     def stream = Sine.asStream(OscState(0, 440.Hz, 0))
       .map(oscState => Array(oscState.sample))
 
-    StreamGraph(stream).play(5 seconds)
+    AudioStreamGraph(stream).play(5 seconds)
   }
 }

@@ -1,6 +1,5 @@
 package scalaudio.rpc.receiver
 
-import scalaudio.core.engine.FunctionGraph
 import scalaudio.core.types.AudioDuration
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 import scalaudio.rpc.RpcEnhancedAudioContext
@@ -23,6 +22,6 @@ class RpcDoubleReceiverDemo extends ScalaudioCoreTestHarness {
       Array(state.sample * doubleReceiver.currentValue)
     }
 
-    FunctionGraph(frameFunc).play(AudioDuration(Int.MaxValue))
+    frameFunc.play(AudioDuration(Int.MaxValue))
   }
 }
