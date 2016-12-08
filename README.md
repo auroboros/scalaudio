@@ -19,6 +19,26 @@ Or for other build tools, see:
 
 https://mvnrepository.com/artifact/org.auroboros
 
+### Quickstart
+Functions can be composed in any way the user chooses (perhaps using _.andThen_, for example). I prefer scalaz style (see https://github.com/scalaz/scalaz to add if desired, as it is not actually required by scalaudio).
+```scala
+import scalaz._
+import Scalaz._
+
+object MyFirstSynthComposition extends App with AmpSyntax {
+
+    // Create audio context using all default settings except for specified single out channel
+    implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
+
+    // Create a function that produces a "frame" (Array[Double] where array length is number of out channels)
+    val frameFunc = Sine.asFunction(OscState(0, 440.Hz, 0)) // .asFunction is a convenience method from signalz that accepts initial state & produces a state-processing function
+      .map(oscState => Array(oscState.sample))
+
+    // a frameFunc or stream of frames can be played directly via implicit conversion to a "signal processing graph" type
+    frameFunc.play(5 seconds)
+}
+```
+
 ###why?
 This project was initially created to facilitate my own computer music composition & audio machine learning projects but I decided to open source it since I only get to work on it in spurts (between my dayjob, other music composition, and toying around with audio in Clojure... some lib from that venture will probably be appearing here soon as well).
 
