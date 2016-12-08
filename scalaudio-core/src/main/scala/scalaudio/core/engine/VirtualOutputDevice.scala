@@ -31,15 +31,15 @@ case class VirtualOutputDevice(deviceId: Int, frameRate: Int, samplesPerFrame: I
 
   def write(var1: Double) {
     val var3: Array[Double] = Array[Double](var1)
-    this.write(var3, 0, 1)
+    write(var3, 0, 1)
   }
 
   def write(var1: Array[Double]) {
-    this.write(var1, 0, var1.length)
+    write(var1, 0, var1.length)
   }
 
   def write(var1: Array[Double], var2: Int, var3: Int) {
-    if (this.bytes == null || this.bytes.length * 2 < var3) this.bytes = new Array[Byte](var3 * 2)
+    if (bytes == null || bytes.length * 2 < var3) bytes = new Array[Byte](var3 * 2)
     var var4: Int = 0
     var var5: Int = 0
     while (var5 < var3) {
@@ -48,11 +48,11 @@ case class VirtualOutputDevice(deviceId: Int, frameRate: Int, samplesPerFrame: I
         var var8: Int = var6.toInt - '耀'
         if (var8 > 32767) var8 = 32767
         else if (var8 < -32768) var8 = -32768
-        this.bytes({
+        bytes({
           var4 += 1
           var4 - 1
         }) = var8.toByte
-        this.bytes({
+        bytes({
           var4 += 1
           var4 - 1
         }) = (var8 >> 8).toByte
@@ -62,14 +62,14 @@ case class VirtualOutputDevice(deviceId: Int, frameRate: Int, samplesPerFrame: I
         var5
       }
     }
-    this.line.write(this.bytes, 0, var4)
+    line.write(bytes, 0, var4)
   }
 
   def stop() {
-    if (this.line != null) {
-      this.line.stop()
-      this.line.flush()
-      this.line.close()
+    if (line != null) {
+      line.stop()
+      line.flush()
+      line.close()
 //      this.line = null
     }
     else new RuntimeException("AudioOutput stop attempted when no line created.").printStackTrace()
