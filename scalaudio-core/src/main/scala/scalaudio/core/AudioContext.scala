@@ -3,6 +3,7 @@ package scalaudio.core
 import com.jsyn.devices.javasound.JavaSoundAudioDevice
 import com.jsyn.devices.{AudioDeviceInputStream, AudioDeviceManager, AudioDeviceOutputStream}
 
+import scalaudio.core.engine.ScalaudioDeviceManager
 import scalaudio.core.types.AudioDuration
 
 /**
@@ -14,10 +15,10 @@ case class AudioContext(config: ScalaudioConfig = ScalaudioConfig()) {
 
   // ~~~ AUDIO IO INITIALIZATION ~~~
 
-  private val audioDevice: AudioDeviceManager = new JavaSoundAudioDevice
+  private val audioDeviceManager: AudioDeviceManager = new JavaSoundAudioDevice
 
-  val audioOutput: AudioDeviceOutputStream = audioDevice.createOutputStream(audioDevice.getDefaultOutputDeviceID, config.samplingRate, config.nOutChannels)
-  val audioInput: AudioDeviceInputStream = audioDevice.createInputStream(audioDevice.getDefaultInputDeviceID, config.samplingRate, config.nOutChannels)
+  val audioOutput: AudioDeviceOutputStream = audioDeviceManager.createOutputStream(ScalaudioDeviceManager.defaultOutputDeviceID, config.samplingRate, config.nOutChannels)
+  val audioInput: AudioDeviceInputStream = audioDeviceManager.createInputStream(ScalaudioDeviceManager.defaultInputDeviceID, config.samplingRate, config.nOutChannels)
 
   // ~~~ MUTABLE STATE CORE ~~~
 
