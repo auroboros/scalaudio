@@ -5,9 +5,11 @@ import javax.sound.sampled._
 /**
   * Created by johnmcgill on 12/7/16.
   */
-case class VirtualOutputDevice(deviceId: Int, frameRate: Int, samplesPerFrame: Int) {
+case class VirtualOutputDevice(frameRate: Int,
+                               samplesPerFrame: Int,
+                               deviceId: Int = ScalaudioDeviceManager.defaultOutputDeviceID) {
 
-  import VirtualOutputDevice._
+  import VirtualDevices._
 
   var bytes: Array[Byte] = _
 
@@ -76,7 +78,7 @@ case class VirtualOutputDevice(deviceId: Int, frameRate: Int, samplesPerFrame: I
   }
 }
 
-object VirtualOutputDevice {
+object VirtualDevices {
   //    TODO: See "JavaSoundOutputStream" in JavaSoundAudioDevice to see how to write
 
   @throws[LineUnavailableException]

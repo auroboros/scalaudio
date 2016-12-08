@@ -1,9 +1,6 @@
 package scalaudio.core
 
-import com.jsyn.devices.javasound.JavaSoundAudioDevice
-import com.jsyn.devices.{AudioDeviceInputStream, AudioDeviceManager, AudioDeviceOutputStream}
-
-import scalaudio.core.engine.ScalaudioDeviceManager
+import scalaudio.core.engine.{VirtualInputDevice, VirtualOutputDevice}
 import scalaudio.core.types.AudioDuration
 
 /**
@@ -15,10 +12,8 @@ case class AudioContext(config: ScalaudioConfig = ScalaudioConfig()) {
 
   // ~~~ AUDIO IO INITIALIZATION ~~~
 
-  private val audioDeviceManager: AudioDeviceManager = new JavaSoundAudioDevice
-
-  val audioOutput: AudioDeviceOutputStream = audioDeviceManager.createOutputStream(ScalaudioDeviceManager.defaultOutputDeviceID, config.samplingRate, config.nOutChannels)
-  val audioInput: AudioDeviceInputStream = audioDeviceManager.createInputStream(ScalaudioDeviceManager.defaultInputDeviceID, config.samplingRate, config.nOutChannels)
+  val audioOutput = VirtualOutputDevice(config.samplingRate, config.nOutChannels)
+  val audioInput = VirtualInputDevice(config.samplingRate, config.nInChannels)
 
   // ~~~ MUTABLE STATE CORE ~~~
 
@@ -32,12 +27,12 @@ case class AudioContext(config: ScalaudioConfig = ScalaudioConfig()) {
 
   def startAudioIO() = {
     // TODO : Should check if input & output are connected & only start if they are (overwrite var from LineIn & Playback)
-    audioInput.start()
-    audioOutput.start()
+    audioInput.startInput()
+    audioOutput.startOutput()
   }
 
   def stopAudioIO() = {
-    audioInput.stop()
+    audioInput.stopInput()
     audioOutput.stop()
   }
 

@@ -1,15 +1,15 @@
 package scalaudio.core.engine
 
-import javax.sound.sampled.{AudioFormat, AudioSystem, DataLine, TargetDataLine}
-
-import com.jsyn.devices.javasound.JavaSoundAudioDevice
+import javax.sound.sampled.{AudioFormat, DataLine, TargetDataLine}
 
 /**
   * Created by johnmcgill on 12/7/16.
   */
-class VirtualInputDevice(deviceId: Int, frameRate: Int, samplesPerFrame: Int) {
+case class VirtualInputDevice(frameRate: Int,
+                              samplesPerFrame: Int,
+                              deviceId: Int = ScalaudioDeviceManager.defaultInputDeviceID) {
 
-  import VirtualOutputDevice._
+  import VirtualDevices._
 
   var bytes: Array[Byte] = _
 
@@ -52,15 +52,17 @@ class VirtualInputDevice(deviceId: Int, frameRate: Int, samplesPerFrame: Int) {
     var var5: Int = 0
     var var6: Int = 0
     while (var6 < var3) {
-        var var7: Int = bytes({
-          var5 += 1; var5 - 1
-        }) & 255
-        var7 += bytes({
-          var5 += 1; var5 - 1
-        }) << 8
-        var1(var6 + var2) = var7.toDouble * 3.051850947599719E-5D
+      var var7: Int = bytes({
+        var5 += 1;
+        var5 - 1
+      }) & 255
+      var7 += bytes({
+        var5 += 1;
+        var5 - 1
+      }) << 8
+      var1(var6 + var2) = var7.toDouble * 3.051850947599719E-5D
 
-        var6 += 1
+      var6 += 1
     }
     var4 / 4
   }
