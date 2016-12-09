@@ -17,7 +17,7 @@ case class Playback(implicit audioContext: AudioContext)
   var bufferedOutput = Array.fill(outBufferSize)(0.0)
   var currentIndex = 0
 
-  audioContext.startAudioIO()
+  audioContext.audioIO.startIO()
   println("Started audio playback IO")
 
   // TODO: Add stop callback to cleanup object?
@@ -28,7 +28,7 @@ case class Playback(implicit audioContext: AudioContext)
       currentIndex = (currentIndex + 1) % outBufferSize
     }
 
-    if (currentIndex == 0) audioContext.audioOutput.write(bufferedOutput)
+    if (currentIndex == 0) audioContext.audioIO.write(bufferedOutput)
 
     frame
   }

@@ -1,11 +1,9 @@
 package scalaudio.core.midi
 
-import com.jsyn.midi.{MessageParser, MidiConstants}
-
 /**
   * Created by johnmcgill on 6/1/16.
   */
-case class PrintlnMidiParser() extends MessageParser {
+case class PrintlnMidiParser() extends ScalaudioMessageParser {
   override def controlChange(channel: Int, index: Int, value: Int) {
     println("ctrl change")
     if (index == 1) {
@@ -40,7 +38,7 @@ case class PrintlnMidiParser() extends MessageParser {
 
   override def pitchBend(channel: Int, bend: Int) {
     println("pitch bend")
-    val fraction: Double = (bend - MidiConstants.PITCH_BEND_CENTER) / MidiConstants.PITCH_BEND_CENTER.toDouble
+    val fraction: Double = (bend - MidiCommandConstants.PITCH_BEND_CENTER) / MidiCommandConstants.PITCH_BEND_CENTER.toDouble
     System.out.println("bend = " + bend + ", fraction = " + fraction)
   }
 }

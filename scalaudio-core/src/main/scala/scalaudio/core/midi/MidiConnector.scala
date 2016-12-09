@@ -1,8 +1,6 @@
 package scalaudio.core.midi
 
-import javax.sound.midi.{MidiDevice, Receiver}
-
-import com.jsyn.devices.javasound.MidiDeviceTools
+import javax.sound.midi._
 
 /**
   * Created by johnmcgill on 5/30/16.
@@ -13,16 +11,31 @@ import com.jsyn.devices.javasound.MidiDeviceTools
 object MidiConnector {
 
   def connectKeyboard(receiver: Receiver): Unit = {
-    val keyboard: MidiDevice = MidiDeviceTools.findKeyboard
+    val keyboard: MidiDevice = findKeyboard(null) // TODO
 
     // Just use default synthesizer.
     if (keyboard != null) {
       keyboard.open()
       keyboard.getTransmitter.setReceiver(receiver)
-      System.out.println("Play MIDI keyboard: " + keyboard.getDeviceInfo.getDescription)
+      println("Play MIDI keyboard: " + keyboard.getDeviceInfo.getDescription)
     }
     else {
-      System.out.println("Could not find a keyboard.")
+      println("Could not find a keyboard.")
     }
+  }
+
+  def findKeyboard(var0: String): MidiDevice = {
+    // TODO: Cleanup
+    val infos: Array[MidiDevice.Info] = MidiSystem.getMidiDeviceInfo
+
+    val maybeChosenDeviceInfo = infos.find{ deviceInfo =>
+      val device = MidiSystem.getMidiDevice(deviceInfo)
+      !device.isInstanceOf[Synthesizer] && !device.isInstanceOf[Sequencer] && device.getMaxTransmitters != 0 && (var0 == null || deviceInfo.getDescription.toLowerCase.contains(var0.toLowerCase))
+    }
+
+    val chosenDeviceInfo = maybeChosenDeviceInfo.get
+
+    println(s"chose ${chosenDeviceInfo.getDescription}")
+    MidiSystem.getMidiDevice(chosenDeviceInfo)
   }
 }

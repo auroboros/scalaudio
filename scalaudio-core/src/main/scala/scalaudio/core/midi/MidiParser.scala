@@ -6,25 +6,26 @@ package scalaudio.core.midi
   * adapted from Jsyn
   */
 object MidiParser {
-  def parse(var1: Array[Byte]) : MidiCommand = {
-    val var2: Byte = var1(0)
-    val var3: Int = var2 & 240
-    val var4: Int = var2 & 15
-    var3 match {
-      case 128 =>
-        NoteOff(var4, var1(1), var1(2))
-      case 144 =>
-        val var5: Byte = var1(2)
-        if (var5 == 0) {
-          NoteOff(var4, var1(1), var5)
+
+  def parse(message: Array[Byte]): MidiCommand = {
+    val status: Byte = message(0)
+    val command: Int = status & 240
+    val channel: Int = status & 15
+    command match {
+      case MidiCommandConstants.NoteOff =>
+        NoteOff(channel, message(1), message(2))
+      case MidiCommandConstants.NoteOn =>
+        val velocity: Byte = message(2)
+        if (velocity == 0) {
+          NoteOff(channel, message(1), velocity)
         } else {
-          NoteOn(var4, var1(1), var5)
+          NoteOn(channel, message(1), velocity)
         }
-      case 176 =>
-        CtrlChange(var4, var1(1), var1(2))
-      case 224 =>
-        val var6: Int = ((var1(2) & 127) << 7) + (var1(1) & 127)
-        PitchBend(var4, var6)
+      case MidiCommandConstants.ControlChange =>
+        CtrlChange(channel, message(1), message(2))
+      case MidiCommandConstants.PitchBend =>
+        val bend: Int = ((message(2) & 127) << 7) + (message(1) & 127)
+        PitchBend(channel, bend)
     }
   }
 }

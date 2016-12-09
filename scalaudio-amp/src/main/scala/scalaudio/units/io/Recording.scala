@@ -2,7 +2,6 @@ package scalaudio.units.io
 
 import java.io.File
 
-import com.jsyn.util.WaveFileWriter
 import signalz.SequentialState
 
 import scalaudio.core.AudioContext
@@ -15,10 +14,11 @@ case class Recording(filename: String)(implicit audioContext: AudioContext)
   extends SequentialState[Frame, AudioContext] {
 
   val waveFile: File = new File(filename + ".wav")
-  val writer = new WaveFileWriter(waveFile)
-  writer.setFrameRate(audioContext.config.samplingRate)
-  writer.setSamplesPerFrame(audioContext.config.nOutChannels)
-  writer.setBitsPerSample(16)
+  val writer = ScalaudioWaveFileWriter(waveFile,
+    audioContext.config.samplingRate,
+    audioContext.config.nOutChannels,
+    16
+  )
 
   val c = audioContext.config
   val outBufferSize = c.framesPerBuffer * c.nOutChannels

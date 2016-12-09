@@ -17,7 +17,7 @@ case class LineInState(
 object LineInState {
   def initialState(implicit audioContext: AudioContext): LineInState = {
     var newBuffer: Array[Double] = Array[Double](audioContext.config.framesPerBuffer * audioContext.config.nInChannels)
-    audioContext.audioInput.read(newBuffer)
+    audioContext.audioIO.read(newBuffer)
 
     new LineInState(
       Array(),
@@ -32,7 +32,7 @@ object LineIn extends SequentialState[LineInState, AudioContext] {
   def nextState(state: LineInState)(implicit audioContext: AudioContext): LineInState =
     if (state.frameIndex == audioContext.config.framesPerBuffer - 1) {
       val newBuffer: Array[Double] = Array[Double](audioContext.config.framesPerBuffer * audioContext.config.nInChannels)
-      audioContext.audioInput.read(newBuffer)
+      audioContext.audioIO.read(newBuffer)
       state.copy(
         frame = Array(0), // TODO: Get actual output frame
         buffer = newBuffer,
