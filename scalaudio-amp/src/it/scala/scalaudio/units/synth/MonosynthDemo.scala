@@ -5,7 +5,7 @@ import scala.concurrent.duration._
 import scalaudio.core.types.{AudioDuration, Pitch}
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 import scalaudio.units.control.AdsrEnvelope
-import scalaudio.units.ugen.ImmutableSine
+import scalaudio.units.ugen.{ImmutableSine, Sine}
 
 /**
   * Created by johnmcgill on 5/30/16.
@@ -33,7 +33,7 @@ class MonosynthDemo extends ScalaudioCoreTestHarness {
     var monosynthState = Monosynth.decodeInitialState(notes)
 
     val frameFunc = () => {
-      monosynthState = Monosynth(ImmutableSine).nextState(monosynthState)
+      monosynthState = Monosynth(Sine.immutable).nextState(monosynthState)
       Array(monosynthState.sample)
     }
 

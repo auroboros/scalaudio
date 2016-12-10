@@ -2,7 +2,7 @@ package scalaudio.amp.engine
 
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 import scalaudio.units.analysis.{EnergyAnalyzerState, EnergyAnalyzerStateGen}
-import scalaudio.units.ugen.{OscState, ImmutableSine}
+import scalaudio.units.ugen.{ImmutableSine, OscState, Sine}
 
 /**
   * Created by johnmcgill on 6/7/16.
@@ -15,7 +15,7 @@ class AnalysisFuncFileWriterDemo extends ScalaudioCoreTestHarness {
     var rmsState: EnergyAnalyzerState = EnergyAnalyzerState(0, None)
 
     val analysisFunc = () => {
-      sineState = ImmutableSine.nextState(sineState)
+      sineState = Sine.immutable.nextState(sineState)
       rmsState = EnergyAnalyzerStateGen.nextState(rmsState.copy(sampleIn = sineState.sample))
       rmsState.energyLevel.map(Array(_))
     }
