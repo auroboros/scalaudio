@@ -1,18 +1,26 @@
 package scalaudio.units.ugen
 
-import scalaudio.core.AudioContext
+import scalaudio.core.CoreSyntax
+import scalaudio.units.sampler.Sine
 
 /**
-  * Created by johnmcgill on 5/27/16.
+  * Created by johnmcgill on 12/10/16.
   */
+object SineImmutablePreferred extends ImmutableSine {
+  val mutable = MutableSine
+}
 
-object Sine extends Osc {
-  def nextState(current: OscState)(implicit audioContext: AudioContext) : OscState = {
-    val w = 2 * Math.PI * current.pitch.toHz / audioContext.config.samplingRate
+object SineMutablePreferred {
+  def apply = MutableSine
+  val immutable = new ImmutableSine{}
+}
 
-    current.copy(
-      sample = Math.sin(current.phi),
-      phi = current.phi + w
-    )
-  }
+object Test extends CoreSyntax{
+  // Immutable preferred
+  val mutableFunc = SineImmutablePreferred.mutable(440.Hz, 0).asReflexiveFunction
+  val immutableFunc = SineImmutablePreferred.asFunction(OscState(0, 440.Hz, 0))
+
+  // Mutable preferred
+  val mutableFunc2 = SineMutablePreferred(440.Hz, 0).asReflexiveFunction
+  val immutableFunc2 = SineMutablePreferred.immutable.asFunction(OscState(0, 440.Hz, 0)
 }

@@ -14,7 +14,7 @@ class SineSpec extends FlatSpec with Matchers with CoreSyntax{
     var state = OscState(0, 440.Hz, 0)
 
     1 to 1000 foreach {_ =>
-      state = Sine.nextState(state)
+      state = ImmutableSine.nextState(state)
       println(state)
     }
   }

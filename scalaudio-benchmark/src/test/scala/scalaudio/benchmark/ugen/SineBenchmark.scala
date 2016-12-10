@@ -4,7 +4,7 @@ import java.time.Instant
 
 import scala.concurrent.duration._
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
-import scalaudio.units.ugen.{OscState, Sine}
+import scalaudio.units.ugen.{OscState, ImmutableSine}
 
 /**
   * Created by johnmcgill on 6/6/16.
@@ -17,7 +17,7 @@ class SineBenchmark extends ScalaudioCoreTestHarness {
     var state: OscState = OscState(0, 440.Hz, 0)
 
     val frameFunc = () => {
-      state = Sine.nextState(state)
+      state = ImmutableSine.nextState(state)
       Array(state.sample)
     }
 

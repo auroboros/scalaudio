@@ -6,7 +6,7 @@ import scala.concurrent.duration._
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 import scalaudio.units.AmpSyntax
 import scalaudio.units.filter.{DelayFilterState, SimpleDelay}
-import scalaudio.units.ugen.{OscState, Sine}
+import scalaudio.units.ugen.{OscState, ImmutableSine}
 import scalaz.Scalaz._
 
 /**
@@ -16,7 +16,7 @@ class StatefulProcessorDemo extends ScalaudioCoreTestHarness with AmpSyntax {
   "StatefulProcessor" should "produce sine without var in outer scope" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
-    val ff = StatefulProcessor(Sine.nextState, OscState(0, 440.Hz, 0)).nextState
+    val ff = StatefulProcessor(ImmutableSine.nextState, OscState(0, 440.Hz, 0)).nextState
       .map(state => Array(state.sample))
 
     ff.play(5.seconds)
@@ -28,7 +28,7 @@ class StatefulProcessorDemo extends ScalaudioCoreTestHarness with AmpSyntax {
     val preTransformer = (s: OscState, u: Unit) => s.copy(
       pitch = (s.pitch.toHz + .2).Hz
     )
-    val ff = StatefulProcessor.withModifier(Sine.nextState,
+    val ff = StatefulProcessor.withModifier(ImmutableSine.nextState,
       OscState(0, 440.Hz, 0),
       preTransformer
     ).nextState map (state => Array(state.sample))
@@ -45,7 +45,7 @@ class StatefulProcessorDemo extends ScalaudioCoreTestHarness with AmpSyntax {
       (delayFilterState: DelayFilterState, newSample: Double) => delayFilterState.copy(sample = newSample)
     )
 
-    val ff = StatefulProcessor(Sine.nextState, OscState(0, 440.Hz, 0)).nextState
+    val ff = StatefulProcessor(ImmutableSine.nextState, OscState(0, 440.Hz, 0)).nextState
       .map(_.sample)
       .map(delayFilter.nextState)
       .map(_.sample)

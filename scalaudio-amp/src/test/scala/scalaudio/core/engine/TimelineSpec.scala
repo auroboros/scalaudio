@@ -1,6 +1,6 @@
 package scalaudio.core.engine
 
-import scalaudio.units.ugen.{OscState, Sine}
+import scalaudio.units.ugen.{OscState, ImmutableSine}
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 
 /**
@@ -14,7 +14,7 @@ class TimelineSpec extends ScalaudioCoreTestHarness {
     var counter = 0
 
     val frameFunc = () => {
-      oscState = Sine.nextState(oscState)
+      oscState = ImmutableSine.nextState(oscState)
       counter += 1
       Array(oscState.sample)
     }
