@@ -3,7 +3,7 @@ package scalaudio.rpc.receiver
 import scalaudio.core.types.AudioDuration
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 import scalaudio.rpc.RpcEnhancedAudioContext
-import scalaudio.units.ugen.{OscState, ImmutableSine}
+import scalaudio.units.ugen.{OscState, Sine}
 
 /**
   * Created by johnmcgill on 6/13/16.
@@ -18,7 +18,7 @@ class RpcDoubleReceiverDemo extends ScalaudioCoreTestHarness {
     val doubleReceiver = RpcDoubleReceiver("receiver_demo", 1)
 
     val frameFunc = () => {
-      state = ImmutableSine.nextState(state)
+      state = Sine.immutable.nextState(state)
       Array(state.sample * doubleReceiver.currentValue)
     }
 

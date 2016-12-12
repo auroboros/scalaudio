@@ -24,7 +24,7 @@ class FmSynthDemo extends FlatSpec with Matchers with AmpSyntax {
     playback(ff, 15.seconds)
   }
 
-  def fmSynthesis(controlFreq: Pitch): () => Frame = {
+  def fmSynthesis(controlFreq: Pitch)(implicit audioContext: AudioContext): () => Frame = {
 
     val sinGen2 = StatefulProcessor.withModifier[OscState, Pitch](Sine.immutable.nextState,
       OscState(0, 0.Hz, 0),
