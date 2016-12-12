@@ -1,9 +1,12 @@
 package scalaudio.core.engine
 
 import javax.sound.sampled._
+import java.lang.{Short => JShort}
 
 /**
   * Created by johnmcgill on 12/7/16.
+  *
+  * ReviewNote: This is based on JSyn's "JavaSoundAudioDevice" so parity should be checked periodically
   */
 case class VirtualOutputDevice(frameRate: Int,
                                samplesPerFrame: Int,
@@ -19,59 +22,53 @@ case class VirtualOutputDevice(frameRate: Int,
 
   //  if (!AudioSystem.isLineSupported(desiredLineType)) println("JavaSoundOutputStream - not supported." + format)
   //  else {
-  val line = getDataLine(desiredLineType, deviceId).asInstanceOf[SourceDataLine]
+  val sourceLine = getDataLine(desiredLineType, deviceId).asInstanceOf[SourceDataLine]
   val bufferSize: Int = calculateBufferSize(0.1D, frameRate, samplesPerFrame)
 
   //TODO: How was suggested latency calculated?
   def startOutput() = {
 
     // thisJavaSoundAudioDevice.suggestedOutputLatency)
-    line.open(format, bufferSize)
+    sourceLine.open(format, bufferSize)
     println("Output buffer size = " + bufferSize + " bytes.")
-    line.start()
+    sourceLine.start()
   }
 
-  def write(var1: Double) {
-    val var3: Array[Double] = Array[Double](var1)
-    write(var3, 0, 1)
+  def write(value: Double) {
+    val buffer: Array[Double] = Array[Double](value)
+    write(buffer, 0, 1)
   }
 
-  def write(var1: Array[Double]) {
-    write(var1, 0, var1.length)
+  def write(buffer: Array[Double]) {
+    write(buffer, 0, buffer.length)
   }
 
-  def write(var1: Array[Double], var2: Int, var3: Int) {
-    if (bytes == null || bytes.length * 2 < var3) bytes = new Array[Byte](var3 * 2)
-    var var4: Int = 0
-    var var5: Int = 0
-    while (var5 < var3) {
-      {
-        val var6: Double = 32767.0D * var1(var5 + var2) + 32768.5D
-        var var8: Int = var6.toInt - '耀'
-        if (var8 > 32767) var8 = 32767
-        else if (var8 < -32768) var8 = -32768
-        bytes({
-          var4 += 1
-          var4 - 1
-        }) = var8.toByte
-        bytes({
-          var4 += 1
-          var4 - 1
-        }) = (var8 >> 8).toByte
-      }
-      {
-        var5 += 1
-        var5
-      }
+  def write(buffer: Array[Double], start: Int, count: Int) {
+    // Allocate byte buffer if needed.
+    if ((bytes == null) || ((bytes.length * 2) < count)) bytes = new Array[Byte](count * 2)
+
+    // Convert float samples to LittleEndian bytes.
+    var byteIndex: Int = 0
+
+    (0 until count) foreach { i =>
+        // Offset before casting so that we can avoid using floor().
+        // Also round by adding 0.5 so that very small signals go to zero.
+        val temp: Double = (32767.0 * buffer(i + start)) + 32768.5
+        var sample: Int = temp.toInt - 32768
+        if (sample > JShort.MAX_VALUE) sample = JShort.MAX_VALUE
+        else if (sample < JShort.MIN_VALUE) sample = JShort.MIN_VALUE
+        bytes(i*2) = sample.toByte // little end
+        bytes((i*2)+1) = (sample >> 8).toByte // big end
     }
-    line.write(bytes, 0, var4)
+
+    sourceLine.write(bytes, 0, count * 2)
   }
 
   def stop() {
-    if (line != null) {
-      line.stop()
-      line.flush()
-      line.close()
+    if (sourceLine != null) {
+      sourceLine.stop()
+      sourceLine.flush()
+      sourceLine.close()
 //      this.line = null
     }
     else new RuntimeException("AudioOutput stop attempted when no line created.").printStackTrace()

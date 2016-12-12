@@ -15,55 +15,49 @@ case class VirtualInputDevice(frameRate: Int,
 
   val format = new AudioFormat(frameRate.toFloat, 16, samplesPerFrame, true, false)
 
-  val var1: DataLine.Info = new DataLine.Info(classOf[TargetDataLine], format)
+  val desiredTargetLineType: DataLine.Info = new DataLine.Info(classOf[TargetDataLine], format)
 
-  //  if (!AudioSystem.isLineSupported(var1)) JavaSoundAudioDevice.logger.severe("JavaSoundInputStream - not supported." + this.format)
+  //  if (!AudioSystem.isLineSupported(desiredTargetLineType)) JavaSoundAudioDevice.logger.severe("JavaSoundInputStream - not supported." + this.format)
   //  else try
-  val line = getDataLine(var1, deviceId).asInstanceOf[TargetDataLine]
-  val var2: Int = calculateBufferSize(0.1D, frameRate, samplesPerFrame)
+  val targetLine = getDataLine(desiredTargetLineType, deviceId).asInstanceOf[TargetDataLine]
+  val bufferSize: Int = calculateBufferSize(0.1D, frameRate, samplesPerFrame)
 
   def startInput() = {
-    line.open(format, var2)
-    println("Input buffer size = " + var2 + " bytes.")
-    line.start()
+    targetLine.open(format, bufferSize)
+    println("Input buffer size = " + bufferSize + " bytes.")
+    targetLine.start()
   }
 
   def stopInput() {
-    if (line != null) {
-      line.stop()
-      line.flush()
-      line.close()
+    if (targetLine != null) {
+      targetLine.stop()
+      targetLine.flush()
+      targetLine.close()
       //      this.line = null
     }
     else new RuntimeException("AudioOutput stop attempted when no line created.").printStackTrace()
   }
 
   def read: Double = {
-    val var1: Array[Double] = new Array[Double](1)
-    read(var1, 0, 1)
-    var1(0)
+    val buffer: Array[Double] = new Array[Double](1)
+    read(buffer, 0, 1)
+    buffer(0)
   }
 
-  def read(var1: Array[Double]): Int = read(var1, 0, var1.length)
+  def read(buffer: Array[Double]): Int = read(buffer, 0, buffer.length)
 
-  def read(var1: Array[Double], var2: Int, var3: Int): Int = {
-    if (bytes == null || bytes.length * 2 < var3) bytes = new Array[Byte](var3 * 2)
-    val var4: Int = line.read(bytes, 0, bytes.length)
-    var var5: Int = 0
-    var var6: Int = 0
-    while (var6 < var3) {
-      var var7: Int = bytes({
-        var5 += 1;
-        var5 - 1
-      }) & 255
-      var7 += bytes({
-        var5 += 1;
-        var5 - 1
-      }) << 8
-      var1(var6 + var2) = var7.toDouble * 3.051850947599719E-5D
+  def read(buffer: Array[Double], start: Int, count: Int): Int = {
+    // Allocate byte buffer if needed.
+    if ((bytes == null) || ((bytes.length * 2) < count)) bytes = new Array[Byte](count * 2)
+    val bytesRead: Int = targetLine.read(bytes, 0, bytes.length)
 
-      var6 += 1
+    // Convert BigEndian bytes to float samples
+    (0 until count) foreach {i =>
+      var sample: Int = bytes(i*2) & 0x00FF // little end
+      sample = sample + (bytes((i*2)+1) << 8) // big end
+      buffer(i + start) = sample * (1.0 / 32767.0)
     }
-    var4 / 4
+
+    bytesRead / 4
   }
 }
