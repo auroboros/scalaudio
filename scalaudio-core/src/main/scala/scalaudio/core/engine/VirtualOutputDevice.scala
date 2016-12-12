@@ -44,6 +44,8 @@ case class VirtualOutputDevice(frameRate: Int,
   }
 
   def write(buffer: Array[Double], start: Int, count: Int) {
+    // TODO: Can't some of this be optimized away...
+
     // Allocate byte buffer if needed.
     if ((bytes == null) || ((bytes.length * 2) < count)) bytes = new Array[Byte](count * 2)
 

@@ -11,7 +11,7 @@ import javax.sound.midi._
 object MidiConnector {
 
   def connectKeyboard(receiver: Receiver): Unit = {
-    val keyboard: MidiDevice = findKeyboard(null) // TODO
+    val keyboard: MidiDevice = findDefaultKeyboard
 
     // Just use default synthesizer.
     if (keyboard != null) {
@@ -24,13 +24,10 @@ object MidiConnector {
     }
   }
 
-  def findKeyboard(var0: String): MidiDevice = {
-    // TODO: Cleanup
-    val infos: Array[MidiDevice.Info] = MidiSystem.getMidiDeviceInfo
-
-    val maybeChosenDeviceInfo = infos.find{ deviceInfo =>
+  def findDefaultKeyboard: MidiDevice = {
+    val maybeChosenDeviceInfo = MidiSystem.getMidiDeviceInfo.find{ deviceInfo =>
       val device = MidiSystem.getMidiDevice(deviceInfo)
-      !device.isInstanceOf[Synthesizer] && !device.isInstanceOf[Sequencer] && device.getMaxTransmitters != 0 && (var0 == null || deviceInfo.getDescription.toLowerCase.contains(var0.toLowerCase))
+      !device.isInstanceOf[Synthesizer] && !device.isInstanceOf[Sequencer] && device.getMaxTransmitters != 0  // deviceInfo.getDescription.toLowerCase.contains(var0.toLowerCase)
     }
 
     val chosenDeviceInfo = maybeChosenDeviceInfo.get

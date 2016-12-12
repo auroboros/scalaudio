@@ -4,6 +4,8 @@ import javax.sound.sampled.{AudioFormat, DataLine, TargetDataLine}
 
 /**
   * Created by johnmcgill on 12/7/16.
+  *
+  * ReviewNote: This is based on JSyn's "JavaSoundAudioDevice" so parity should be checked periodically
   */
 case class VirtualInputDevice(frameRate: Int,
                               samplesPerFrame: Int,
@@ -47,6 +49,8 @@ case class VirtualInputDevice(frameRate: Int,
   def read(buffer: Array[Double]): Int = read(buffer, 0, buffer.length)
 
   def read(buffer: Array[Double], start: Int, count: Int): Int = {
+    // TODO: Can't some of this be optimized away...
+
     // Allocate byte buffer if needed.
     if ((bytes == null) || ((bytes.length * 2) < count)) bytes = new Array[Byte](count * 2)
     val bytesRead: Int = targetLine.read(bytes, 0, bytes.length)
