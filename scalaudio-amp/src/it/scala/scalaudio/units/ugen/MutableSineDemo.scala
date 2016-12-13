@@ -16,7 +16,25 @@ class MutableSineDemo extends FlatSpec with Matchers with AmpSyntax {
 
     // Goofy looking because init state is.... the object itself.
     // Maybe better to just create external mutable state object no matter what
-    val mutatorFunc = MutableSine(440.Hz, 0).asReflexiveFunction
+    val mutatorFunc = MutableSine(440.Hz, 0).asReflexiveFunction()
+
+    val frameFunc = mutatorFunc.map(_._1).map(Array(_))
+
+    playback(frameFunc, 5.seconds)
+  }
+
+  "c" should "d" in {
+    implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
+
+    // Goofy looking because init state is.... the object itself.
+    // Maybe better to just create external mutable state object no matter what
+    var freq: Double = 440
+
+    val mutatorFunc = MutableSine(440.Hz, 0).asReflexiveFunction.
+      withModifier((u: Unit, s: MutableSine) => {
+        s.setPitch(freq.Hz)
+        freq += .1
+      }) // TODO: Implicit to erase "Unit" from signature?
 
     val frameFunc = mutatorFunc.map(_._1).map(Array(_))
 
