@@ -34,8 +34,10 @@ object MyFirstSynthComposition extends App with AmpSyntax {
     val frameFunc = Sine.asFunction(OscState(0, 440.Hz, 0)) // .asFunction is a convenience method from signalz that accepts initial state & produces a state-processing function
       .map(oscState => Array(oscState.sample))
 
-    // a frameFunc or stream of frames can be played directly via implicit conversion to a "signal processing graph" type
-    frameFunc.play(5 seconds)
+    // a frameFunc or stream of frames can be played directly via implicit conversion to a "signal processing graph" type a la:
+    // frameFunc.play(5 seconds)
+    // but using the playback helper automatically appends speaker output to the function
+    playback(frameFunc, 5 seconds)
 }
 ```
 
