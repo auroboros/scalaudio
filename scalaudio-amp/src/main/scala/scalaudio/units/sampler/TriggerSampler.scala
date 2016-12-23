@@ -36,7 +36,7 @@ case class TriggerSampler(wtType: WavetableType)(implicit audioContext: AudioCon
     state.copy(
       frame = outFrame,
       playbackPositions = state.playbackPositions.map(_ + incrementRate)
-        .filter(_ <= soundSample.wavetable.head.length)
+        .filter(_ <= soundSample.wavetable.head.length - 1) // or .indices.last?
     )
   }
 }

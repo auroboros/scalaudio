@@ -5,6 +5,7 @@ import java.io.File
 import scalaudio.core.math._
 import scalaudio.core.types.{AudioDuration, MultichannelAudio}
 import scalaudio.core.util.AdaptedJavaSoundSampleLoader
+import scalaudio.units.ugen.Square
 
 /**
   * Created by johnmcgill on 2/1/16.
@@ -15,9 +16,9 @@ object SamplerUtils {
     wtMode match {
       case fs : FileSample => fileSample2Sample(fs)
       case s : SoundSample => s
-      case _ : Sine => SoundSample(generateSingleSinePeriod(periodLength), periodLength.toSamples)
-      case _ : Square => SoundSample(generateSingleSquarePeriod(periodLength), periodLength.toSamples)
-      case _ : Sawtooth => SoundSample(generateSingleSawtoothPeriod(periodLength), periodLength.toSamples)
+      case SineTable => SoundSample(generateSingleSinePeriod(periodLength), periodLength.toSamples)
+      case SquareTable => SoundSample(generateSingleSquarePeriod(periodLength), periodLength.toSamples)
+      case SawtoothTable => SoundSample(generateSingleSawtoothPeriod(periodLength), periodLength.toSamples)
     }
 
   def fileSample2Sample(filesample : FileSample) : SoundSample = {
@@ -40,9 +41,9 @@ object SamplerUtils {
 }
 
 sealed trait WavetableType
-case class Sine() extends WavetableType
-case class Square() extends WavetableType
-case class Sawtooth() extends WavetableType
+case object SineTable extends WavetableType
+case object SquareTable extends WavetableType
+case object SawtoothTable extends WavetableType
 case class FileSample(filename : String) extends WavetableType
 case class SoundSample(wavetable : MultichannelAudio, samplingFreq : Double) extends WavetableType {
   val fileLengthInSamples: Int = wavetable.head.length
