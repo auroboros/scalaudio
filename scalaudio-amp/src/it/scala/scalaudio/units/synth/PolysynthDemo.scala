@@ -43,7 +43,7 @@ class PolysynthDemo extends ScalaudioCoreTestHarness {
     var polysynthState = PolysynthState(0, notes, Nil)
 
     val frameFunc = () => {
-      polysynthState = Polysynth(Sine.immutable).nextState(polysynthState)
+      polysynthState = Polysynth.immutable(Sine.immutable).nextState(polysynthState)
       Array(polysynthState.sample * .2)
     }
 

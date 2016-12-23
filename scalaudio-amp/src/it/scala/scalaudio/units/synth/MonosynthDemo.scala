@@ -33,7 +33,7 @@ class MonosynthDemo extends ScalaudioCoreTestHarness {
     var monosynthState = Monosynth.decodeInitialState(notes)
 
     val frameFunc = () => {
-      monosynthState = Monosynth(Sine.immutable).nextState(monosynthState)
+      monosynthState = Monosynth.immutable(Sine.immutable).nextState(monosynthState)
       Array(monosynthState.sample)
     }
 

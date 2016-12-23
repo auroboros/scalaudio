@@ -5,7 +5,7 @@ import java.io.File
 import scalaudio.core.math._
 import scalaudio.core.types.{AudioDuration, MultichannelAudio}
 import scalaudio.core.util.AdaptedJavaSoundSampleLoader
-import scalaudio.units.ugen.Square
+import scalaudio.units.ugen.ImmutableSquare$
 
 /**
   * Created by johnmcgill on 2/1/16.

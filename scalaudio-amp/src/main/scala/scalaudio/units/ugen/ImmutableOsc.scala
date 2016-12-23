@@ -12,6 +12,6 @@ case class OscState(sample: Sample,
                     pitch: Pitch,
                     phi: Double)
 
-trait Osc extends SequentialState[OscState, AudioContext]{
+trait ImmutableOsc extends SequentialState[OscState, AudioContext]{
   def nextState(current: OscState)(implicit audioContext: AudioContext) : OscState
 }

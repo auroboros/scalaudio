@@ -16,10 +16,10 @@ class StatefulProcessorDemo extends ScalaudioCoreTestHarness with AmpSyntax {
   "StatefulProcessor" should "produce sine without var in outer scope" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
-    val ff = StatefulProcessor(Sine.immutable.nextState, OscState(0, 440.Hz, 0)).nextState
+    val ff = Sine.immutable.asFunction(OscState(0, 440.Hz, 0))
       .map(state => Array(state.sample))
 
-    ff.play(5.seconds)
+    playback(ff, 5.seconds)
   }
 
   "StatefulProcessor" should "use pre-transformer for automation" in {
@@ -28,29 +28,29 @@ class StatefulProcessorDemo extends ScalaudioCoreTestHarness with AmpSyntax {
     val preTransformer = (s: OscState, u: Unit) => s.copy(
       pitch = (s.pitch.toHz + .2).Hz
     )
-    val ff = StatefulProcessor.withModifier(Sine.immutable.nextState,
+    val ff = Sine.immutable.asFunction.withModifier(
       OscState(0, 440.Hz, 0),
       preTransformer
-    ).nextState map (state => Array(state.sample))
+    ) map (state => Array(state.sample))
 
-    ff.play(5 seconds)
+    playback(ff, 5 seconds)
   }
 
   "StatefulProcessors" should "be chainable" in {
 
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
-    val delayFilter = StatefulProcessor.withModifier(SimpleDelay.nextState,
+    val delayFilter = SimpleDelay.immutable.asFunction.withModifier(
       SimpleDelay.initialState(3.seconds),
       (delayFilterState: DelayFilterState, newSample: Double) => delayFilterState.copy(sample = newSample)
     )
 
-    val ff = StatefulProcessor(Sine.immutable.nextState, OscState(0, 440.Hz, 0)).nextState
+    val ff = Sine.immutable.asFunction(OscState(0, 440.Hz, 0))
       .map(_.sample)
-      .map(delayFilter.nextState)
+      .map(delayFilter)
       .map(_.sample)
       .map(Array(_))
 
-    ff.play(5.seconds)
+    playback(ff, 5.seconds)
   }
 }

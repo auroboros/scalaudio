@@ -12,7 +12,7 @@ class UnitRampSpec extends ScalaudioCoreTestHarness {
     val oscState = new OscState(0, 1.Hz, 0)
 
     val secondPlusOneOfStates = (1 to audioContext.config.samplingRate + 1).scanLeft(oscState){(curr, acc) =>
-      UnitRamp.nextState(curr)
+      UnitRamp.immutable.nextState(curr)
     }.tail
 
     secondPlusOneOfStates.length shouldEqual (audioContext.config.samplingRate + 1)

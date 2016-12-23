@@ -5,7 +5,11 @@ import scalaudio.core.AudioContext
 /**
   * Created by johnmcgill on 7/10/16.
   */
-object Sawtooth extends Osc {
+object Sawtooth {
+  val immutable = new ImmutableSawtooth{}
+}
+
+trait ImmutableSawtooth extends ImmutableOsc {
   def nextState(current: OscState)(implicit audioContext: AudioContext) : OscState = {
     val w = 2 * Math.PI * current.pitch.toHz / audioContext.config.samplingRate
 

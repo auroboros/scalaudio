@@ -30,7 +30,7 @@ class MonosynthMidiReceiverDemo extends ScalaudioCoreTestHarness {
     MidiConnector.connectKeyboard(midiReceiver)
 
     val frameFunc = () => {
-      monosynthState = Monosynth(Sine.immutable).nextState(
+      monosynthState = Monosynth.immutable(Sine.immutable).nextState(
         midiReceiver.processMidiCommandsIntoState(monosynthState)
       )
       Array(monosynthState.sample)

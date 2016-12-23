@@ -21,7 +21,7 @@ class LinearEnvelopeDemo extends FlatSpec with Matchers with CoreSyntax {
     var sineState = OscState(0, 660.Hz, 0)
 
     val frameFunc = () => {
-      sineState = Square.nextState(sineState)
+      sineState = Square.immutable.nextState(sineState)
       envState = Envelope.nextState(envState)
       GainFilter.applyGainToFrame(envState.value)(Array(sineState.sample))
     }
@@ -40,7 +40,7 @@ class LinearEnvelopeDemo extends FlatSpec with Matchers with CoreSyntax {
     var sineState = OscState(0, 660.Hz, 0)
 
     val frameFunc = () => {
-      sineState = Square.nextState(sineState)
+      sineState = Square.immutable.nextState(sineState)
       envState = Envelope.nextState(envState)
       GainFilter.applyGainToFrame(envState.value)(Array(sineState.sample))
     }

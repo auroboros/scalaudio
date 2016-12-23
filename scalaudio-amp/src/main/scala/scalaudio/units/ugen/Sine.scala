@@ -14,7 +14,7 @@ object Sine {
   val immutable = new ImmutableSine{}
 }
 
-trait ImmutableSine extends Osc {
+trait ImmutableSine extends ImmutableOsc {
   def nextState(current: OscState)(implicit audioContext: AudioContext) : OscState = {
     val w = 2 * Math.PI * current.pitch.toHz / audioContext.config.samplingRate
 
