@@ -2,6 +2,7 @@ package scalaudio.units.sampler
 
 import java.io.File
 
+import scalaudio.core.math._
 import scalaudio.core.types.{AudioDuration, MultichannelAudio}
 import scalaudio.core.util.AdaptedJavaSoundSampleLoader
 
@@ -42,5 +43,13 @@ sealed trait WavetableType
 case class Sine() extends WavetableType
 case class Square() extends WavetableType
 case class Sawtooth() extends WavetableType
-case class SoundSample(wavetable : MultichannelAudio, samplingFreq : Double) extends WavetableType
 case class FileSample(filename : String) extends WavetableType
+case class SoundSample(wavetable : MultichannelAudio, samplingFreq : Double) extends WavetableType {
+  val fileLengthInSamples: Int = wavetable.head.length
+
+  def interpolatedSample(channel: Int, position: Double): Double = {
+    val (ind1: Int, ind2: Int) = (position.floor.toInt, position.ceil.toInt % fileLengthInSamples)
+    val interpAmount: Double = position % 1
+    linearInterpolate(wavetable(channel)(ind1), wavetable(channel)(ind2), interpAmount)
+  }
+}
