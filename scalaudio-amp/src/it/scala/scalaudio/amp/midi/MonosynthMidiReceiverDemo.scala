@@ -8,7 +8,7 @@ import scalaudio.core.types.{AudioDuration, Pitch}
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 import scalaudio.units.control.AdsrEnvelope
 import scalaudio.units.synth.{Monosynth, MonosynthMidiReceiver}
-import scalaudio.units.ugen.Sine
+import scalaudio.units.ugen.{ImmutableSine, Sine}
 
 /**
   * Created by johnmcgill on 6/2/16.
@@ -30,7 +30,7 @@ class MonosynthMidiReceiverDemo extends ScalaudioCoreTestHarness {
     MidiConnector.connectKeyboard(midiReceiver)
 
     val frameFunc = () => {
-      monosynthState = Monosynth(Sine).nextState(
+      monosynthState = Monosynth.immutable(Sine.immutable).nextState(
         midiReceiver.processMidiCommandsIntoState(monosynthState)
       )
       Array(monosynthState.sample)

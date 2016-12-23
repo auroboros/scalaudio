@@ -4,7 +4,7 @@ import scala.collection.mutable.ListBuffer
 import scalaudio.core.math.FftMath._
 import scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 import scalaudio.jmathplot.ConvenientPlot
-import scalaudio.units.ugen.{OscState, Sine}
+import scalaudio.units.ugen.{ImmutableSine, OscState, Sine}
 /**
   * Created by johnmcgill on 6/15/16.
   */
@@ -20,7 +20,7 @@ object FftPlot extends App with CoreSyntax {
 
   1 to experimentFftSize foreach {_ =>
     yVals += oscState.sample
-    oscState = Sine.nextState(oscState)
+    oscState = Sine.immutable.nextState(oscState)
   }
 
   val spectrum = powerSpectrumFromFft(performFFT(yVals.toArray))

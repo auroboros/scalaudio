@@ -15,7 +15,7 @@ class SawtoothStateGenDemo extends FlatSpec with Matchers with AmpSyntax {
   "Sawtooth state gen" should "produce sine audio output" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
-    val frameFunc = Sawtooth.asFunction(OscState(0, 440.Hz, 0))
+    val frameFunc = Sawtooth.immutable.asFunction(OscState(0, 440.Hz, 0))
       .map { s =>
         println(s.sample)
         s.sample

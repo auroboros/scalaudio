@@ -9,10 +9,10 @@ class PhasorSpec extends ScalaudioCoreTestHarness {
   "1 Hz Phasor" should "output 0 to 2 pi over 1 second + 1 sample" in {
     implicit val audioContext = AudioContext()
 
-    val oscState = new OscState(0, 1.Hz, 0)
+    val oscState = OscState(0, 1.Hz, 0)
 
     val secondPlusOneOfStates = (1 to audioContext.config.samplingRate + 1).scanLeft(oscState){(curr, acc) =>
-      Phasor.nextState(curr)
+      Phasor.immutable.nextState(curr)
     }.tail
 
     secondPlusOneOfStates.length shouldEqual (audioContext.config.samplingRate + 1)

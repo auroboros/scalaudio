@@ -17,7 +17,7 @@ class SineStateGenDemo extends FlatSpec with Matchers with AmpSyntax {
     var state : OscState = OscState(0, 440.Hz, 0)
 
     val frameFunc = () => {
-      state = Sine.nextState(state)
+      state = Sine.immutable.nextState(state)
       Array(state.sample)
     }
 
@@ -27,16 +27,16 @@ class SineStateGenDemo extends FlatSpec with Matchers with AmpSyntax {
   "Sine state gen" should "produce sine audio output through StatefulProcessor" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
-    val frameFunc = Sine.statefulProcessor(OscState(0, 440.Hz, 0)).nextState
+    val frameFunc = Sine.immutable.statefulProcessor(OscState(0, 440.Hz, 0)).nextState
       .map(oscState => Array(oscState.sample))
 
-    frameFunc.play(5 seconds)
+    playback(frameFunc, 5 seconds)
   }
 
   "Sine state gen" should "produce sine audio output through StatefulProcessor with asFunction convenience syntax" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
-    val frameFunc = Sine.asFunction(OscState(0, 440.Hz, 0))
+    val frameFunc = Sine.immutable.asFunction(OscState(0, 440.Hz, 0))
       .map(oscState => Array(oscState.sample))
 
     frameFunc.play(5 seconds)
@@ -46,7 +46,7 @@ class SineStateGenDemo extends FlatSpec with Matchers with AmpSyntax {
     // TODO: memory leak? (because of no tail recursion?)
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
-    def stream = Sine.streamingProcessor(OscState(0, 440.Hz, 0)).outStream
+    def stream = Sine.immutable.streamingProcessor(OscState(0, 440.Hz, 0)).outStream
       .map(oscState => Array(oscState.sample))
 
     AudioStreamGraph(stream).play(5 seconds)
@@ -56,7 +56,7 @@ class SineStateGenDemo extends FlatSpec with Matchers with AmpSyntax {
     // TODO: memory leak? (because of no tail recursion?)
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
-    def stream = Sine.asStream(OscState(0, 440.Hz, 0))
+    def stream = Sine.immutable.asStream(OscState(0, 440.Hz, 0))
       .map(oscState => Array(oscState.sample))
 
     AudioStreamGraph(stream).play(5 seconds)

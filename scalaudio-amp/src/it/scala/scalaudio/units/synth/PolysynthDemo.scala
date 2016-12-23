@@ -5,7 +5,7 @@ import scala.concurrent.duration._
 import scalaudio.core.types.{AudioDuration, Pitch}
 import scalaudio.core.{AudioContext, ScalaudioConfig, ScalaudioCoreTestHarness}
 import scalaudio.units.control.AdsrEnvelope
-import scalaudio.units.ugen.Sine
+import scalaudio.units.ugen.{ImmutableSine, Sine}
 
 /**
   * Created by johnmcgill on 5/30/16.
@@ -43,7 +43,7 @@ class PolysynthDemo extends ScalaudioCoreTestHarness {
     var polysynthState = PolysynthState(0, notes, Nil)
 
     val frameFunc = () => {
-      polysynthState = Polysynth(Sine).nextState(polysynthState)
+      polysynthState = Polysynth.immutable(Sine.immutable).nextState(polysynthState)
       Array(polysynthState.sample * .2)
     }
 

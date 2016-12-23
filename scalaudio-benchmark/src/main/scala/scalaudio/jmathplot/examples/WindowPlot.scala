@@ -4,7 +4,7 @@ import scala.collection.mutable.ListBuffer
 import scalaudio.core.math.window._
 import scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
 import scalaudio.jmathplot.ConvenientPlot
-import scalaudio.units.ugen.{OscState, Sine}
+import scalaudio.units.ugen.{ImmutableSine, OscState, Sine}
 
 /**
   * Created by johnmcgill on 6/16/16.
@@ -17,7 +17,7 @@ object WindowPlot extends App with CoreSyntax {
 
   1 to 700 foreach { _ =>
     yVals += oscState.sample
-    oscState = Sine.nextState(oscState)
+    oscState = Sine.immutable.nextState(oscState)
   }
 
   val windowedYVals = pad(

@@ -18,7 +18,7 @@ class RpcDoubleReceiverDemo extends ScalaudioCoreTestHarness {
     val doubleReceiver = RpcDoubleReceiver("receiver_demo", 1)
 
     val frameFunc = () => {
-      state = Sine.nextState(state)
+      state = Sine.immutable.nextState(state)
       Array(state.sample * doubleReceiver.currentValue)
     }
 
