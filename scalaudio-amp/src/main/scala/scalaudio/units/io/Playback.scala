@@ -14,6 +14,7 @@ case class Playback(implicit audioContext: AudioContext)
 
   val c = audioContext.config
   val outBufferSize = c.framesPerBuffer * c.nOutChannels
+
   var bufferedOutput = Array.fill(outBufferSize)(0.0)
   var currentIndex = 0
 

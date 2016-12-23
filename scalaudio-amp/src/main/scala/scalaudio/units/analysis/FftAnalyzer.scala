@@ -10,17 +10,23 @@ import scalaudio.core.types.{AudioSignal, Sample}
 /**
   * Created by johnmcgill on 6/14/16.
   */
+object FftAnalyzer {
+  val immutable = new ImmutableFftAnalyzer{}
+
+  // immutable utils
+  def decodeInitialState(implicit audioContext: AudioContext) = FftAnalyzerState(0.0,
+    None,
+    Array.fill(audioContext.config.fftSize)(0),
+    audioContext.config.fftSize
+  )
+}
+
 case class FftAnalyzerState(sampleIn: Sample,
                             fftFrame: Option[Array[Complex]],
                             analysisBuffer: AudioSignal, // TODO: This should be queue?
                             computeInterval: Int)
 
-object FftAnalyzerStateGen extends SequentialState[FftAnalyzerState, AudioContext] {
-  def decodeInitialState(implicit audioContext: AudioContext) =
-    FftAnalyzerState(0.0,
-      None,
-      Array.fill(audioContext.config.fftSize)(0),
-      audioContext.config.fftSize)
+trait ImmutableFftAnalyzer extends SequentialState[FftAnalyzerState, AudioContext] {
 
   def nextState(s: FftAnalyzerState)(implicit audioContext: AudioContext): FftAnalyzerState = {
     val compute = s.analysisBuffer.length == s.computeInterval
