@@ -10,12 +10,16 @@ import scala.concurrent.duration._
 /**
   * Created by johnmcgill on 12/5/16.
   */
+object TriggerSampler {
+  def immutable(wavetableType: WavetableType)(implicit audioContext: AudioContext) = ImmutableTriggerSampler(wavetableType)
+}
+
 case class TriggerSamplerState(frame: Frame = Array.empty,
                                playbackRate: Double = 1,
                                playbackPositions: List[Double] = Nil
                               )
 
-case class TriggerSampler(wtType: WavetableType)(implicit audioContext: AudioContext)
+case class ImmutableTriggerSampler(wtType: WavetableType)(implicit audioContext: AudioContext)
   extends SequentialState[TriggerSamplerState, AudioContext]
     with CoreSyntax {
 
@@ -30,8 +34,8 @@ case class TriggerSampler(wtType: WavetableType)(implicit audioContext: AudioCon
         soundSample.interpolatedSample(c, pos)
       } // TODO: Interpolated frame moved into SoundSample
     }
-    val outFrame = soundSample.wavetable.indices.toArray map {c =>
-      frames.map(_(c)).sum
+    val outFrame = soundSample.wavetable.indices.toArray map { c =>
+      frames.map(_ (c)).sum
     }
     state.copy(
       frame = outFrame,

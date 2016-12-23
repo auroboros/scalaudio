@@ -10,12 +10,18 @@ import scalaudio.core.math.linearInterpolate
 /**
   * Created by johnmcgill on 12/5/16.
   */
+object Wavetable {
+  def immutable(waveTableType: WavetableType,
+                playbackRate: Double = 1)(implicit audioContext: AudioContext) =
+    ImmutableWavetable(waveTableType, playbackRate)
+}
+
 case class WavetableState(
                            frame: Frame,
                            position: Double
                          )
 
-case class Wavetable(waveTableType: WavetableType,
+case class ImmutableWavetable(waveTableType: WavetableType,
                      playbackRate: Double = 1)(implicit audioContext: AudioContext)
   extends SequentialState[WavetableState, AudioContext] with CoreSyntax {
   // TODO: Playback rate vs osc frequency (can be given in case class signatures...). Or maybe use wavetable osc to match in compute block...

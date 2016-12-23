@@ -15,7 +15,7 @@ class WavetableDemo extends FlatSpec with Matchers with AmpSyntax {
   "Wavetable" should "loop a sample by default" in {
     implicit val audioContext = AudioContext()
 
-    val ff = Wavetable(
+    val ff = Wavetable.immutable(
       FileSample("/Users/johnmcgill/nocode/samples/Yamaha-TG100-Whistle-C5.wav"),
       10
     ).asFunction(WavetableState(Array.empty, 0)).map(_.frame)
@@ -26,7 +26,7 @@ class WavetableDemo extends FlatSpec with Matchers with AmpSyntax {
   "Wavetable" should "loop a sine table" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
-    val ff = Wavetable(SineTable, 440) // TODO: If sampled period is 10 seconds, shouldnt this sound lower?
+    val ff = Wavetable.immutable(SineTable, 440) // TODO: If sampled period is 10 seconds, shouldnt this sound lower?
       .asFunction(WavetableState(Array.empty, 0))
       .map(_.frame)
 
