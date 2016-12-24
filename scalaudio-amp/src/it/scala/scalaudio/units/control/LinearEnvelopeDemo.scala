@@ -5,13 +5,14 @@ import org.scalatest.{FlatSpec, Matchers}
 import scala.collection.immutable.TreeMap
 import scala.concurrent.duration._
 import scalaudio.core.types.AudioDuration
-import scalaudio.core.{AudioContext, CoreSyntax, ScalaudioConfig}
+import scalaudio.core.{AudioContext, ScalaudioConfig}
+import scalaudio.units.AmpSyntax
 import scalaudio.units.filter.GainFilter
 import scalaudio.units.ugen.{OscState, Square}
 /**
   * Created by johnmcgill on 5/29/16.
   */
-class LinearEnvelopeDemo extends FlatSpec with Matchers with CoreSyntax {
+class LinearEnvelopeDemo extends FlatSpec with Matchers with AmpSyntax {
   "Square wave with linear env" should "ramp up over 5 seconds" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
@@ -26,7 +27,7 @@ class LinearEnvelopeDemo extends FlatSpec with Matchers with CoreSyntax {
       GainFilter.applyGainToFrame(envState.value)(Array(sineState.sample))
     }
 
-    frameFunc.play(7 seconds)
+    playback(frameFunc, 7 seconds)
   }
 
   "Square wave with multiple ramps/points" should "fluctuate accordingly" in {
@@ -45,6 +46,6 @@ class LinearEnvelopeDemo extends FlatSpec with Matchers with CoreSyntax {
       GainFilter.applyGainToFrame(envState.value)(Array(sineState.sample))
     }
 
-    frameFunc.play(15 seconds)
+    playback(frameFunc, 15 seconds)
   }
 }
