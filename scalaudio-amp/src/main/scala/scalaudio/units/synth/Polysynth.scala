@@ -21,7 +21,7 @@ object Polysynth {
 
   private def nextVoiceState(s: PolysynthVoiceState)(implicit audioContext: AudioContext): PolysynthVoiceState = {
     val newOscState = s.osc.nextState(s.oscState)
-    val newEnvState = Envelope.nextState(s.envState)
+    val newEnvState = Envelope.immutable.nextState(s.envState)
 
     s.copy(
       sample = newOscState.sample * newEnvState.value,

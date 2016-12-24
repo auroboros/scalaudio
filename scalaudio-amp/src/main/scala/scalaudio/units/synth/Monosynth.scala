@@ -39,8 +39,8 @@ case class MonosynthState(sample: Sample,
 class ImmutableMonosynth(val osc: ImmutableOsc) extends CoreSyntax {
 
   def nextState(s: MonosynthState)(implicit audioContext: AudioContext): MonosynthState = {
-    val newPitchState = Envelope.nextState(s.pitchEnvState)
-    val newAdsrState = Envelope.nextState(s.adsrEnvState)
+    val newPitchState = Envelope.immutable.nextState(s.pitchEnvState)
+    val newAdsrState = Envelope.immutable.nextState(s.adsrEnvState)
     val newOscState = osc.nextState(s.oscState.copy(pitch = newPitchState.value.Hz))
 
     s.copy(
