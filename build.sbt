@@ -1,6 +1,6 @@
 name := "scalaudio"
 organization in ThisBuild := "org.auroboros"
-version in ThisBuild := "0.1.0-SNAPSHOT"
+version in ThisBuild := "0.1.0"
 
 homepage in ThisBuild := Some(url("https://github.com/auroboros/scalaudio"))
 licenses in ThisBuild := Seq("copyright" -> url("https://github.com/auroboros/scalaudio/blob/master/license.txt"))
