@@ -18,4 +18,13 @@ trait AmpSyntax extends CoreSyntax {
       frameFunc.andThen(playbackFunc)
     ).play(duration)
   }
+
+  // TODO: Experimental -- should U -> F -> F be enriched or should frame func itself be enriched?
+  implicit def frameFuncProducer2SideChainFunction(ffp: (Unit) => (Frame) => Frame): SideChainFunction = SideChainFunction(ffp)
+}
+
+
+case class SideChainFunction(ffp: (Unit) => (Frame) => Frame) {
+
+  def sidechain(frameFunction: Unit => Frame): Unit => Frame = frameFunction.andThen(f => ffp()(f))
 }

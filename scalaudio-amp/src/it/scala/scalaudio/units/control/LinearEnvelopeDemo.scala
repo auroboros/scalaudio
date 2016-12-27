@@ -35,6 +35,24 @@ class LinearEnvelopeDemo extends FlatSpec with Matchers with AmpSyntax {
     )
   }
 
+  "Square wave with mutable linear env" should "ramp up over 5 seconds with sidechain syntax" in {
+    implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
+
+    val envQueue = List(
+      TimedEnvelopeSegment(1.second: AudioDuration, LinearEnvelope(0, 1, 5.seconds))
+    )
+
+    val envelopeFunc: (Unit) => (Frame) => Frame = Envelope(envQueue).asReflexiveFunction().map(_._1)
+      .map(g => GainFilter.applyGainToFrame(g)(_))
+
+    val squareFunc = Square.immutable.asFunction(OscState(0, 660.Hz, 0)).map(o => Array(o.sample))
+
+    playback(
+      envelopeFunc.sidechain(squareFunc),
+      7 seconds
+    )
+  }
+
   // IMMUTABLE
 
   "Square wave with linear env" should "ramp up over 5 seconds" in {
