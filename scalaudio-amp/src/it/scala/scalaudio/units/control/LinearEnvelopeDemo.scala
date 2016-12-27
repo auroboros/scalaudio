@@ -35,14 +35,32 @@ class LinearEnvelopeDemo extends FlatSpec with Matchers with AmpSyntax {
     )
   }
 
-  "Square wave with mutable linear env" should "ramp up over 5 seconds with sidechain syntax" in {
+  "Square wave with mutable linear env" should "ramp up over 2 seconds and hold, with sidechain syntax" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
     val envQueue = List(
-      TimedEnvelopeSegment(1.second: AudioDuration, LinearEnvelope(0, 1, 5.seconds))
+      TimedEnvelopeSegment(1.second: AudioDuration, LinearEnvelope(0, 1, 2.seconds))
     )
 
     val envelopeFunc: (Unit) => (Frame) => Frame = Envelope(envQueue).asReflexiveFunction().map(_._1)
+      .map(g => GainFilter.applyGainToFrame(g)(_))
+
+    val squareFunc = Square.immutable.asFunction(OscState(0, 660.Hz, 0)).map(o => Array(o.sample))
+
+    playback(
+      envelopeFunc.sidechain(squareFunc),
+      7 seconds
+    )
+  }
+
+  "Square wave with mutable linear env" should "play for 2 secs then fallback to 0 if in default mode" in {
+    implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
+
+    val envQueue = List(
+      TimedEnvelopeSegment(1.second: AudioDuration, LinearEnvelope(0, 1, 2.seconds))
+    )
+
+    val envelopeFunc: (Unit) => (Frame) => Frame = Envelope(envQueue, mode = Default).asReflexiveFunction().map(_._1)
       .map(g => GainFilter.applyGainToFrame(g)(_))
 
     val squareFunc = Square.immutable.asFunction(OscState(0, 660.Hz, 0)).map(o => Array(o.sample))

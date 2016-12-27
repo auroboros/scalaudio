@@ -23,7 +23,7 @@ trait AmpSyntax extends CoreSyntax {
   implicit def frameFuncProducer2SideChainFunction(ffp: (Unit) => (Frame) => Frame): SideChainFunction = SideChainFunction(ffp)
 }
 
-
+// "Transient pipe/chain"?
 case class SideChainFunction(ffp: (Unit) => (Frame) => Frame) {
 
   def sidechain(frameFunction: Unit => Frame): Unit => Frame = frameFunction.andThen(f => ffp()(f))

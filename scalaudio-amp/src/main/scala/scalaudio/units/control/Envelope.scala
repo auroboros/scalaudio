@@ -12,17 +12,23 @@ import scalaudio.core.types._
   */
 object Envelope {
   def apply(envelopeEvents: List[TimedEnvelopeSegment],
-            startValue: Double = 0)
-           (implicit audioContext: AudioContext) = MutableEnvelope(envelopeEvents, startValue)
+            startValue: Double = 0,
+            mode: EnvelopeFallbackMode = Previous)
+           (implicit audioContext: AudioContext) = MutableEnvelope(envelopeEvents, startValue, mode)
 
   val immutable = new ImmutableEnvelope {}
 }
+
+sealed trait EnvelopeFallbackMode
+case object Previous extends EnvelopeFallbackMode
+case object Default extends EnvelopeFallbackMode
 
 // Mutable
 
 case class MutableEnvelope(
                             envelopeEvents: List[TimedEnvelopeSegment],
-                            startValue: Double = 0
+                            startValue: Double = 0,
+                            mode: EnvelopeFallbackMode = Previous
                           )
                           (implicit val audioContext: AudioContext)
   extends ReflexiveMutatingState[MutableEnvelope, Unit, Sample] {
@@ -32,6 +38,14 @@ case class MutableEnvelope(
   var latestValue = startValue
 
   var maybeCurrentEvent: Option[TimedEnvelopeSegment] = None
+
+  // TODO: Although pattern matching is only done once, do these anon function invocations create overhead? Could just create a class for each mode
+  // Especially since in "Default" mode latestValue var is probably irrelevant altogether.
+  // Another possibility is to output Option and then trail with sample & hold or defaulter as separate sig processing units
+  val fallbackValue = mode match {
+    case Previous => () => latestValue
+    case Default => () => startValue
+  }
 
   // Definition
   override def process(i: Unit, s: MutableEnvelope): (Sample, MutableEnvelope) = {
@@ -50,8 +64,8 @@ case class MutableEnvelope(
         .find(_.endTime >= currentTime)
     }
 
-    // If event in progress, get value. Otherwise, use last (maybe can optimize by only updating this on end time but... requires comparison anyway:)
-    latestValue = maybeCurrentEvent.map(_.valueAtTime(currentTime)).getOrElse(latestValue)
+    // If event in progress, get value. Otherwise, use last (maybe can optimize by only updating this on end time but... requires comparison anyway?)
+    latestValue = maybeCurrentEvent.map(_.valueAtTime(currentTime)).getOrElse(fallbackValue())
 
     (latestValue, this)
   }
