@@ -22,3 +22,10 @@ case class PointEnvelope(value: Double)(implicit val audioContext: AudioContext)
   val length = AudioDuration(0)
   override def valueAtRelativeTime(relativeTime: AudioDuration) : Double = value
 }
+
+case class TimedEnvelopeSegment(startTime: AudioDuration, envelopeSegment: EnvelopeSegment) {
+
+  def valueAtTime(absoluteTime: AudioDuration) = envelopeSegment.valueAtRelativeTime(absoluteTime - startTime)
+
+  def endTime = startTime + envelopeSegment.length
+}

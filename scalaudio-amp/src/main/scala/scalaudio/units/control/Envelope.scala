@@ -11,7 +11,7 @@ import scalaudio.core.types._
   * Created by johnmcgill on 5/29/16.
   */
 object Envelope {
-  def apply(envelopeEvents: mutable.Queue[(AudioDuration, EnvelopeSegment)],
+  def apply(envelopeEvents: List[TimedEnvelopeSegment],
             startValue: Double = 0)
            (implicit audioContext: AudioContext) = MutableEnvelope(envelopeEvents, startValue)
 
@@ -21,39 +21,39 @@ object Envelope {
 // Mutable
 
 case class MutableEnvelope(
-                            envelopeEvents: mutable.Queue[(AudioDuration, EnvelopeSegment)],
+                            envelopeEvents: List[TimedEnvelopeSegment],
                             startValue: Double = 0
                           )
                           (implicit val audioContext: AudioContext)
   extends ReflexiveMutatingState[MutableEnvelope, Unit, Sample] {
 
-  // TODO: Use "peek" instead of all this nonsense
-  val (firstStartTime, firstSegment) = envelopeEvents.dequeue()
+  val sortedEventQueue = mutable.Queue(envelopeEvents.sortBy(_.startTime): _*)
 
-  var lastValue = startValue
+  var latestValue = startValue
 
-  var maybeCurrentStartTime: Option[AudioDuration] = Some(firstStartTime)
-  var currentSegment = firstSegment
+  var maybeCurrentEvent: Option[TimedEnvelopeSegment] = None
 
   // Definition
   override def process(i: Unit, s: MutableEnvelope): (Sample, MutableEnvelope) = {
-    while (maybeCurrentStartTime.isDefined && currentSegment.endTime(maybeCurrentStartTime.get) < audioContext.currentTime) {
 
-      if (envelopeEvents.nonEmpty) {
-        val (newStartTime, newSegment) = envelopeEvents.dequeue()
+    val currentTime = audioContext.currentTime // TODO: Unnecessary? (performance?)
 
-        maybeCurrentStartTime = Some(newStartTime)
-        currentSegment = newSegment
-      } else {
-        maybeCurrentStartTime = None
-      }
+    // If there was an event in progress but it has ended, clear slot
+    maybeCurrentEvent.foreach{ inProgressEvent =>
+      if (currentTime > inProgressEvent.endTime)
+        maybeCurrentEvent = None
     }
 
-    Tuple2(
-      maybeCurrentStartTime.map(time => currentSegment.valueAtRelativeTime(audioContext.currentTime - time)) // TODO: OO this, shouldnt be re-providing current time
-        .getOrElse(lastValue),
-      this
-    )
+    // If there is no event in progress, check for the next one (but ignore overlapping ones that would have also ended)
+    if (maybeCurrentEvent.isEmpty) {
+      maybeCurrentEvent = sortedEventQueue.dequeueAll(_.startTime <= currentTime)
+        .find(_.endTime >= currentTime)
+    }
+
+    // If event in progress, get value. Otherwise, use last (maybe can optimize by only updating this on end time but... requires comparison anyway:)
+    latestValue = maybeCurrentEvent.map(_.valueAtTime(currentTime)).getOrElse(latestValue)
+
+    (latestValue, this)
   }
 }
 

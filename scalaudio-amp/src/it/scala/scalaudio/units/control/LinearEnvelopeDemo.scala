@@ -3,15 +3,14 @@ package scalaudio.units.control
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.collection.immutable.TreeMap
-import scala.collection.mutable
 import scala.concurrent.duration._
 import scalaudio.core.types.{AudioDuration, Frame}
 import scalaudio.core.{AudioContext, ScalaudioConfig}
 import scalaudio.units.AmpSyntax
 import scalaudio.units.filter.GainFilter
 import scalaudio.units.ugen.{OscState, Square}
+import scalaz.Scalaz._
 import scalaz._
-import Scalaz._
 
 /**
   * Created by johnmcgill on 5/29/16.
@@ -22,8 +21,8 @@ class LinearEnvelopeDemo extends FlatSpec with Matchers with AmpSyntax {
   "Square wave with mutable linear env" should "ramp up over 5 seconds" in {
     implicit val audioContext = AudioContext(ScalaudioConfig(nOutChannels = 1))
 
-    val envQueue: mutable.Queue[(AudioDuration, EnvelopeSegment)] = mutable.Queue(
-      (1.second: AudioDuration, LinearEnvelope(0, 1, 5.seconds))
+    val envQueue = List(
+      TimedEnvelopeSegment(1.second: AudioDuration, LinearEnvelope(0, 1, 5.seconds))
     )
 
     val envelopeFunc: (Unit) => (Frame) => Frame = Envelope(envQueue).asReflexiveFunction().map(_._1)
