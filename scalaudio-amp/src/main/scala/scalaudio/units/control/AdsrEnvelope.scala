@@ -24,4 +24,16 @@ case class AdsrEnvelope(attackDuration: AudioDuration,
       releaseStart -> LinearEnvelope(decayRestingPoint, 0, releaseDuration)
     )
   }
+
+  def asTimedEnvelopeSegments(startTime: AudioDuration, startVal: Double = 0): List[TimedEnvelopeSegment] = {
+    val decayStart = startTime + attackDuration
+    val sustainStart = decayStart + decayDuration
+    val releaseStart = sustainStart + sustainDuration
+
+    List(
+      TimedEnvelopeSegment(startTime, LinearEnvelope(startVal, attackPeak, attackDuration)),
+      TimedEnvelopeSegment(decayStart, LinearEnvelope(attackPeak, decayRestingPoint, decayDuration)),
+      TimedEnvelopeSegment(releaseStart, LinearEnvelope(decayRestingPoint, 0, releaseDuration))
+    )
+  }
 }
