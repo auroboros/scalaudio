@@ -33,7 +33,7 @@ case class MutableEnvelope(
                           (implicit val audioContext: AudioContext)
   extends ReflexiveMutatingState[MutableEnvelope, Unit, Sample] {
 
-  val sortedEventQueue = mutable.Queue(envelopeEvents.sortBy(_.startTime): _*)
+  val sortedEventQueue = mutable.Queue(envelopeEvents: _*)
 
   var latestValue = startValue
 
@@ -46,6 +46,9 @@ case class MutableEnvelope(
     case Previous => () => latestValue
     case Default => () => startValue
   }
+
+  // Add segment & Default to Now (real-time)
+  def addSegment(segment: EnvelopeSegment, time: AudioDuration = audioContext.currentTime) = sortedEventQueue.enqueue(TimedEnvelopeSegment(time, segment))
 
   // Definition
   override def process(i: Unit, s: MutableEnvelope): (Sample, MutableEnvelope) = {
@@ -60,7 +63,7 @@ case class MutableEnvelope(
 
     // If there is no event in progress, check for the next one (but ignore overlapping ones that would have also ended)
     if (maybeCurrentEvent.isEmpty) {
-      maybeCurrentEvent = sortedEventQueue.dequeueAll(_.startTime <= currentTime)
+      maybeCurrentEvent = sortedEventQueue.dequeueAll(_.startTime <= currentTime) // If sorting is enforced, maybe won't have to dequeueAll?
         .find(_.endTime >= currentTime)
     }
 
