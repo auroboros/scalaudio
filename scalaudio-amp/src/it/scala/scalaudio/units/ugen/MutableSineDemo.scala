@@ -31,12 +31,12 @@ class MutableSineDemo extends FlatSpec with Matchers with AmpSyntax {
     var freq: Double = 440
 
     val mutatorFunc = MutableSine(440.Hz, 0).asReflexiveFunction.
-      withModifier((u: Unit, s: MutableSine) => {
+      withModifier((u: Unit, u2: Unit, s: MutableSine) => {
         s.setPitch(freq.Hz)
-        freq += .1
+        freq += .1 // TODO: Create standalone func for this & pipe this in here as variable?
       }) // TODO: Implicit to erase "Unit" from signature?
 
-    val frameFunc = mutatorFunc.map(_._1).map(Array(_))
+    val frameFunc = mutatorFunc.curried(()).map(_._1).map(Array(_))
 
     playback(frameFunc, 5.seconds)
   }
