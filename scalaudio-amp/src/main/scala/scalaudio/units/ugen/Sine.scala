@@ -10,7 +10,9 @@ import scalaudio.core.types._
   */
 
 object Sine {
-  def apply = MutableSine
+  def apply(initPitch: Pitch,
+            initPhi: Double)(implicit audioContext: AudioContext) = MutableSine(initPitch, initPhi)
+
   val immutable = new ImmutableSine{}
 }
 

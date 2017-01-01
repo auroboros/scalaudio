@@ -21,17 +21,17 @@ case class MutableMetronome(topLevelMeasureLength: AudioDuration, subdivisions: 
 //  val divisionLimits = Integer.MAX_VALUE :: subdivisions
 
   var remainderSamples = 0L
+  var clock: List[Int] = Nil
 
   def process(u: Unit, mutableClock: MutableMetronome): (List[Int], MutableMetronome) = {
-    var result:List[Int] = Nil
+    clock = Nil
 
     remainderSamples = subdivisionDurations.scanLeft(audioContext.currentTime.toSamples){(remSamples, divDur) =>
       val n = (remSamples / divDur.toSamples.toDouble).floor
-      result :+= n.toInt + 1
+      clock :+= n.toInt + 1
       (remSamples - (n * divDur.toSamples)).toLong
     }.last
 
-    // TODO: Should put result into local var no matter so current position can be read between beats?
-    (if (remainderSamples == 0) result else Nil, this)
+    (if (remainderSamples == 0) clock else Nil, this)
   }
 }
