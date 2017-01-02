@@ -1,4 +1,4 @@
-package scalaudio.units.ugen
+package scalaudio.units.control
 
 import signalz.ReflexiveMutatingState
 

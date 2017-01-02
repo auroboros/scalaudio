@@ -1,13 +1,12 @@
-package scalaudio.units.ugen
+package scalaudio.units.control
 
 import org.scalatest.{FlatSpec, Matchers}
 
-import scalaudio.core.{AudioContext, ScalaudioConfig}
-import scalaudio.core.engine.AudioFunctionGraph
-import scalaudio.units.AmpSyntax
 import scala.concurrent.duration._
-import scalaz._
-import Scalaz._
+import scalaudio.core.{AudioContext, ScalaudioConfig}
+import scalaudio.units.AmpSyntax
+import scalaudio.units.ugen.Sine
+import scalaz.Scalaz._
 
 /**
   * Created by johnmcgill on 12/31/16.
