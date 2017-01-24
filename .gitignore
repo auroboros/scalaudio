@@ -7,3 +7,4 @@ scalaudio-actor/src/test/
 scalaudio-rpc-frontend/logs/
 scalaudio-rpc-frontend/project/project/
 lib/jsyn_16_7_3.jar
+lib/
