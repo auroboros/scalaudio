@@ -1,4 +1,4 @@
-#scalaudio
+# scalaudio
 
 scalaudio is a library is to facilitate audio synthesis/analysis on the JVM by wrapping the Java Sound API in more productive syntax. Its goal is to provide extreme flexibility while reducing verbosity of audio processing code, with the added bonus of type-checking. It aims to be pretty modular (DI for config and output engines via implicits) yet use the same syntax for both real-time and offline processing. Efficiency is a secondary goal, though even in current form some mutable data structures are used to avoid performance snags of constant memory allocation.
 
@@ -41,10 +41,10 @@ object MyFirstSynthComposition extends App with AmpSyntax {
 }
 ```
 
-###why?
+### why?
 This project was initially created to facilitate my own computer music composition & audio machine learning projects but I decided to open source it since I only get to work on it in spurts (between my dayjob, other music composition, and toying around with audio in Clojure... some lib from that venture will probably be appearing here soon as well).
 
 It was loosely inspired by Phil Burk's excellent library JSyn (in fact, JSyn is still a dependency as scalaudio borrows some of its utils, though this dependency will likely be cut in a future release).
 
-###contribute!
+### contribute!
 Please feel free to contribute PRs, I will happily review & pull as I am quite actively supporting this project.
